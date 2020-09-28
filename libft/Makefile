@@ -113,7 +113,8 @@ SRCS = get_next_line.c \
 	   pr_putendl_fd.c \
 	   pr_strlen.c \
 	   ft_strarr_to_lst.c \
-	   ft_lst_to_strarr.c
+	   ft_lst_to_strarr.c \
+	   ft_lstfind_head.c
 DIR_H = includes
 FILES_O = $(SRCS:%.c=%.o)
 

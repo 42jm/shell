@@ -103,13 +103,14 @@ void			ft_lstiter(t_list *lst, void (*f)(t_list *lmnt));
 t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *lmnt));
 t_list			*ft_strarr_to_lst(char **strarr);
 char			**ft_lst_to_strarr(t_list *lst);
-
 void			ft_lstappend(t_list **alst, t_list *lmnt);
 t_list			*ft_lstpop(t_list **alst, size_t id);
 size_t			ft_lstlen(t_list **alst);
+void			ft_lstprint(t_list **alst, void (*ft_putlmnt)(t_list *));
+t_list			*ft_lstfind_head(t_list **alist, void *content, size_t len);
+
 void			*ft_memrchr(const void *s, int c, size_t n);
 char			*ft_strndup(char *s, size_t len);
-void			ft_lstprint(t_list **alst, void (*ft_putlmnt)(t_list *));
 void			ft_putnstr(const char *s, size_t n);
 char			*ft_strcdup(char *str, char c);
 size_t			ft_strclen(char *str, char c);

@@ -8,8 +8,10 @@ SRC_NAME = main.c \
 			parse.c \
 			execute.c \
 			error.c \
+			env.c \
 			builtin_echo.c \
-			builtin_exit.c
+			builtin_exit.c \
+			builtin_cd.c
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_NAME))
 OBJ = $(SRC_NAME:.c=.o)

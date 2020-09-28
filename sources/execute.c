@@ -57,7 +57,7 @@ static int	get_command_path(char *command, char **envp, char **apath)
 	return (4);
 }
 
-int			execute_builtin(char **args)
+int			execute_builtin(char **args, t_list *envlst)
 {
 	int		argc;
 
@@ -66,6 +66,8 @@ int			execute_builtin(char **args)
 		builtin_echo(argc, args);
 	else if (!ft_strcmp(*args, "exit"))
 		builtin_exit(argc, args);
+	else if (!ft_strcmp(*args, "cd"))
+		builtin_cd(argc, args, envlst);
 	else
 		return (put_error_ret("BUILTIN NOT YET IMPLEMENTED", *args, 1));
 	return (0);
@@ -89,7 +91,7 @@ int			execute_command(char **args, t_list *envlst)
 	//execute if builtin
 	if (ft_arrstr(builtins, *args))
 	{
-		if (execute_builtin(args))
+		if (execute_builtin(args, envlst))
 			return (1);
 		return (0);
 	}

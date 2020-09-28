@@ -29,6 +29,8 @@ int			parse_userinput(char *line, char ***aargs);
 int			execute_command(char **args, t_list *envlst);
 int			put_error(char *message, char *arg);
 int			put_error_ret(char *message, char *arg, int ret);
+char		*env_getvalue(t_list *envlst, char *varname);
 int			builtin_echo(int argc, char **argv);
 void		builtin_exit(int argc, char **argv);
+int			builtin_cd(int argc, char **argv, t_list *envlst);
 #endif
