@@ -11,8 +11,7 @@
 # **************************************************************************** #
 
 NAME = libft.a
-SRCS = get_next_line.c \
-	   ft_atoi.c \
+SRCS = ft_atoi.c \
 	   ft_atollu.c \
 	   ft_bzero.c \
 	   ft_isalnum.c \
@@ -95,7 +94,6 @@ SRCS = get_next_line.c \
 	   ft_strcmp_ci.c \
 	   ft_strcrop.c \
 	   ft_ltoa.c \
-	   ft_randr.c \
 	   ft_pow.c \
 	   ft_read.c \
 	   ft_puthex.c \

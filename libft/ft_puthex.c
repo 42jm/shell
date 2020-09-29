@@ -1,22 +1,18 @@
-//ft_puthex.c///////////////////////////////////////////////////////////////////
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_puthex.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/02/20 12:16:49 by jmbomeyo          #+#    #+#             */
+/*   Updated: 2019/10/05 19:06:07 by jmbomeyo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
 void	ft_puthex(void *adr, size_t len, char pad)
 {
 	ft_puthex_fd(adr, len, 1, pad);
 }
-
-/*
-#include <strings.h>
-int		main(int argc, char **argv)
-{
-	char	c;
-
-	if (argc != 2)
-		return (1);
-	c = atoi(argv[1]);
-	ft_puthex(&c, 1);
-	ft_putchar('\n');
-	return (0);
-}
-*/

@@ -25,20 +25,3 @@ long long	ft_pow(int n, int exp)
 		res *= n;
 	return (res);
 }
-
-/*
-#include <stdio.h>
-#include <stdlib.h>
-int	main(int argc, char **argv)
-{
-	if (argc != 3)
-	{
-		printf("usage: ");
-		printf(argv[0]);
-		printf(" number exponent\n");
-		return (1);
-	}
-	printf("%llu\n", ft_pow(atoi(argv[1]), atoi(argv[2])));
-	return (0);
-}
-*/

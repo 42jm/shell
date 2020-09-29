@@ -14,13 +14,11 @@
 # define MINISHELL_H
 
 # include "libft.h"
-# include "get_next_line.h"
 # include <unistd.h>
 # include <sys/wait.h>
 
 # define MAX_INPUT_LENGTH 1025
 
-extern char	**environ;
 extern char	**g_env;
 
 int			put_error(char *message, char *arg);

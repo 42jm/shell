@@ -22,7 +22,6 @@
 # include <inttypes.h>
 # include <stdarg.h>
 
-# define DELTA(X, Y) ((X) < (Y) ? (Y) - (X) : (X) - (Y));
 # define PAGEBUF 32
 
 void			*ft_memset(void *s, int c, size_t n);
@@ -125,7 +124,6 @@ char			*ft_ltoa(long long int n);
 char			*ft_strhex(unsigned char *ptr, size_t n);
 void			endian_toggle(void *ptr, size_t n);
 long long		ft_pow(int n, int exp);
-int				ft_randr(int min, int max);
 char			*ft_read(int fd, char delim);
 void			ft_puthex_fd(void *adr, size_t len, int fd, char pad);
 void			ft_puthex(void *adr, size_t len, char pad);
