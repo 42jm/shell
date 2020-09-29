@@ -21,11 +21,11 @@ t_list	*ft_strarr_to_lst(char **strarr)
 	if (!strarr || !strarr[0])
 		return (NULL);
 	i = 0;
-	lst = ft_lstnew((void const *) strarr[i], ft_strlen(strarr[i]));
+	lst = ft_lstnew((void const *)strarr[i], ft_strlen(strarr[i]));
 	ptr = lst;
 	while (ptr && strarr[++i])
 	{
-		ptr->next = ft_lstnew((void const *) strarr[i], ft_strlen(strarr[i]));
+		ptr->next = ft_lstnew((void const *)strarr[i], ft_strlen(strarr[i]));
 		ptr = ptr->next;
 	}
 	return (lst);

@@ -5,6 +5,7 @@
 int	builtin_cd(int argc, char **argv, t_list *envlst)
 {
 	char	*path;
+	int		ret;
 	
 	if (argc > 2)
 		return (put_error("too many arguments", *argv));
@@ -14,8 +15,14 @@ int	builtin_cd(int argc, char **argv, t_list *envlst)
 		path = env_getvalue(envlst, "OLDPWD");
 	else
 		path = argv[1];
-	chdir(path);
-	if (!ft_strcmp(argv[1], "-"))
-		ft_putendl(env_getvalue(envlst, "PWD"));
+	ret = chdir(path);
+	if (ret)
+		return (put_error("chdir failed", *argv));
+	path = getcwd(NULL, 0);
+	env_set(envlst, "OLDPWD", env_getvalue(envlst, "PWD"));
+	env_set(envlst, "PWD", path);
+	if (argc > 1 && !ft_strcmp(argv[1], "-"))
+		ft_putendl(path);
+	free(path);
 	return (0);
 }

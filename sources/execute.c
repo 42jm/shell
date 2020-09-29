@@ -68,6 +68,8 @@ int			execute_builtin(char **args, t_list *envlst)
 		builtin_exit(argc, args);
 	else if (!ft_strcmp(*args, "cd"))
 		builtin_cd(argc, args, envlst);
+	else if (!ft_strcmp(*args, "setenv"))
+		builtin_setenv(argc, args, envlst);
 	else
 		return (put_error_ret("BUILTIN NOT YET IMPLEMENTED", *args, 1));
 	return (0);
@@ -77,7 +79,7 @@ int			execute_command(char **args, t_list *envlst)
 {
 	pid_t		pid;
 	char		*command_path;
-	static char	*builtins[] = { "echo", "cd", "exit", NULL };
+	static char	*builtins[] = { "echo", "cd", "exit", "setenv", NULL };
 	/*
 	static char	*envp[] = {
 		"PATH=/usr/local/sbin:/usr/local/bin:/usr/bin",

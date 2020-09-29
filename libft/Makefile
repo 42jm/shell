@@ -79,6 +79,7 @@ SRCS = get_next_line.c \
 	   ft_strstr.c \
 	   ft_strsub.c \
 	   ft_strtrim.c \
+	   ft_strjoin_arr.c \
 	   ft_tolower.c \
 	   ft_toupper.c \
 	   ft_lstappend.c \

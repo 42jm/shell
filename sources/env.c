@@ -2,16 +2,61 @@
 
 #include "minishell.h"
 
-char	*env_getvalue(t_list *envlst, char *varname)
+t_list	*env_getentry(t_list *envlst, char *varname)
 {
 	char	*str;
-	t_list	*env_entry;
+	t_list	*entry;
 
 	str = ft_strjoin(varname, "=");
-	env_entry = ft_lstfind_head(&envlst, (void *)str, ft_strlen(str));
+	entry = ft_lstfind_head(&envlst, (void *)str, ft_strlen(str));
 	free(str);
-	if (!env_entry)
+	return (entry);
+}
+
+char	*env_getvalue(t_list *envlst, char *varname)
+{
+	char	*ptr;
+	t_list	*entry;
+
+	entry = env_getentry(envlst, varname);
+	if (!entry)
 		return (NULL);
-	str = ft_strchr((char *)(env_entry->content), '=') + 1;
-	return (str);
+	ptr = ft_strchr((char *)(entry->content), '=') + 1;
+	return (ptr);
+}
+
+int		env_set(t_list *envlst, char *varname, char *valnew)
+{
+	t_list	*entry;
+	char	*tmp;
+	char	*neo_str;
+	t_list	*neo_entry;
+
+	tmp = ft_strjoin(varname, "=");
+	neo_str = ft_strjoin(tmp, valnew);
+	free(tmp);
+	entry = env_getentry(envlst, varname);
+	if (entry)
+	{
+		free(entry->content);
+		entry->content = (void *)neo_str;
+		entry->content_size = ft_strlen(neo_str);
+		return (0);
+	}
+	neo_entry = ft_lstnew((void *)neo_str, ft_strlen(neo_str));
+	ft_lstappend(&envlst, neo_entry);
+	return (0);
+}
+
+int		env_put(t_list *envlst)
+{
+	t_list	*entry;
+
+	entry = envlst;
+	while (entry)
+	{
+		ft_putendl((char *)(entry->content));
+		entry = entry->next;
+	}
+	return (0);
 }

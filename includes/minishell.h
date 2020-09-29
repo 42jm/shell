@@ -23,14 +23,21 @@
 extern char	**environ;
 extern char	**g_env;
 
+int			put_error(char *message, char *arg);
+int			put_error_ret(char *message, char *arg, int ret);
 int			put_prompt(int fd);
+
 int			read_userinput(int fd, char **input);
 int			parse_userinput(char *line, char ***aargs);
 int			execute_command(char **args, t_list *envlst);
-int			put_error(char *message, char *arg);
-int			put_error_ret(char *message, char *arg, int ret);
+
+t_list		*env_getentry(t_list *envlst, char *varname);
 char		*env_getvalue(t_list *envlst, char *varname);
+int			env_set(t_list *envlst, char *varname, char *valnew);
+int			env_put(t_list *envlst);
+
 int			builtin_echo(int argc, char **argv);
 void		builtin_exit(int argc, char **argv);
 int			builtin_cd(int argc, char **argv, t_list *envlst);
+int			builtin_setenv(int argc, char **argv, t_list *envlst);
 #endif
