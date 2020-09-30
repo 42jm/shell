@@ -103,6 +103,7 @@ t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *lmnt));
 t_list			*ft_strarr_to_lst(char **strarr);
 char			**ft_lst_to_strarr(t_list *lst);
 void			ft_lstappend(t_list **alst, t_list *lmnt);
+size_t			ft_lstget_id(t_list **alst, void *content, size_t content_size);
 t_list			*ft_lstpop(t_list **alst, size_t id);
 size_t			ft_lstlen(t_list **alst);
 void			ft_lstprint(t_list **alst, void (*ft_putlmnt)(t_list *));

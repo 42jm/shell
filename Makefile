@@ -13,7 +13,7 @@ SRC_NAME = main.c \
 			builtin_echo.c \
 			builtin_exit.c \
 			builtin_cd.c \
-			builtin_setenv.c
+			builtin_envs.c
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_NAME))
 OBJ = $(SRC_NAME:.c=.o)

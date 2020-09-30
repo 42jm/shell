@@ -58,6 +58,22 @@ int		env_set(t_list *envlst, char *varname, char *valnew)
 	return (0);
 }
 
+int		env_unset(t_list *envlst, char *varname)
+{
+	t_list	*entry;
+	size_t	id;
+
+	entry = env_getentry(envlst, varname);
+	if (entry)
+	{
+		id = ft_lstget_id(&envlst, entry->content, entry->content_size);
+		entry = ft_lstpop(&envlst, id);
+		free(entry->content);
+		free(entry);
+	}
+	return (0);
+}
+
 int		env_put(t_list *envlst)
 {
 	t_list	*entry;

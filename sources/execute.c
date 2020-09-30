@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int			execute_builtin(char **args, t_list *envlst)
+int	execute_builtin(char **args, t_list *envlst)
 {
 	int		argc;
 
@@ -25,12 +25,14 @@ int			execute_builtin(char **args, t_list *envlst)
 		builtin_cd(argc, args, envlst);
 	else if (!ft_strcmp(*args, "setenv"))
 		builtin_setenv(argc, args, envlst);
+	else if (!ft_strcmp(*args, "unsetenv"))
+		builtin_unsetenv(argc, args, envlst);
 	else
 		return (put_error_ret("BUILTIN NOT YET IMPLEMENTED", *args, 1));
 	return (0);
 }
 
-int			execute_command(char **args, t_list *envlst)
+int	execute_command(char **args, t_list *envlst)
 {
 	pid_t	pid;
 	char	*command_path;
@@ -57,9 +59,10 @@ int			execute_command(char **args, t_list *envlst)
 	return (0);
 }
 
-int			execute_any(char **args, t_list *envlst)
+int	execute_any(char **args, t_list *envlst)
 {
-	static char	*builtins[] = { "echo", "cd", "exit", "setenv", NULL };
+	static char	*builtins[] = { "echo", "cd", "exit", "setenv", \
+								"unsetenv", NULL };
 
 	if (args == NULL)
 		return (0);

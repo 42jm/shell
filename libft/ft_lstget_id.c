@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-size_t	ft_lstget_id(t_list **alst, void *content)
+size_t	ft_lstget_id(t_list **alst, void *content, size_t content_size)
 {
 	size_t	i;
 	t_list	*lst;
@@ -23,7 +23,8 @@ size_t	ft_lstget_id(t_list **alst, void *content)
 		lst = *alst;
 		while (lst)
 		{
-			if (!ft_memcmp(content, lst->content, lst->content_size))
+			if (content_size == lst->content_size \
+			&&	!ft_memcmp(content, lst->content, content_size))
 				return (i);
 			lst = lst->next;
 			i++;
