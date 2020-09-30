@@ -16,7 +16,7 @@ int	builtin_cd(int argc, char **argv, t_list *envlst)
 {
 	char	*path;
 	int		ret;
-	
+
 	if (argc > 2)
 		return (put_error("too many arguments", *argv));
 	if (argc == 1)
