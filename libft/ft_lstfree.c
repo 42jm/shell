@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strarr_to_lst.c                                 :+:      :+:    :+:   */
+/*   ft_lstfree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,21 +12,13 @@
 
 #include "libft.h"
 
-t_list	*ft_strarr_to_lst(char **arr)
+static void	free_content(void *content, size_t content_size)
 {
-	t_list	*lst;
-	t_list	*ptr;
-	size_t	i;
+	free(content);
+	(void)content_size;
+}
 
-	if (!arr || !arr[0])
-		return (NULL);
-	i = 0;
-	lst = ft_lstnew((void const *)arr[i], ft_strlen(arr[i]) + 1);
-	ptr = lst;
-	while (ptr && arr[++i])
-	{
-		ptr->next = ft_lstnew((void const *)arr[i], ft_strlen(arr[i]) + 1);
-		ptr = ptr->next;
-	}
-	return (lst);
+void		ft_lstfree(t_list *lst)
+{
+	ft_lstdel(&lst, &free_content);
 }

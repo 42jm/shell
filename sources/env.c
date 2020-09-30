@@ -42,18 +42,22 @@ int		env_set(t_list *envlst, char *varname, char *valnew)
 	char	*neo_str;
 	t_list	*neo_entry;
 
-	tmp = ft_strjoin(varname, "=");
-	neo_str = ft_strjoin(tmp, valnew);
-	free(tmp);
+	neo_str = ft_strjoin(varname, "=");
+	if (valnew)
+	{
+		tmp = ft_strjoin(neo_str, valnew);
+		free(neo_str);
+		neo_str = tmp;
+	}
 	entry = env_getentry(envlst, varname);
 	if (entry)
 	{
 		free(entry->content);
 		entry->content = (void *)neo_str;
-		entry->content_size = ft_strlen(neo_str);
+		entry->content_size = ft_strlen(neo_str) + 1;
 		return (0);
 	}
-	neo_entry = ft_lstnew((void *)neo_str, ft_strlen(neo_str));
+	neo_entry = ft_lstnew((void *)neo_str, ft_strlen(neo_str) + 1);
 	ft_lstappend(&envlst, neo_entry);
 	return (0);
 }

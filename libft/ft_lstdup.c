@@ -1,32 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strarr_to_lst.c                                 :+:      :+:    :+:   */
+/*   ft_lstdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/23 10:06:09 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2019/02/23 11:12:02 by jmbomeyo         ###   ########.fr       */
+/*   Created: 2019/02/23 09:53:03 by jmbomeyo          #+#    #+#             */
+/*   Updated: 2019/02/23 10:21:19 by jmbomeyo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_strarr_to_lst(char **arr)
+t_list	*ft_lstdup(t_list *lst)
 {
-	t_list	*lst;
-	t_list	*ptr;
-	size_t	i;
+	t_list	*dup;
+	t_list	*dup_head;
 
-	if (!arr || !arr[0])
+	ft_putendl("\t0");
+	if (!lst)
 		return (NULL);
-	i = 0;
-	lst = ft_lstnew((void const *)arr[i], ft_strlen(arr[i]) + 1);
-	ptr = lst;
-	while (ptr && arr[++i])
+	ft_putendl("\t1");
+	dup = ft_lstnew(lst->content, lst->content_size);
+	dup_head = dup;
+	ft_putendl("\t2");
+	while (lst->next)
 	{
-		ptr->next = ft_lstnew((void const *)arr[i], ft_strlen(arr[i]) + 1);
-		ptr = ptr->next;
+		ft_putendl("\t2.1");
+		lst = lst->next;
+		dup->next = ft_lstnew(lst->content, lst->content_size);
+		dup = dup->next;
 	}
-	return (lst);
+	ft_putendl("\t3");
+	return (dup_head);
 }

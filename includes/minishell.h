@@ -44,4 +44,5 @@ void		builtin_exit(int argc, char **argv);
 int			builtin_cd(int argc, char **argv, t_list *envlst);
 int			builtin_setenv(int argc, char **argv, t_list *envlst);
 int			builtin_unsetenv(int argc, char **argv, t_list *envlst);
+int			builtin_env(int argc, char **argv, t_list *envlst);
 #endif

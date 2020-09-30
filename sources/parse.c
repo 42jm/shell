@@ -14,7 +14,8 @@
 
 int	parse_userinput(char *line, char ***aargs)
 {
-	char	*ptr;
+	char	*str;
+	char	**arr;
 
 	if (!line)
 		return (1);
@@ -30,8 +31,8 @@ int	parse_userinput(char *line, char ***aargs)
 		*aargs = NULL;
 		return (0);
 	}
-	if ((ptr = ft_strchr(line, '\n')))
-		*ptr = '\0';
+	if ((str = ft_strchr(line, '\n')))
+		*str = '\0';
 	else
 		pr_putstr_fd("\n", 1);
 	*aargs = ft_strcsplit(line, ' ');

@@ -27,6 +27,8 @@ int	execute_builtin(char **args, t_list *envlst)
 		builtin_setenv(argc, args, envlst);
 	else if (!ft_strcmp(*args, "unsetenv"))
 		builtin_unsetenv(argc, args, envlst);
+	else if (!ft_strcmp(*args, "env"))
+		builtin_env(argc, args, envlst);
 	else
 		return (put_error_ret("BUILTIN NOT YET IMPLEMENTED", *args, 1));
 	return (0);
@@ -62,7 +64,7 @@ int	execute_command(char **args, t_list *envlst)
 int	execute_any(char **args, t_list *envlst)
 {
 	static char	*builtins[] = { "echo", "cd", "exit", "setenv", \
-								"unsetenv", NULL };
+								"unsetenv", "env", NULL };
 
 	if (args == NULL)
 		return (0);

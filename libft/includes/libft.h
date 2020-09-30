@@ -108,6 +108,8 @@ t_list			*ft_lstpop(t_list **alst, size_t id);
 size_t			ft_lstlen(t_list **alst);
 void			ft_lstprint(t_list **alst, void (*ft_putlmnt)(t_list *));
 t_list			*ft_lstfind_head(t_list **alist, void *content, size_t len);
+void			ft_lstfree(t_list *lst);
+t_list			*ft_lstdup(t_list *lst);
 
 void			*ft_memrchr(const void *s, int c, size_t n);
 char			*ft_strndup(char *s, size_t len);
