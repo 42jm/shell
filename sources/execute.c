@@ -25,29 +25,16 @@ static int	test_file_validity(char *path)
 	return (0);
 }
 
-static int	get_command_path(char *command, char **envp, char **apath)
+static int	test_file_existance(char *command, char **envp, char **apath)
 {
 	char	**paths;
 	char	*tmp;
 	int		i;
 
-	if (ft_strchr(command, '/'))
-	{
-		if (access(command, F_OK))
-			return (put_error_ret("file does not exist", command, 1));
-		if (test_file_validity(command))
-			return (2);
-		*apath = ft_strdup(command);
-		return (0);
-	}
-	//get strarr of paths from envp
-	while (*envp && ft_strncmp(*envp, "PATH=", 5))
-		envp++;
 	paths = ft_strcsplit(*envp + 5, ':');
 	i = 0;
 	while (paths[i])
 	{
-		//verify existance of file
 		tmp = ft_strjoin(paths[i], "/");
 		*apath = ft_strjoin(tmp, command);
 		free(tmp);
@@ -62,9 +49,28 @@ static int	get_command_path(char *command, char **envp, char **apath)
 		free(*apath);
 		i++;
 	}
-	put_error("command not found", command);
 	free_strarr_all(paths);
 	return (4);
+}
+
+static int	get_command_path(char *command, char **envp, char **apath)
+{
+	char	*tmp;
+
+	if (ft_strchr(command, '/'))
+	{
+		if (access(command, F_OK))
+			return (put_error_ret("file does not exist", command, 1));
+		if (test_file_validity(command))
+			return (2);
+		*apath = ft_strdup(command);
+		return (0);
+	}
+	while (*envp && ft_strncmp(*envp, "PATH=", 5))
+		envp++;
+	if (test_file_existance(command, envp, apath))
+		return (put_error_ret("command not found", command, 3));
+	return (0);
 }
 
 int			execute_builtin(char **args, t_list *envlst)
@@ -90,42 +96,23 @@ int			execute_command(char **args, t_list *envlst)
 	pid_t		pid;
 	char		*command_path;
 	static char	*builtins[] = { "echo", "cd", "exit", "setenv", NULL };
-	/*
-	static char	*envp[] = {
-		"PATH=/usr/local/sbin:/usr/local/bin:/usr/bin",
-		NULL };
-	*/
 	char		**envp;
 
-	//return on empty
 	if (args == NULL)
 		return (0);
-	//execute if builtin
 	if (ft_arrstr(builtins, *args))
-	{
-		if (execute_builtin(args, envlst))
-			return (1);
-		return (0);
-	}
-	//envp strarr from list
-	envp = ft_lst_to_strarr(envlst);
-	if (!envp)
+		return (execute_builtin(args, envlst) ? 1 : 0);
+	if (!(envp = ft_lst_to_strarr(envlst)))
 		return (2);
-	//get command full path
 	if (get_command_path(args[0], envp, &command_path))
 	{
 		free_strarr_all(envp);
 		return (3);
 	}
-	//execute args[0] with args + 1 as subprocess
-	pid = fork();
-	if (!pid)
+	if (!(pid = fork()))
 	{
 		execve(command_path, args, envp);
 		put_error("execve error", command_path);
-		free_strarr_all(envp);
-		free(command_path);
-		return (-1);
 	}
 	wait(NULL);
 	free_strarr_all(envp);
