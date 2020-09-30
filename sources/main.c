@@ -33,7 +33,7 @@ int			main(int argc, char **argv)
 			return (2);
 		if (parse_userinput(line, &args))
 			return (3);
-		if (execute_command(args, envlst) < 0)
+		if (execute_any(args, envlst) < 0)
 			return (4);
 		if (args)
 			free_strarr_all(args);

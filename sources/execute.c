@@ -12,67 +12,6 @@
 
 #include "minishell.h"
 
-static int	test_file_validity(char *path)
-{
-	struct stat	statbuf;
-
-	if (access(path, X_OK))
-		return (put_error_ret("file is not executable", path, 1));
-	if (stat(path, &statbuf))
-		return (put_error_ret("could not get file status", path, 2));
-	if ((statbuf.st_mode & S_IFMT) != S_IFREG)
-		return (put_error_ret("file is not regular", path, 3));
-	return (0);
-}
-
-static int	test_file_existance(char *command, char **envp, char **apath)
-{
-	char	**paths;
-	char	*tmp;
-	int		i;
-
-	paths = ft_strcsplit(*envp + 5, ':');
-	i = 0;
-	while (paths[i])
-	{
-		tmp = ft_strjoin(paths[i], "/");
-		*apath = ft_strjoin(tmp, command);
-		free(tmp);
-		if (!access(*apath, F_OK))
-		{
-			free_strarr_all(paths);
-			if (!test_file_validity(*apath))
-				return (0);
-			free(*apath);
-			return (3);
-		}
-		free(*apath);
-		i++;
-	}
-	free_strarr_all(paths);
-	return (4);
-}
-
-static int	get_command_path(char *command, char **envp, char **apath)
-{
-	char	*tmp;
-
-	if (ft_strchr(command, '/'))
-	{
-		if (access(command, F_OK))
-			return (put_error_ret("file does not exist", command, 1));
-		if (test_file_validity(command))
-			return (2);
-		*apath = ft_strdup(command);
-		return (0);
-	}
-	while (*envp && ft_strncmp(*envp, "PATH=", 5))
-		envp++;
-	if (test_file_existance(command, envp, apath))
-		return (put_error_ret("command not found", command, 3));
-	return (0);
-}
-
 int			execute_builtin(char **args, t_list *envlst)
 {
 	int		argc;
@@ -93,15 +32,10 @@ int			execute_builtin(char **args, t_list *envlst)
 
 int			execute_command(char **args, t_list *envlst)
 {
-	pid_t		pid;
-	char		*command_path;
-	static char	*builtins[] = { "echo", "cd", "exit", "setenv", NULL };
-	char		**envp;
+	pid_t	pid;
+	char	*command_path;
+	char	**envp;
 
-	if (args == NULL)
-		return (0);
-	if (ft_arrstr(builtins, *args))
-		return (execute_builtin(args, envlst) ? 1 : 0);
 	if (!(envp = ft_lst_to_strarr(envlst)))
 		return (2);
 	if (get_command_path(args[0], envp, &command_path))
@@ -113,9 +47,23 @@ int			execute_command(char **args, t_list *envlst)
 	{
 		execve(command_path, args, envp);
 		put_error("execve error", command_path);
+		free_strarr_all(envp);
+		free(command_path);
+		return (-1);
 	}
 	wait(NULL);
 	free_strarr_all(envp);
 	free(command_path);
 	return (0);
+}
+
+int			execute_any(char **args, t_list *envlst)
+{
+	static char	*builtins[] = { "echo", "cd", "exit", "setenv", NULL };
+
+	if (args == NULL)
+		return (0);
+	if (ft_arrstr(builtins, *args))
+		return (execute_builtin(args, envlst) ? 1 : 0);
+	return (execute_command(args, envlst));
 }

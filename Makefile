@@ -7,6 +7,7 @@ SRC_NAME = main.c \
 			read.c \
 			parse.c \
 			execute.c \
+			execute_helpers.c \
 			error.c \
 			env.c \
 			builtin_echo.c \
