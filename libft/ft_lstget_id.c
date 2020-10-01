@@ -6,7 +6,7 @@
 /*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 12:18:30 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2019/09/23 12:18:31 by jmbomeyo         ###   ########.fr       */
+/*   Updated: 2020/10/01 17:45:07 by jmbomeyo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ size_t	ft_lstget_id(t_list **alst, void *content, size_t content_size)
 		while (lst)
 		{
 			if (content_size == lst->content_size \
-			&&	!ft_memcmp(content, lst->content, content_size))
+			&& !ft_memcmp(content, lst->content, content_size))
 				return (i);
 			lst = lst->next;
 			i++;

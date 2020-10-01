@@ -6,7 +6,7 @@
 /*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 12:16:49 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2019/10/05 19:06:07 by jmbomeyo         ###   ########.fr       */
+/*   Updated: 2020/10/01 17:53:26 by jmbomeyo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ static int	expand_vars(char **aarg, t_list *envlst)
 	char	*arg;
 	size_t	var_id;
 	size_t	var_len;
-	char	*var_name;
 	char	*var_value;
 	char	*tmp;
 
@@ -37,16 +36,15 @@ static int	expand_vars(char **aarg, t_list *envlst)
 		var_len = 0;
 		while (is_bashvariable(arg[var_id + var_len]))
 			var_len++;
-		var_name = ft_strcrop(arg, var_id, var_id + var_len);
-		var_value = env_getvalue(envlst, var_name);
-		free(var_name);
+		tmp = ft_strcrop(arg, var_id, var_id + var_len);
+		var_value = env_getvalue(envlst, tmp);
+		free(tmp);
 		arg[var_id - 1] = '\0';
 		tmp = ft_strjoin(arg, var_value);
 		*aarg = ft_strjoin(tmp, arg + var_id + var_len);
 		free(tmp);
 		free(arg);
-		var_id += ft_strlen(var_value) - 1;
-		var_id += ft_strclen(*aarg + var_id, '$');
+		var_id += ft_strlen(var_value) - 1 + ft_strclen(*aarg + var_id, '$');
 	}
 	return (0);
 }
