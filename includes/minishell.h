@@ -23,10 +23,10 @@ extern char	**g_env;
 
 int			put_error(char *message, char *arg);
 int			put_error_ret(char *message, char *arg, int ret);
-int			put_prompt(int fd);
+int			put_prompt(int fd, t_list *envlst);
 
 int			read_userinput(int fd, char **input);
-int			parse_userinput(char *line, char ***aargs);
+int			parse_userinput(char *line, char ***aargs, t_list *envlst);
 
 int			test_file_validity(char *path);
 int			test_file_existance(char *command, char **envp, char **apath);

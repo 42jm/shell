@@ -58,6 +58,7 @@ int		env_set(t_list *envlst, char *varname, char *valnew)
 		return (0);
 	}
 	neo_entry = ft_lstnew((void *)neo_str, ft_strlen(neo_str) + 1);
+	free(neo_str);
 	ft_lstappend(&envlst, neo_entry);
 	return (0);
 }

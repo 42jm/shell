@@ -18,14 +18,14 @@ void	builtin_exit(int argc, char **argv)
 
 	pr_putstr_fd("exit\n", 2);
 	if (argc > 2)
-		put_error("too many arguments", *argv);
+		put_error("Too many arguments", *argv);
 	i = 0;
 	if (argc == 2)
 	{
 		if (ft_isdigit((int)argv[1][0]))
 			i = ft_atoi(argv[1]);
 		else
-			put_error("numeric argument required", argv[1]);
+			put_error("Numeric argument required", argv[1]);
 	}
 	exit(i);
 }

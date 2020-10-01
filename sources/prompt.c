@@ -12,9 +12,14 @@
 
 #include "minishell.h"
 
-int	put_prompt(int fd)
+int	put_prompt(int fd, t_list *envlst)
 {
-	if (pr_putstr_fd("$> ", fd) > 0)
-		return (put_error("could not print prompt", NULL));
+	char	*prompt;
+
+	prompt = env_getvalue(envlst, "PS1");
+	if (!prompt)
+		prompt="$> ";
+	if (pr_putstr_fd(prompt, fd) > 0)
+		return (put_error("Could not print prompt", NULL));
 	return (0);
 }

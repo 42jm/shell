@@ -12,12 +12,6 @@
 
 #include "minishell.h"
 
-static void	lstfree(void *ptr, size_t sz)
-{
-	free(ptr);
-	sz = 0;
-}
-
 int			main(int argc, char **argv)
 {
 	char	*line;
@@ -27,19 +21,19 @@ int			main(int argc, char **argv)
 	envlst = ft_strarr_to_lst(__environ);
 	while (1)
 	{
-		if (put_prompt(1))
+		if (put_prompt(1, envlst))
 			return (1);
 		if (read_userinput(0, &line))
 			return (2);
-		if (parse_userinput(line, &args))
+		if (parse_userinput(line, &args, envlst))
 			return (3);
 		if (execute_any(args, envlst) < 0)
-			return (4);
+			break;
 		if (args)
 			free_strarr_all(args);
 		if (line)
 			free(line);
 	}
-	ft_lstdel(&envlst, &lstfree);
+	ft_lstfree(envlst);
 	return (0);
 }

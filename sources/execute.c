@@ -50,7 +50,7 @@ int	execute_command(char **args, t_list *envlst)
 	if (!(pid = fork()))
 	{
 		execve(command_path, args, envp);
-		put_error("execve error", command_path);
+		put_error("Execve error", command_path);
 		free_strarr_all(envp);
 		free(command_path);
 		return (-1);
