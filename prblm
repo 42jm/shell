@@ -1,0 +1,11 @@
+[invalid read size of one]
+valgrind ./minishell
+setenv FOO bar
+echo $FOO
+
+[guilleumets]
+setenv PATH "/bin:/usr/bin"
+
+[SEGFAULT]
+unsetenv PATH
+ls
