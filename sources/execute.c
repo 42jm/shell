@@ -67,8 +67,10 @@ int	execute_any(char **args, t_list *envlst)
 								"unsetenv", "env", NULL };
 
 	if (args == NULL)
-		return (0);
+		return (1);
 	if (ft_arrstr(builtins, *args))
 		return (execute_builtin(args, envlst) ? 1 : 0);
+	if (*args == NULL || **args == '\0' && args[1] == NULL)
+		return (0);
 	return (execute_command(args, envlst));
 }

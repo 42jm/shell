@@ -14,7 +14,7 @@
 
 char	*ft_arrstr(char **arr, char *s)
 {
-	while (*arr)
+	while (arr && *arr && s && *s)
 	{
 		if (!ft_strcmp(*arr, s))
 			return (*arr);

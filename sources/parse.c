@@ -30,7 +30,7 @@ static int	expand_vars(char **aarg, t_list *envlst)
 	char	*tmp;
 
 	var_id = ft_strclen(*aarg, '$');
-	while (var_id && aarg[0][var_id])
+	while (var_id && is_bashvariable(aarg[0][var_id]))
 	{
 		arg = *aarg;
 		var_len = 0;
@@ -44,7 +44,8 @@ static int	expand_vars(char **aarg, t_list *envlst)
 		*aarg = ft_strjoin(tmp, arg + var_id + var_len);
 		free(tmp);
 		free(arg);
-		var_id += ft_strlen(var_value) - 1 + ft_strclen(*aarg + var_id, '$');
+		var_id += - 1 + ft_strlen(var_value);
+		var_id += ft_strclen(*aarg + var_id, '$');
 	}
 	return (0);
 }
@@ -100,11 +101,6 @@ int			parse_userinput(char *line, char ***aargs, t_list *envlst)
 		*aargs = (char **)malloc(sizeof(**aargs) * 2);
 		(*aargs)[0] = ft_strdup("exit");
 		(*aargs)[1] = NULL;
-		return (0);
-	}
-	if (*line == '\n')
-	{
-		*aargs = NULL;
 		return (0);
 	}
 	if ((str = ft_strchr(line, '\n')))

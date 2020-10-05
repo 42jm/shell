@@ -17,7 +17,7 @@ size_t	ft_strclen(char *s, char chr)
 	size_t	len;
 	size_t	i;
 
-	len = ft_strlen(s) + 1;
+	len = ft_strlen(s);
 	i = 0;
 	while (i < len)
 	{
