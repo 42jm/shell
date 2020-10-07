@@ -12,13 +12,13 @@
 
 #include "minishell.h"
 
-int			main(int argc, char **argv)
+int			main(int argc, char **argv, char **envp)
 {
 	char	*line;
 	char	**args;
 	t_list	*envlst;
 
-	envlst = ft_strarr_to_lst(__environ);
+	envlst = ft_strarr_to_lst(envp);
 	while (1)
 	{
 		if (put_prompt(1, envlst))
