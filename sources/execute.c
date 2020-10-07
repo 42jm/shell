@@ -6,7 +6,7 @@
 /*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 12:16:49 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2019/10/05 19:06:07 by jmbomeyo         ###   ########.fr       */
+/*   Updated: 2020/10/07 16:13:25 by jmbomeyo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	execute_any(char **args, t_list *envlst)
 		return (1);
 	if (ft_arrstr(builtins, *args))
 		return (execute_builtin(args, envlst) ? 1 : 0);
-	if (*args == NULL || **args == '\0' && args[1] == NULL)
+	if (*args == NULL || (**args == '\0' && args[1] == NULL))
 		return (0);
 	return (execute_command(args, envlst));
 }
