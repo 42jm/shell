@@ -1,9 +1,0 @@
-[guilleumets]
-./minishell
-echo "It works"
-setenv PATH "/bin:/usr/bin"
-
-[valgrind env]
-valgrind ./minishell
-env
-/usr/bin/env

@@ -12,26 +12,17 @@
 
 #include "minishell.h"
 
-static char	*parse_quotes(char *line)
+static char	*quote_copy(char *line, size_t quote_one, size_t quote_two)
 {
-	size_t	quote_one;
-	size_t	quote_two;
 	char	*neoline;
-	char 	*tmp;
-	size_t	i;
-	size_t	j;
+	char	*tmp;
+	int		i;
+	int		j;
 
-	quote_one = ft_strclen(line, '"');
-	quote_two = quote_one + ft_strclen(line + quote_one, '"');
-	if (!quote_one || quote_two == quote_one)
-		return (ft_strdup(line));
 	neoline = (char *)malloc(sizeof(*neoline) * (ft_strlen(line) - 1));
-	i = 0;
-	while (i < quote_one - 1)
-	{
+	i = -1;
+	while (++i < quote_one - 1)
 		neoline[i] = line[i];
-		i++;
-	}
 	while (i < quote_two - 2)
 	{
 		neoline[i] = line[i + 1];
@@ -48,6 +39,19 @@ static char	*parse_quotes(char *line)
 	free(tmp);
 	neoline[i] = '\0';
 	return (neoline);
+}
+
+char		*parse_quotes(char *line)
+{
+	size_t	quote_one;
+	size_t	quote_two;
+	char	*neoline;
+
+	quote_one = ft_strclen(line, '"');
+	quote_two = quote_one + ft_strclen(line + quote_one, '"');
+	if (!quote_one || quote_two == quote_one)
+		return (ft_strdup(line));
+	return (quote_copy(line, quote_one, quote_two));
 }
 
 static char	**parse_split(char *line)
@@ -68,7 +72,7 @@ static char	**parse_split(char *line)
 			*neoline = '\t';
 		arr++;
 	}
-	return(split);
+	return (split);
 }
 
 int			parse_userinput(char *line, char ***aargs, t_list *envlst)
@@ -90,6 +94,5 @@ int			parse_userinput(char *line, char ***aargs, t_list *envlst)
 	else
 		pr_putstr_fd("\n", 1);
 	*aargs = parse_split(line);
-	ft_putstr_arr(*aargs, ft_strlen_arr((const char **)*aargs));
 	return (expand_any(*aargs, envlst));
 }

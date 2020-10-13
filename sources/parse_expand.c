@@ -44,7 +44,7 @@ static int	expand_vars(char **aarg, t_list *envlst)
 		*aarg = ft_strjoin(tmp, arg + var_id + var_len);
 		free(tmp);
 		free(arg);
-		var_id += - 1 + ft_strlen(var_value);
+		var_id += -1 + ft_strlen(var_value);
 		var_id += ft_strclen(*aarg + var_id, '$');
 	}
 	return (0);
@@ -79,13 +79,13 @@ static int	expand_home(char **aarg, t_list *envlst)
 int			expand_any(char **args, t_list *envlst)
 {
 	if (!args)
-		return(1);
+		return (1);
 	while (*args)
 	{
 		if (expand_vars(args, envlst))
-			return(2);
+			return (2);
 		if (expand_home(args, envlst))
-			return(3);
+			return (3);
 		args++;
 	}
 	return (0);

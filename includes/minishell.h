@@ -27,6 +27,7 @@ int			put_prompt(int fd, t_list *envlst);
 
 int			read_userinput(int fd, char **input);
 int			expand_any(char **args, t_list *envlst);
+char		*parse_quotes(char *line);
 int			parse_userinput(char *line, char ***aargs, t_list *envlst);
 
 int			test_file_validity(char *path);
