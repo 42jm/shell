@@ -50,7 +50,7 @@ int	test_file_existance(char *command, char **envp, char **apath)
 		i++;
 	}
 	free_strarr_all(paths);
-	return (4);
+	return (put_error_ret("Command not found", command, 4));
 }
 
 int	get_command_path(char *command, char **envp, char **apath)
@@ -68,7 +68,9 @@ int	get_command_path(char *command, char **envp, char **apath)
 	}
 	while (*envp && ft_strncmp(*envp, "PATH=", 5))
 		envp++;
+	if (!envp[0])
+		return (put_error_ret("PATH var not found in env", command, 3));
 	if (test_file_existance(command, envp, apath))
-		return (put_error_ret("Command not found", command, 3));
+		return (4);
 	return (0);
 }

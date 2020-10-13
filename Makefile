@@ -6,6 +6,7 @@ SRC_NAME = main.c \
 			prompt.c \
 			read.c \
 			parse.c \
+			parse_expand.c \
 			execute.c \
 			execute_helpers.c \
 			error.c \

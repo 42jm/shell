@@ -72,6 +72,7 @@ char			*ft_strjoin_arr(char **arr, size_t n, char sep);
 char			*ft_strtrim(char const *s);
 char			**ft_strcsplit(char const *s, char c);
 char			**ft_strnsplit(char const *s, size_t n);
+char			**ft_strstrsplit(char *s, char *delim);
 char			*ft_itoa(int n);
 char			*ft_itoa_base(int n, int base);
 void			ft_putchar(char c);

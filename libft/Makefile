@@ -78,6 +78,7 @@ SRCS = ft_atoi.c \
 	   ft_strrchr.c \
 	   ft_strcsplit.c \
 	   ft_strnsplit.c \
+	   ft_strstrsplit.c \
 	   ft_strstr.c \
 	   ft_strsub.c \
 	   ft_strtrim.c \
