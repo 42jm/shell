@@ -6,7 +6,7 @@
 /*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 12:16:49 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2020/10/01 18:16:10 by jmbomeyo         ###   ########.fr       */
+/*   Updated: 2020/10/13 12:29:36 by jmbomeyo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,21 @@ static char	*parse_quotes(char *line)
 	size_t	quote_one;
 	size_t	quote_two;
 	char	*neoline;
+	char 	*tmp;
 	size_t	i;
 	size_t	j;
 
 	quote_one = ft_strclen(line, '"');
-	quote_two = ft_strclen(line[quote_two], '"');
-	if (!quote_one || !quote_two)
+	quote_two = quote_one + ft_strclen(line + quote_one, '"');
+	if (!quote_one || quote_two == quote_one)
 		return (ft_strdup(line));
-	neoline = (char *)malloc(sizeof(*neoline) * (ft_strlen(line) - 2));
+	neoline = (char *)malloc(sizeof(*neoline) * (ft_strlen(line) - 1));
 	i = 0;
 	while (i < quote_one - 1)
-		neoline[i] = line[i++];
+	{
+		neoline[i] = line[i];
+		i++;
+	}
 	while (i < quote_two - 2)
 	{
 		neoline[i] = line[i + 1];
@@ -42,18 +46,28 @@ static char	*parse_quotes(char *line)
 	while (tmp[j])
 		neoline[i++] = tmp[j++];
 	free(tmp);
+	neoline[i] = '\0';
 	return (neoline);
 }
 
 static char	**parse_split(char *line)
 {
-	char	**split;
 	char	*neoline;
+	char	**split;
+	char	**arr;
 
-	
-	split = ft_strstrsplit(line, " \t");
-	//find neoline in split and replace it with
+	neoline = parse_quotes(line);
+	split = ft_strstrsplit(neoline, " \t");
 	free(neoline);
+	arr = split;
+	while (arr && *arr)
+	{
+		while ((neoline = ft_strchr(*arr, 1)))
+			*neoline = ' ';
+		while ((neoline = ft_strchr(*arr, 2)))
+			*neoline = '\t';
+		arr++;
+	}
 	return(split);
 }
 
@@ -76,5 +90,6 @@ int			parse_userinput(char *line, char ***aargs, t_list *envlst)
 	else
 		pr_putstr_fd("\n", 1);
 	*aargs = parse_split(line);
+	ft_putstr_arr(*aargs, ft_strlen_arr((const char **)*aargs));
 	return (expand_any(*aargs, envlst));
 }
