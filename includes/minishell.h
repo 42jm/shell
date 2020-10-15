@@ -6,7 +6,7 @@
 /*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/30 15:39:13 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2019/11/01 17:56:32 by jmbomeyo         ###   ########.fr       */
+/*   Updated: 2020/10/15 13:30:26 by jmbomeyo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int			env_unset(t_list *envlst, char *varname);
 int			env_put(t_list *envlst);
 
 int			builtin_echo(int argc, char **argv);
-void		builtin_exit(int argc, char **argv);
+int			builtin_exit(int argc, char **argv);
 int			builtin_cd(int argc, char **argv, t_list *envlst);
 int			builtin_setenv(int argc, char **argv, t_list *envlst);
 int			builtin_unsetenv(int argc, char **argv, t_list *envlst);

@@ -6,7 +6,7 @@
 /*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 12:16:49 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2020/10/07 16:13:25 by jmbomeyo         ###   ########.fr       */
+/*   Updated: 2020/10/15 13:32:30 by jmbomeyo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,25 @@
 
 int	execute_builtin(char **args, t_list *envlst)
 {
-	int		argc;
+	int	argc;
+	int	ret;
 
 	argc = ft_strlen_arr((const char **)args);
 	if (!ft_strcmp(*args, "echo"))
-		builtin_echo(argc, args);
+		ret = builtin_echo(argc, args);
 	else if (!ft_strcmp(*args, "exit"))
-		builtin_exit(argc, args);
+		ret = builtin_exit(argc, args);
 	else if (!ft_strcmp(*args, "cd"))
-		builtin_cd(argc, args, envlst);
+		ret = builtin_cd(argc, args, envlst);
 	else if (!ft_strcmp(*args, "setenv"))
-		builtin_setenv(argc, args, envlst);
+		ret = builtin_setenv(argc, args, envlst);
 	else if (!ft_strcmp(*args, "unsetenv"))
-		builtin_unsetenv(argc, args, envlst);
+		ret = builtin_unsetenv(argc, args, envlst);
 	else if (!ft_strcmp(*args, "env"))
-		builtin_env(argc, args, envlst);
+		ret = builtin_env(argc, args, envlst);
 	else
-		return (put_error_ret("BUILTIN NOT YET IMPLEMENTED", *args, 1));
-	return (0);
+		ret = put_error_ret("BUILTIN NOT YET IMPLEMENTED", *args, 1);
+	return (ret);
 }
 
 int	execute_command(char **args, t_list *envlst)
@@ -69,7 +70,7 @@ int	execute_any(char **args, t_list *envlst)
 	if (args == NULL)
 		return (1);
 	if (ft_arrstr(builtins, *args))
-		return (execute_builtin(args, envlst) ? 1 : 0);
+		return (execute_builtin(args, envlst));
 	if (*args == NULL || (**args == '\0' && args[1] == NULL))
 		return (0);
 	return (execute_command(args, envlst));

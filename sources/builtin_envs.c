@@ -6,7 +6,7 @@
 /*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 12:16:49 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2019/10/05 19:06:07 by jmbomeyo         ###   ########.fr       */
+/*   Updated: 2020/10/15 14:16:38 by jmbomeyo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	builtin_env(int argc, char **argv, t_list *envlst)
 	t_list	*neo_env;
 	char	*varname;
 	char	*valnew;
+	int		ret;
 
 	neo_env = ft_lstdup(envlst);
 	while (*(++argv) && ft_strchr(*argv, '='))
@@ -49,10 +50,11 @@ int	builtin_env(int argc, char **argv, t_list *envlst)
 		env_set(neo_env, varname, valnew);
 		free(varname);
 	}
+	ret = 0;
 	if (*argv)
-		execute_any(argv, neo_env);
+		ret = execute_any(argv, neo_env);
 	else
 		env_put(neo_env);
 	ft_lstfree(neo_env);
-	return (0);
+	return (ret);
 }
