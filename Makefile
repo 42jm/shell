@@ -24,9 +24,9 @@ all: $(NAME)
 $(NAME):
 	@make -C libft re
 	@printf "[$(NAME)] creating objects\n"
-	@gcc -c $(SRC) $(INC)
+	@clang -c $(SRC) $(INC)
 	@printf "[$(NAME)] creating $(NAME)\n"
-	@gcc -o $(NAME) $(OBJ) $(INC) $(LIB)
+	@clang -o $(NAME) $(OBJ) $(INC) $(LIB)
 
 clean:
 	@make -C libft clean

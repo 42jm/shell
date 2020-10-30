@@ -125,7 +125,7 @@ all: $(NAME)
 
 $(NAME):
 	@printf "[$(NAME)] creating objects\n"
-	@gcc -Wall -Wextra -Werror -c $(SRCS) -I $(DIR_H)
+	@clang -Wall -Wextra -Werror -c $(SRCS) -I $(DIR_H)
 	@printf "[$(NAME)] creating $(NAME)\n"
 	@ar rcs $(NAME) $(FILES_O)
 
