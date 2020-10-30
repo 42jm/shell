@@ -16,8 +16,8 @@ static char	*quote_copy(char *line, size_t quote_one, size_t quote_two)
 {
 	char	*neoline;
 	char	*tmp;
-	int		i;
-	int		j;
+	size_t	i;
+	size_t	j;
 
 	neoline = (char *)malloc(sizeof(*neoline) * (ft_strlen(line) - 1));
 	i = -1;
@@ -45,7 +45,6 @@ char		*parse_quotes(char *line)
 {
 	size_t	quote_one;
 	size_t	quote_two;
-	char	*neoline;
 
 	quote_one = ft_strclen(line, '"');
 	quote_two = quote_one + ft_strclen(line + quote_one, '"');
@@ -78,7 +77,6 @@ static char	**parse_split(char *line)
 int			parse_userinput(char *line, char ***aargs, t_list *envlst)
 {
 	char	*str;
-	char	**arr;
 
 	if (!line)
 		return (1);

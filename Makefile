@@ -1,6 +1,7 @@
 NAME = minishell
 INC = -I includes -I libft/includes
 LIB = -L libft/ -lft
+FLAGS = -Wall -Wextra -Werror
 SRC_DIR = sources/
 SRC_NAME = main.c \
 			prompt.c \
@@ -24,9 +25,9 @@ all: $(NAME)
 $(NAME):
 	@make -C libft re
 	@printf "[$(NAME)] creating objects\n"
-	@clang -c $(SRC) $(INC)
+	@clang $(FLAGS) -c $(SRC) $(INC)
 	@printf "[$(NAME)] creating $(NAME)\n"
-	@clang -o $(NAME) $(OBJ) $(INC) $(LIB)
+	@clang $(FLAGS) -o $(NAME) $(OBJ) $(INC) $(LIB)
 
 clean:
 	@make -C libft clean

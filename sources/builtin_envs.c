@@ -14,8 +14,6 @@
 
 int	builtin_setenv(int argc, char **argv, t_list *envlst)
 {
-	t_list	*entry;
-
 	if (argc > 3)
 		return (put_error("Too many arguments", *argv));
 	if (argc > 1)
@@ -26,8 +24,6 @@ int	builtin_setenv(int argc, char **argv, t_list *envlst)
 
 int	builtin_unsetenv(int argc, char **argv, t_list *envlst)
 {
-	t_list	*entry;
-
 	if (argc < 2)
 		return (put_error("Too few arguments", *argv));
 	while (*(++argv))
@@ -42,6 +38,7 @@ int	builtin_env(int argc, char **argv, t_list *envlst)
 	char	*valnew;
 	int		ret;
 
+	(void)argc;
 	neo_env = ft_lstdup(envlst);
 	while (*(++argv) && ft_strchr(*argv, '='))
 	{

@@ -1,0 +1,11 @@
+						jmbomeyo			quegonza
+sources					13					17
+functions				~30					~67
+lines					727					1618
+signals					no					?
+leaks					none				probably some still reachable since using exit
+env vars				list				str array
+command					str array			struct
+input					strsplit			get next line
+tabs					-					not considered space
+echo 'ls -la' | ./mini	prompt displays		infinite while loop

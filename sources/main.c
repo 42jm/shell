@@ -19,6 +19,8 @@ int			main(int argc, char **argv, char **envp)
 	t_list	*envlst;
 	int		ret;
 
+	(void)argc;
+	(void)argv;
 	envlst = ft_strarr_to_lst(envp);
 	ret = 0;
 	while (ret >= 0)
@@ -36,7 +38,5 @@ int			main(int argc, char **argv, char **envp)
 			free(line);
 	}
 	ft_lstfree(envlst);
-	if (ret < 0)
-		return (-ret - 1);
-	return (ret);
+	return (ret < 0 ? -ret -1 : ret);
 }

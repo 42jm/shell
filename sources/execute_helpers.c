@@ -55,8 +55,6 @@ int	test_file_existance(char *command, char **envp, char **apath)
 
 int	get_command_path(char *command, char **envp, char **apath)
 {
-	char	*tmp;
-
 	if (ft_strchr(command, '/'))
 	{
 		if (access(command, F_OK))
