@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   21sh.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,16 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef TWENTYONESH_H
+# define TWENTYONESH_H
 
 # include "libft.h"
 # include <unistd.h>
 # include <sys/wait.h>
 
 # define MAX_INPUT_LENGTH 1025
-
-extern char	**g_env;
 
 int			put_error(char *message, char *arg);
 int			put_error_ret(char *message, char *arg, int ret);

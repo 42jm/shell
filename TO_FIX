@@ -1,6 +1,2 @@
-DO NOT PUSH binary and library
-Makefile: denpend on objects
-Makefile: library is always recompiled :c
 do not put includes in header but in each source files
 protect all your malloc
-env_getvalue: potentiel NULL + 1

@@ -1,38 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_cd.c                                       :+:      :+:    :+:   */
+/*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 12:16:49 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2019/10/05 19:06:07 by jmbomeyo         ###   ########.fr       */
+/*   Updated: 2020/10/15 14:00:40 by jmbomeyo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "21sh.h"
 
-int	builtin_cd(int argc, char **argv, t_list *envlst)
+int	builtin_exit(int argc, char **argv)
 {
-	char	*path;
-	int		ret;
+	int	ret;
 
+	pr_putstr_fd("exit\n", 2);
 	if (argc > 2)
-		return (put_error("Too many arguments", *argv));
-	if (argc == 1)
-		path = env_getvalue(envlst, "HOME");
-	else if (!ft_strcmp(argv[1], "-"))
-		path = env_getvalue(envlst, "OLDPWD");
-	else
-		path = argv[1];
-	ret = chdir(path);
-	if (ret)
-		return (put_error("Chdir failed", *argv));
-	path = getcwd(NULL, 0);
-	env_set(envlst, "OLDPWD", env_getvalue(envlst, "PWD"));
-	env_set(envlst, "PWD", path);
-	if (argc > 1 && !ft_strcmp(argv[1], "-"))
-		ft_putendl(path);
-	free(path);
-	return (0);
+		put_error("Too many arguments", *argv);
+	ret = -1;
+	if (argc == 2)
+	{
+		if (ft_isdigit((int)argv[1][0]))
+			ret = -1 * (ft_atoi(argv[1]) + 1);
+		else
+			ret = put_error_ret("Numeric argument required", argv[1], 2);
+	}
+	return (ret);
 }

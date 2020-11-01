@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "21sh.h"
 
 t_list	*env_getentry(t_list *envlst, char *varname)
 {
@@ -31,8 +31,10 @@ char	*env_getvalue(t_list *envlst, char *varname)
 	entry = env_getentry(envlst, varname);
 	if (!entry)
 		return (NULL);
-	ptr = ft_strchr((char *)(entry->content), '=') + 1;
-	return (ptr);
+	ptr = ft_strchr((char *)(entry->content), '=');
+	if (!ptr)
+		return (NULL);
+	return (ptr + 1);
 }
 
 int		env_set(t_list *envlst, char *varname, char *valnew)

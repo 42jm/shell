@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "21sh.h"
 
 static char	*quote_copy(char *line, size_t quote_one, size_t quote_two)
 {

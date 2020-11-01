@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "21sh.h"
 
 int	builtin_setenv(int argc, char **argv, t_list *envlst)
 {

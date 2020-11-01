@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 NAME = libft.a
-SRCS = ft_atoi.c \
+SRC = ft_atoi.c \
 	   ft_atollu.c \
 	   ft_bzero.c \
 	   ft_isalnum.c \
@@ -118,23 +118,27 @@ SRCS = ft_atoi.c \
 	   ft_strarr_to_lst.c \
 	   ft_lst_to_strarr.c \
 	   ft_lstfind_head.c
-DIR_H = includes
-FILES_O = $(SRCS:%.c=%.o)
+INC_DIR = includes/
+OBJ_DIR = objects/
+OBJ = $(addprefix $(OBJ_DIR), $(SRC:%.c=%.o))
 
 all: $(NAME)
 
-$(NAME):
-	@printf "[$(NAME)] creating objects\n"
-	@clang -Wall -Wextra -Werror -c $(SRCS) -I $(DIR_H)
-	@printf "[$(NAME)] creating $(NAME)\n"
-	@ar rcs $(NAME) $(FILES_O)
+$(NAME): $(OBJ)
+	@printf "$(NAME): archiving\n"
+	@ar rcs $(NAME) $(OBJ)
+
+$(OBJ_DIR)%.o: %.c
+	@mkdir -p $(OBJ_DIR)
+	@printf "$(NAME): compiling $@\n"
+	@clang -Wall -Wextra -Werror -c $< -o $@ -I $(INC_DIR)
 
 clean:
-	@printf "[$(NAME)] removing objects\n"
-	@rm -f $(FILES_O)
+	@printf "$(NAME): removing objects\n"
+	@rm -rf $(OBJ_DIR)
 
 fclean: clean
-	@printf "[$(NAME)] removing $(NAME)\n"
+	@printf "$(NAME): removing $(NAME)\n"
 	@rm -f $(NAME)
 
 re: fclean all
