@@ -17,6 +17,8 @@ size_t	ft_strlen_arr(const char **a)
 	size_t	c;
 
 	c = 0;
+	if (!a || !*a)
+		return (0);
 	while (*a++)
 		c++;
 	return (c);

@@ -40,6 +40,7 @@ int	execute_command(char **args, t_list *envlst)
 	pid_t	pid;
 	char	*command_path;
 	char	**envp;
+	int		wstatus;
 
 	if (!(envp = ft_lst_to_strarr(envlst)))
 		return (2);
@@ -48,7 +49,8 @@ int	execute_command(char **args, t_list *envlst)
 		free_strarr_all(envp);
 		return (3);
 	}
-	if (!(pid = fork()))
+	pid = fork();
+	if (!pid)
 	{
 		execve(command_path, args, envp);
 		put_error("Execve error", command_path);
@@ -56,19 +58,27 @@ int	execute_command(char **args, t_list *envlst)
 		free(command_path);
 		return (-1);
 	}
-	wait(NULL);
+	if (pid > 0)
+	{
+		waitpid(pid, &wstatus, 0);
+		if (WIFEXITED(wstatus))
+			g_childret = WEXITSTATUS(wstatus);
+	}
 	free_strarr_all(envp);
 	free(command_path);
+	if (pid == -1)
+		return (put_error("the shell failed to fork", *args));
 	return (0);
 }
 
-int	execute_any(char **args, t_list *envlst)
+int	execute(char **args, t_list *envlst)
 {
+	//int			ret;
 	static char	*builtins[] = { "echo", "cd", "exit", "setenv", \
 								"unsetenv", "env", NULL };
 
 	if (args == NULL)
-		return (1);
+		return (put_error("no arguments", "execute"));
 	if (ft_arrstr(builtins, *args))
 		return (execute_builtin(args, envlst));
 	if (*args == NULL || (**args == '\0' && args[1] == NULL))

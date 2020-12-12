@@ -1,2 +1,0 @@
-do not put includes in header but in each source files
-protect all your malloc

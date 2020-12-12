@@ -17,23 +17,17 @@ char	*ft_strndup(char *s, size_t len)
 	char	*newstr;
 	size_t	i;
 
-	if (len < ft_strlen(s))
+	if (len >= ft_strlen(s))
+		return (ft_strdup(s));
+	newstr = (char *)malloc((len + 1) * sizeof(*s));
+	if (!newstr)
+		return (NULL);
+	i = 0;
+	while (i < len)
 	{
-		newstr = (char *)malloc((len + 1) * sizeof(*s));
-		if (newstr)
-		{
-			i = 0;
-			while (i < len)
-			{
-				newstr[i] = s[i];
-				i++;
-			}
-			newstr[len] = '\0';
-		}
-		else
-			return (NULL);
+		newstr[i] = s[i];
+		i++;
 	}
-	else
-		newstr = ft_strdup(s);
+	newstr[len] = '\0';
 	return (newstr);
 }

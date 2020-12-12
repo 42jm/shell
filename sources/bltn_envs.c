@@ -49,7 +49,7 @@ int	builtin_env(int argc, char **argv, t_list *envlst)
 	}
 	ret = 0;
 	if (*argv)
-		ret = execute_any(argv, neo_env);
+		ret = execute(argv, neo_env);
 	else
 		env_put(neo_env);
 	ft_lstfree(neo_env);
