@@ -12,7 +12,7 @@
 
 #include "21sh.h"
 
-static int	pipe_dupexe(t_astnode **at, t_list *envlst, int *fildes, int io)
+static int	pipe_dupexe(t_astnode **at, int *fildes, int io)
 {
 	int	ret;
 
@@ -20,13 +20,13 @@ static int	pipe_dupexe(t_astnode **at, t_list *envlst, int *fildes, int io)
 		return (put_error("argument io is neither 1 nor 0", "pipe_dupexe"));
 	if (close(fildes[1 - io]) == -1)
 		return (put_error("failed to close unused pipe fd", "pipe_dupexe"));
-	ret = ast_localredir(at, envlst, fildes[io], io);
+	ret = ast_localredir(at, fildes[io], io);
 	if (close(fildes[io]) == -1)
 		return (put_error("failed to close used pipe fd", "pipe_dupexe"));
 	return (ret);
 }
 
-int	astexec_pipe(t_astnode **at, t_list *envlst)
+int			astexec_pipe(t_astnode **at)
 {
 	int			fildes[2];
 	pid_t		pid;
@@ -45,8 +45,8 @@ int	astexec_pipe(t_astnode **at, t_list *envlst)
 	if (!pid)
 	{
 		signal(SIGINT, sighandle_ignore);
-		pipe_dupexe((t_astnode **)&node->content, envlst, fildes, 1);
+		pipe_dupexe((t_astnode **)&node->content, fildes, 1);
 		return (-1);
 	}
-	return (pipe_dupexe((t_astnode **)&node->next, envlst, fildes, 0));
+	return (pipe_dupexe((t_astnode **)&node->next, fildes, 0));
 }

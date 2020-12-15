@@ -12,7 +12,7 @@
 
 #include "21sh.h"
 
-void	put_astlexed(t_astnode *token)
+void		put_astlexed(t_astnode *token)
 {
 	if (!token)
 		return ;
@@ -30,19 +30,22 @@ void	put_astlexed(t_astnode *token)
 	}
 }
 
-void	put_astparsed(t_astnode *token, size_t tabs)
+static void	astput_word(t_astnode *token, size_t tabs)
+{
+	ft_putstr(" \"");
+	ft_putstr(token->content);
+	ft_putchar('"');
+	put_astparsed(token->next, tabs);
+}
+
+void		put_astparsed(t_astnode *token, size_t tabs)
 {
 	size_t	i;
 
 	if (!token)
 		ft_putchar('\n');
 	else if (!token->op)
-	{
-		ft_putstr(" \"");
-		ft_putstr(token->content);
-		ft_putchar('"');
-		put_astparsed(token->next, tabs);
-	}
+		astput_word(token, tabs);
 	else if (ft_strchr("><0123456789", *token->op))
 	{
 		ft_putchar(' ');

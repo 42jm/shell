@@ -38,11 +38,19 @@ typedef struct	s_astnode
 	struct s_astnode	*next;
 }				t_astnode;
 
+typedef struct	s_envvar
+{
+	bool	exportable;
+	char	*name;
+	char	*value;
+}				t_envvar;
+t_list			*g_envlst;
+
 void			sighandle_ignore(int signum);
 
 int				put_error(char *message, char *arg);
 int				put_error_ret(char *message, char *arg, int ret);
-int				put_prompt(int fd, t_list *envlst);
+int				put_prompt(int fd);
 void			put_astlexed(t_astnode *node);
 void			put_astparsed(t_astnode *node, size_t tabs);
 
@@ -50,25 +58,34 @@ size_t			ft_strclen_unquoted(char *s, char chr);
 size_t			ft_stralen_unquoted(char *s, char *chars);
 char			**ft_strcsplit_all(char *s, char c);
 int				read_userinput(int fd, char ***input);
-int				expand_word(t_astnode *node, t_list *envlst);
+int				expand_tilde(t_astnode *node);
+int				expand_param(t_astnode *node);
+int				expand_word(t_astnode *node);
 char			*parse_quotes(char *line);
 size_t			quotationlen(char *s);
-int				parse_userinput(char *line, t_astnode **aroot, t_list *envlst);
+size_t			expansionlen(char *s);
 t_astnode		*token_new(char *type);
+int				token_delimit(t_astnode *token, char *input, size_t len);
+int				handle_andor(t_astnode **at, t_astnode *prev, t_astnode *head);
 int				ast_parser(t_astnode **aroot);
 int				ast_lexer(char *input, t_astnode **anode);
-int				ast_execute(t_astnode **aroot, t_list *envlst);
+int				ast_execute(t_astnode **aroot);
 
 size_t			astlex_oplen(char *ptr);
 
-int				ast_localredir(t_astnode **at, t_list *envlst, int d, int s);
-int				astexec_args(t_astnode *node, t_list *envlst);
-int				astexec_simplecmd(t_astnode **anode, t_list *envlst);
-int				astexec_redir(t_astnode **ahead, t_list *envlst);
-int				astexec_andor(t_astnode **ahead, t_list *envlst);
-int				astexec_semicol(t_astnode **at, t_list *envlst);
-int				astexec_amper(t_astnode **at, t_list *envlst);
-int				astexec_pipe(t_astnode **at, t_list *envlst);
+int				ast_localredir(t_astnode **at, int dest, int src);
+int				ast_localclose(t_astnode **at, int fd);
+int				astredir_simple(t_astnode **at, int fd, char *op, char *path);
+int				astredir_aggregate(t_astnode **at, int fd, char *op, char *word);
+int				astredir_heredoc(t_astnode **at, int fd, char *op, char *word);
+
+int				astexec_args(t_astnode *node);
+int				astexec_simplecmd(t_astnode **anode);
+int				astexec_redir(t_astnode **ahead);
+int				astexec_andor(t_astnode **ahead);
+int				astexec_semicol(t_astnode **at);
+int				astexec_amper(t_astnode **at);
+int				astexec_pipe(t_astnode **at);
 
 char			**ast_to_strarr(t_astnode *node);
 
@@ -79,18 +96,23 @@ void			free_lex(t_astnode *node);
 int				test_file_validity(char *path);
 int				test_file_existance(char *command, char **envp, char **apath);
 int				get_command_path(char *command, char **envp, char **apath);
-int				execute(char **args, t_list *envlst);
+int				execute(char **args);
 
-t_list			*env_getentry(t_list *envlst, char *varname);
-char			*env_getvalue(t_list *envlst, char *varname);
-int				env_set(t_list *envlst, char *varname, char *valnew);
-int				env_unset(t_list *envlst, char *varname);
-int				env_put(t_list *envlst);
+t_list			*env_getentry(char *varname);
+char			*env_getvalue(char *varname);
+int				env_set(char *varname, char *valnew, bool exportable);
+int				env_unset(char *varname);
+int				env_put(bool exportonly);
+void			env_free(t_list *entry);
+t_list			*env_splitnew(char *str, bool exportable);
+t_list			*env_init(char **envp);
+t_list			*env_strarr_to_struct(char **envp);
+char			**env_struct_to_strarr(t_list *entry);
 
 int				builtin_echo(int argc, char **argv);
 int				builtin_exit(int argc, char **argv);
-int				builtin_cd(int argc, char **argv, t_list *envlst);
-int				builtin_setenv(int argc, char **argv, t_list *envlst);
-int				builtin_unsetenv(int argc, char **argv, t_list *envlst);
-int				builtin_env(int argc, char **argv, t_list *envlst);
+int				builtin_cd(int argc, char **argv);
+int				builtin_setenv(int argc, char **argv);
+int				builtin_unsetenv(int argc, char **argv);
+int				builtin_env(int argc, char **argv);
 #endif

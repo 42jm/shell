@@ -16,22 +16,34 @@ SRC_NAME = main.c \
 			ast_put.c \
 			ast_free.c \
 			ast_parser.c \
-			ast_lexer.c \
+			astparse_andor.c \
+			astlex_token.c \
+			astlex_len.c \
 			astlex_op.c \
-			ast_execute.c \
-			astexec_redir.c \
+			ast_lexer.c \
 			astexec_simplecmd.c \
+			astexec_redir.c \
 			astexec_separ.c \
 			astexec_pipe.c \
-			word_expansion.c \
+			ast_execute.c \
+			astredir_aggregate.c \
+			astredir_heredoc.c \
+			astredir_simple.c \
+			astredir_local.c \
+			expansion.c \
+			expansion_param.c \
+			expansion_tilde.c \
 			env.c \
+			env_convert.c \
+			env_get.c \
+			env_new.c \
 			execute.c \
 			file_tests.c \
-			error.c \
 			bltn_echo.c \
 			bltn_exit.c \
+			bltn_envs.c \
 			bltn_cd.c \
-			bltn_envs.c
+			error.c
 SRC = $(addprefix $(SRC_DIR), $(SRC_NAME))
 OBJ = $(addprefix $(OBJ_DIR), $(SRC_NAME:.c=.o))
 

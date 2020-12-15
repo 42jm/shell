@@ -12,50 +12,6 @@
 
 #include "21sh.h"
 
-static int	andor_list(t_astnode *token)
-{
-	t_astnode	*ptr;
-	t_astnode	*prev;
-
-	if (!token)
-		return (0);
-	if (!(ptr = token->next))
-		return (put_error("syntax error near token", token->op));
-	prev = token;
-	while (ptr && (!ptr->op \
-	|| (ft_strcmp(ptr->op, "&&") && ft_strcmp(ptr->op, "||"))))
-	{
-		prev = ptr;
-		ptr = ptr->next;
-	}
-	prev->next = NULL;
-	if (ast_parser(&token->next))
-		return (1);
-	token->content = token->next;
-	token->next = ptr;
-	return (andor_list(ptr));
-}
-
-static int	handle_andor(t_astnode **atoken, t_astnode *prev, t_astnode *head)
-{
-	t_astnode	*ptr;
-
-	if (!prev)
-		return (put_error("syntax error near token", head->op));
-	if (!(ptr = token_new(";")))
-		return (1);
-	prev->next = NULL;
-	if (ast_parser(&head))
-	{
-		free(ptr);
-		return (1);
-	}
-	ptr->content = head;
-	ptr->next = *atoken;
-	*atoken = ptr;
-	return (andor_list(ptr->next));
-}
-
 static int	handle_separ(t_astnode *token, t_astnode *prev, t_astnode *head)
 {
 	if (!prev)
@@ -109,11 +65,11 @@ static int	parse_level(t_astnode **aroot, char **tokens_lv)
 
 int			ast_parser(t_astnode **aroot)
 {
-	int		ret;
-	size_t	lvl;
-	char	*tokens[3][3] = {
-		{ ";", "&", NULL } ,
-		{ "&&", "||", NULL } ,
+	int			ret;
+	size_t		lvl;
+	static char	*tokens[3][3] = {
+		{ ";", "&", NULL },
+		{ "&&", "||", NULL },
 		{ "|", NULL, NULL }
 	};
 

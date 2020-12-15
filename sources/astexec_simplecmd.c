@@ -12,21 +12,24 @@
 
 #include "21sh.h"
 
-int	astexec_args(t_astnode *node, t_list *envlst)
+int	astexec_args(t_astnode *node)
 {
 	char	**args;
 	int		ret;
 
-	//TODO	envir
 	if (!(args = ast_to_strarr(node)))
 		return (put_error("malloc failed", "astexec_args"));
-	ret = execute(args, envlst);
+	ret = execute(args);
 	free_strarr_all(args);
 	return (ret);
 }
 
-int	astexec_simplecmd(t_astnode **at, t_list *envlst)
+int	astexec_simplecmd(t_astnode **at)
 {
-	//TODO	expand
-	return (astexec_redir(at, envlst));
+	int	ret;
+
+	ret = expand_word(*at);
+	if (ret)
+		return (ret);
+	return (astexec_redir(at));
 }

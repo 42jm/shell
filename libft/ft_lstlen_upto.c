@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstget_id.c                                     :+:      :+:    :+:   */
+/*   ft_lstlen_upto.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,23 +12,19 @@
 
 #include "libft.h"
 
-size_t	ft_lstget_id(t_list **alst, void *content, size_t content_size)
+size_t	ft_lstlen_upto(t_list *head, t_list *tail)
 {
 	size_t	i;
-	t_list	*lst;
+	t_list	*lmnt;
 
-	if (alst)
+	i = 0;
+	lmnt = head;
+	while (lmnt)
 	{
-		i = 0;
-		lst = *alst;
-		while (lst)
-		{
-			if (content_size == lst->content_size \
-			&& !ft_memcmp(content, lst->content, content_size))
-				return (i);
-			lst = lst->next;
-			i++;
-		}
+		i++;
+		if (lmnt == tail)
+			return (i);
+		lmnt = lmnt->next;
 	}
-	return (-1);
+	return (0);
 }

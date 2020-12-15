@@ -12,19 +12,23 @@
 
 #include "21sh.h"
 
-int astexec_andor(t_astnode **at, t_list *envlst)
+int	astexec_andor(t_astnode **at)
 {
 	t_astnode	*node;
+	int			ret;
 
 	node = *at;
+	ret = 0;
 	if (!ft_strcmp(node->op, "&&") && !g_childret)
-		g_childret = ast_execute((t_astnode **)&node->content, envlst);
+		ret = ast_execute((t_astnode **)&node->content);
 	else if (!ft_strcmp(node->op, "||") && g_childret)
-		g_childret = ast_execute((t_astnode **)&node->content, envlst);
-	return (ast_execute((t_astnode **)&node->next, envlst));
+		ret = ast_execute((t_astnode **)&node->content);
+	if (ret == -1)
+		return (-1);
+	return (ast_execute((t_astnode **)&node->next));
 }
 
-int	astexec_amper(t_astnode **at, t_list *envlst)
+int	astexec_amper(t_astnode **at)
 {
 	pid_t		pid;
 	t_astnode	*node;
@@ -35,20 +39,19 @@ int	astexec_amper(t_astnode **at, t_list *envlst)
 		return (put_error("failed fork", node->op));
 	if (!pid)
 	{
-		ast_execute((t_astnode **)&node->content, envlst);
+		ast_execute((t_astnode **)&node->content);
 		return (-1);
 	}
 	g_childret = 0;
-	//TODO	append pid to global link list of all bg jobs
-	//TODO	fix `cat &' does not auto exit
-	return (ast_execute((t_astnode **)&node->next, envlst));
+	return (ast_execute((t_astnode **)&node->next));
 }
 
-int	astexec_semicol(t_astnode **at, t_list *envlst)
+int	astexec_semicol(t_astnode **at)
 {
 	t_astnode	*node;
 
 	node = *at;
-	g_childret = ast_execute((t_astnode **)&node->content, envlst);
-	return (ast_execute((t_astnode **)&node->next, envlst));
+	if (ast_execute((t_astnode **)&node->content) == -1)
+		return (-1);
+	return (ast_execute((t_astnode **)&node->next));
 }

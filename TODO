@@ -3,6 +3,10 @@ do not put includes in header but in each source files
 protect all your malloc
 read:	support for \\n (escaped newline, aka line continuation)
 
+[21sh]
+norme
+fusion
+
 [42sh] mandatory
 <	monitoring of all signals
 <	builtins
@@ -10,9 +14,6 @@ read:	support for \\n (escaped newline, aka line continuation)
 		echo
 		exit
 		type
-logical operators
-	"&&"
-	"||"
 monitoring of internal shell variables
 	name=value
 	builtin: export

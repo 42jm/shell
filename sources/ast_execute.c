@@ -12,7 +12,7 @@
 
 #include "21sh.h"
 
-int	ast_execute(t_astnode **at, t_list *envlst)
+int	ast_execute(t_astnode **at)
 {
 	t_astnode	*node;
 
@@ -20,14 +20,14 @@ int	ast_execute(t_astnode **at, t_list *envlst)
 		return (0);
 	node = *at;
 	if (!node->op)
-		return (astexec_simplecmd(at, envlst));
+		return (astexec_simplecmd(at));
 	else if (!ft_strcmp(node->op, ";"))
-		return (astexec_semicol(at, envlst));
+		return (astexec_semicol(at));
 	else if (!ft_strcmp(node->op, "&"))
-		return (astexec_amper(at, envlst));
+		return (astexec_amper(at));
 	else if (!ft_strcmp(node->op, "|"))
-		return (astexec_pipe(at, envlst));
+		return (astexec_pipe(at));
 	else if (!ft_strcmp(node->op, "&&") || !ft_strcmp(node->op, "||"))
-		return (astexec_andor(at, envlst));
-	return (astexec_simplecmd(at, envlst));
+		return (astexec_andor(at));
+	return (astexec_simplecmd(at));
 }

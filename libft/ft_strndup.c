@@ -17,6 +17,8 @@ char	*ft_strndup(char *s, size_t len)
 	char	*newstr;
 	size_t	i;
 
+	if (!s)
+		return (NULL);
 	if (len >= ft_strlen(s))
 		return (ft_strdup(s));
 	newstr = (char *)malloc((len + 1) * sizeof(*s));

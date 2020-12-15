@@ -27,7 +27,6 @@ SRC = ft_atoi.c \
 	   ft_lstiter.c \
 	   ft_lstmap.c \
 	   ft_lstnew.c \
-	   ft_lstget_id.c \
 	   ft_lstfree.c \
 	   ft_lstdup.c \
 	   ft_memalloc.c \
@@ -89,6 +88,7 @@ SRC = ft_atoi.c \
 	   ft_lstappend.c \
 	   ft_lstpop.c \
 	   ft_lstlen.c \
+	   ft_lstlen_upto.c \
 	   ft_lstprint.c \
 	   ft_putnstr.c \
 	   ft_strcdup.c \

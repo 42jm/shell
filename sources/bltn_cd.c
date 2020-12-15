@@ -12,7 +12,7 @@
 
 #include "21sh.h"
 
-int	builtin_cd(int argc, char **argv, t_list *envlst)
+int	builtin_cd(int argc, char **argv)
 {
 	char	*path;
 	int		ret;
@@ -20,17 +20,17 @@ int	builtin_cd(int argc, char **argv, t_list *envlst)
 	if (argc > 2)
 		return (put_error("Too many arguments", *argv));
 	if (argc == 1)
-		path = env_getvalue(envlst, "HOME");
+		path = env_getvalue("HOME");
 	else if (!ft_strcmp(argv[1], "-"))
-		path = env_getvalue(envlst, "OLDPWD");
+		path = env_getvalue("OLDPWD");
 	else
 		path = argv[1];
 	ret = chdir(path);
 	if (ret)
 		return (put_error("Chdir failed", *argv));
 	path = getcwd(NULL, 0);
-	env_set(envlst, "OLDPWD", env_getvalue(envlst, "PWD"));
-	env_set(envlst, "PWD", path);
+	env_set("OLDPWD", env_getvalue("PWD"), 0);
+	env_set("PWD", path, 1);
 	if (argc > 1 && !ft_strcmp(argv[1], "-"))
 		ft_putendl(path);
 	free(path);

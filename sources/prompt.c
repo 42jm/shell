@@ -12,11 +12,11 @@
 
 #include "21sh.h"
 
-int	put_prompt(int fd, t_list *envlst)
+int	put_prompt(int fd)
 {
 	char	*prompt;
 
-	prompt = env_getvalue(envlst, "PS1");
+	prompt = env_getvalue("PS1");
 	if (!prompt)
 		prompt = "\\_$> ";
 	if (pr_putstr_fd(prompt, fd) > 0)

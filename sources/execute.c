@@ -12,7 +12,7 @@
 
 #include "21sh.h"
 
-int	execute_builtin(char **args, t_list *envlst)
+int			execute_builtin(char **args)
 {
 	int	argc;
 	int	ret;
@@ -23,41 +23,41 @@ int	execute_builtin(char **args, t_list *envlst)
 	else if (!ft_strcmp(*args, "exit"))
 		ret = builtin_exit(argc, args);
 	else if (!ft_strcmp(*args, "cd"))
-		ret = builtin_cd(argc, args, envlst);
+		ret = builtin_cd(argc, args);
 	else if (!ft_strcmp(*args, "setenv"))
-		ret = builtin_setenv(argc, args, envlst);
+		ret = builtin_setenv(argc, args);
 	else if (!ft_strcmp(*args, "unsetenv"))
-		ret = builtin_unsetenv(argc, args, envlst);
-	else if (!ft_strcmp(*args, "env"))
-		ret = builtin_env(argc, args, envlst);
+		ret = builtin_unsetenv(argc, args);
 	else
 		ret = put_error_ret("BUILTIN NOT YET IMPLEMENTED", *args, 1);
 	return (ret);
 }
 
-int	execute_command(char **args, t_list *envlst)
+static int	pr_execve(char *command_path, char **args, char **envp)
+{
+	execve(command_path, args, envp);
+	put_error("Execve error", command_path);
+	free_strarr_all(envp);
+	free(command_path);
+	return (-1);
+}
+
+int			execute_command(char **args)
 {
 	pid_t	pid;
 	char	*command_path;
 	char	**envp;
 	int		wstatus;
 
-	if (!(envp = ft_lst_to_strarr(envlst)))
+	if (!(envp = env_struct_to_strarr(g_envlst)))
 		return (2);
 	if (get_command_path(args[0], envp, &command_path))
 	{
 		free_strarr_all(envp);
 		return (3);
 	}
-	pid = fork();
-	if (!pid)
-	{
-		execve(command_path, args, envp);
-		put_error("Execve error", command_path);
-		free_strarr_all(envp);
-		free(command_path);
-		return (-1);
-	}
+	if (!(pid = fork()))
+		return (pr_execve(command_path, args, envp));
 	if (pid > 0)
 	{
 		waitpid(pid, &wstatus, 0);
@@ -71,17 +71,16 @@ int	execute_command(char **args, t_list *envlst)
 	return (0);
 }
 
-int	execute(char **args, t_list *envlst)
+int			execute(char **args)
 {
-	//int			ret;
 	static char	*builtins[] = { "echo", "cd", "exit", "setenv", \
-								"unsetenv", "env", NULL };
+								"unsetenv", NULL };
 
 	if (args == NULL)
 		return (put_error("no arguments", "execute"));
 	if (ft_arrstr(builtins, *args))
-		return (execute_builtin(args, envlst));
+		return (execute_builtin(args));
 	if (*args == NULL || (**args == '\0' && args[1] == NULL))
 		return (0);
-	return (execute_command(args, envlst));
+	return (execute_command(args));
 }

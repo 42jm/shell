@@ -108,6 +108,7 @@ void			ft_lstappend(t_list **alst, t_list *lmnt);
 size_t			ft_lstget_id(t_list **alst, void *content, size_t content_size);
 t_list			*ft_lstpop(t_list **alst, size_t id);
 size_t			ft_lstlen(t_list **alst);
+size_t			ft_lstlen_upto(t_list *head, t_list *tail);
 void			ft_lstprint(t_list **alst, void (*ft_putlmnt)(t_list *));
 t_list			*ft_lstfind_head(t_list **alist, void *content, size_t len);
 void			ft_lstfree(t_list *lst);
