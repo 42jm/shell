@@ -37,10 +37,8 @@ int			execute_firstline(char ***alines)
 	ret = ast_lexer(*g_lines, &astroot);
 	if (!ret)
 	{
-		put_astlexed(astroot);
 		g_lines++;
 		ret = ast_parser(&astroot);
-		put_astparsed(astroot, 0);
 	}
 	if (!ret)
 		ret = ast_execute(&astroot);
