@@ -31,10 +31,11 @@ static int	lexer_ignore(t_astnode **at, char *input, size_t *alen)
 	if (!*at && !(*at = token_new(NULL)))
 		return (1);
 	if (ft_strchr("\\'\"", input[len]))
-		len += quotationlen(input + len);
+		len += quotationlen(input + len, "\\'\"");
 	else if (ft_strchr("$`", input[len]))
 		len += expansionlen(input + len);
-	*alen = len;
+	if (*alen != len)
+		*alen = len - 1;
 	return (0);
 }
 

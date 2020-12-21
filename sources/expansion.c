@@ -70,7 +70,7 @@ static int	remove_quotes(t_astnode *node)
 		len = 1;
 		if (tmp[i] != '\\')
 		{
-			len = quotationlen(tmp + i);
+			len = quotationlen(tmp + i, "\"'\\");
 			if (!len && ++i)
 				continue ;
 			if (ft_strdrop_inplace(&tmp, i + len - 1, i + len))

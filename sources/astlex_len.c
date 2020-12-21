@@ -12,7 +12,7 @@
 
 #include "21sh.h"
 
-size_t			quotationlen(char *s)
+size_t			quotationlen(char *s, char *quotes)
 {
 	size_t	len;
 	char	quote;
@@ -21,7 +21,7 @@ size_t			quotationlen(char *s)
 	if (!s)
 		return (0);
 	quote = *s;
-	if (!ft_strchr("\\'\"", quote))
+	if (!ft_strchr(quotes, quote))
 		return (0);
 	if (quote == '\\')
 		return (2);
@@ -40,28 +40,6 @@ size_t			quotationlen(char *s)
 	return (0);
 }
 
-static size_t	expansionlen_param(char *s)
-{
-	size_t	len;
-	bool	is_var;
-
-	if (!s || *s != '$')
-		return (0);
-	len = 1;
-	is_var = false;
-	if (s[1] == '_' || ft_isalpha(s[1]))
-		is_var = true;
-	while (s[len])
-	{
-		if (is_var && s[len] != '_' && !ft_isalnum(s[len]))
-			return (len);
-		if (!is_var && !ft_isdigit(s[len]))
-			return (len);
-		len++;
-	}
-	return (len);
-}
-
 static size_t	expansionlen_until(char *s, char *endseq)
 {
 	size_t	len;
@@ -78,7 +56,7 @@ static size_t	expansionlen_until(char *s, char *endseq)
 		}
 		else if (ft_strchr("\\'\"", s[len]))
 		{
-			if (!(tmp = quotationlen(s + len)))
+			if (!(tmp = quotationlen(s + len, "\\'\"")))
 				return (0);
 			len += tmp;
 		}
@@ -87,7 +65,7 @@ static size_t	expansionlen_until(char *s, char *endseq)
 		else
 			len++;
 	}
-	put_error("missing end sequence", endseq);
+	put_error("warning: missing end sequence", endseq);
 	return (0);
 }
 
@@ -108,7 +86,7 @@ size_t			expansionlen(char *s)
 	else if (*s == '`')
 		endseq = "`";
 	else
-		return (expansionlen_param(s));
+		return (bashvar_len(s + 1));
 	tmp = expansionlen_until(s + len, endseq);
 	if (!tmp)
 		return (0);

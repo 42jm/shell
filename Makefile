@@ -8,6 +8,7 @@ FLAGS = -Wall -Wextra -Werror
 OBJ_DIR = objects/
 SRC_DIR = sources/
 SRC_NAME = main.c \
+			signals.c \
 			prompt.c \
 			read.c \
 			ft_strcsplit_all.c \
@@ -22,6 +23,7 @@ SRC_NAME = main.c \
 			astlex_op.c \
 			ast_lexer.c \
 			astexec_simplecmd.c \
+			astexec_assign.c \
 			astexec_redir.c \
 			astexec_separ.c \
 			astexec_pipe.c \
@@ -37,6 +39,7 @@ SRC_NAME = main.c \
 			env_convert.c \
 			env_get.c \
 			env_new.c \
+			env_put.c \
 			execute.c \
 			file_tests.c \
 			bltn_echo.c \

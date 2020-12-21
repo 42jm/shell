@@ -12,7 +12,7 @@
 
 #include "21sh.h"
 
-size_t	ft_strclen_unquoted(char *s, char chr)
+size_t	ft_strclen_unquoted(char *s, char chr, char *quotes)
 {
 	size_t	len;
 	size_t	i;
@@ -24,7 +24,7 @@ size_t	ft_strclen_unquoted(char *s, char chr)
 	{
 		if (s[i] == chr)
 			return (i + 1);
-		quote_len = quotationlen(s + i);
+		quote_len = quotationlen(s + i, quotes);
 		if (quote_len)
 			i += quote_len;
 		else
@@ -43,7 +43,7 @@ size_t	ft_stralen_unquoted(char *s, char *chars)
 	len = 0;
 	while (*chars)
 	{
-		tmp = ft_strclen_unquoted(s, *chars);
+		tmp = ft_strclen_unquoted(s, *chars, "\\'\"");
 		if (tmp && (tmp < len || !len))
 			len = tmp;
 		chars++;

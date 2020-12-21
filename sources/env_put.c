@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_get.c                                          :+:      :+:    :+:   */
+/*   env_put.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,41 +12,50 @@
 
 #include "21sh.h"
 
-t_list		*env_getentry(char *varname)
+int		envput_export(void)
 {
 	t_list		*entry;
 	t_envvar	*var;
 
-	if (!g_envlst || !varname)
-		return (NULL);
-	var = NULL;
 	entry = g_envlst;
 	while (entry)
 	{
 		var = entry->content;
-		if (!ft_strcmp(var->name, varname))
-			break ;
+		if (var->exportable)
+		{
+			ft_putstr("export ");
+			ft_putstr(var->name);
+			if (var->value)
+			{
+				ft_putstr("=\"");
+				ft_putstr(var->value);
+				ft_putchar('"');
+			}
+			ft_putchar('\n');
+		}
 		entry = entry->next;
 	}
-	return (entry);
+	return (0);
 }
 
-t_envvar	*env_getvar(char *varname)
+int		env_put(bool exportonly)
 {
 	t_list		*entry;
-
-	entry = env_getentry(varname);
-	if (!entry)
-		return (NULL);
-	return (entry->content);
-}
-
-char		*env_getvalue(char *varname)
-{
 	t_envvar	*var;
 
-	var = env_getvar(varname);
-	if (!var)
-		return (NULL);
-	return (var->value);
+	entry = g_envlst;
+	while (entry)
+	{
+		var = entry->content;
+		if (!exportonly || var->exportable)
+		{
+			ft_putstr(var->name);
+			ft_putchar('=');
+			if (var->value)
+				ft_putstr(var->value);
+			ft_putchar('\n');
+		}
+		entry = entry->next;
+	}
+	return (0);
 }

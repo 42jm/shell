@@ -41,7 +41,7 @@ char			**ft_strcsplit_all(char *s, char c)
 	size_t	clen;
 	char	**split;
 
-	clen = ft_strclen_unquoted(s, c);
+	clen = ft_strclen_unquoted(s, c, "\\'\"");
 	head = get_next_split(s, clen);
 	if (!head)
 		return (NULL);
@@ -49,7 +49,7 @@ char			**ft_strcsplit_all(char *s, char c)
 	s += clen;
 	while (clen)
 	{
-		clen = ft_strclen_unquoted(s, c);
+		clen = ft_strclen_unquoted(s, c, "\\'\"");
 		lmnt->next = get_next_split(s, clen);
 		lmnt = lmnt->next;
 		s += clen;

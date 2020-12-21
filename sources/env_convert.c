@@ -60,10 +60,24 @@ char		**env_struct_to_strarr(t_list *entry)
 	while (i < len && entry)
 	{
 		var = entry->content;
-		envp[i] = ft_strcjoin('=', var->name, var->value);
-		i++;
+		if (var->exportable)
+			envp[i++] = ft_strcjoin('=', var->name, var->value);
 		entry = entry->next;
 	}
-	envp[len] = NULL;
+	while (i <= len)
+		envp[i++] = NULL;
 	return (envp);
+}
+
+int			env_init(int argc, char **argv, char **envp)
+{
+	int		ret;
+
+	g_envlst = env_strarr_to_struct(envp);
+	ret = g_envlst ? 0 : 1;
+	if (!ret)
+		ret = env_set("?", "0", 0);
+	if (!ret)
+		ret = builtin_set(argc == 1 ? 0 : argc, argv);
+	return (ret > 0 ? -ret - 1 : ret);
 }

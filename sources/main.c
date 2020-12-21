@@ -12,19 +12,6 @@
 
 #include "21sh.h"
 
-void		sighandle_ignore(int signum)
-{
-	(void)signum;
-}
-
-void		sighandle_int(int signum)
-{
-	(void)signum;
-	ft_putchar('\n');
-	ft_putstr("\\_$> ");
-	g_childret = 130;
-}
-
 int			execute_firstline(char ***alines)
 {
 	char		**tmp;
@@ -70,7 +57,7 @@ static int	prompt_loop(void)
 	if (input)
 		free_strarr_all(input);
 	if (ret > 0)
-		g_childret = ret;
+		env_lastret_set(ret);
 	return (ret);
 }
 
@@ -78,13 +65,9 @@ int			main(int argc, char **argv, char **envp)
 {
 	int	ret;
 
-	(void)argc;
-	(void)argv;
-	g_childret = 0;
 	g_lines = NULL;
-	ret = 0;
 	signal(SIGINT, sighandle_int);
-	g_envlst = env_strarr_to_struct(envp);
+	ret = env_init(argc, argv, envp);
 	while (ret >= 0)
 		ret = prompt_loop();
 	env_free(g_envlst);

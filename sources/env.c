@@ -12,6 +12,19 @@
 
 #include "21sh.h"
 
+int		env_lastret_set(int lastret)
+{
+	char	*str;
+	int		ret;
+
+	str = ft_itoa(lastret);
+	if (!str)
+		return (put_error("malloc failed", "envset_lastret"));
+	ret = env_set("?", str, 0);
+	free(str);
+	return (ret);
+}
+
 int		env_set(char *varname, char *valnew, bool exportable)
 {
 	t_list		*entry;
@@ -36,6 +49,8 @@ int		env_set(char *varname, char *valnew, bool exportable)
 	var->value = ft_strdup(valnew);
 	entry->content = var;
 	entry->content_size = sizeof(*var);
+	entry->next = NULL;
+	ft_lstappend(&g_envlst, entry);
 	return (0);
 }
 
@@ -60,29 +75,6 @@ int		env_unset(char *varname)
 		free(var->value);
 	free(var);
 	free(entry);
-	return (0);
-}
-
-int		env_put(bool exportonly)
-{
-	t_list		*entry;
-	t_envvar	*var;
-
-	entry = g_envlst;
-	while (entry)
-	{
-		var = entry->content;
-		if (!exportonly || var->exportable)
-		{
-			ft_putstr(var->name);
-			ft_putchar('=');
-			if (var->value)
-				ft_putendl(var->value);
-			else
-				ft_putchar('\n');
-		}
-		entry = entry->next;
-	}
 	return (0);
 }
 

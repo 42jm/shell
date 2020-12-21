@@ -16,12 +16,18 @@ int	astexec_andor(t_astnode **at)
 {
 	t_astnode	*node;
 	int			ret;
+	char		*lastret;
+	int			is_lastret;
 
 	node = *at;
 	ret = 0;
-	if (!ft_strcmp(node->op, "&&") && !g_childret)
+	lastret = env_getvalue("?");
+	if (!lastret)
+		return (put_error("envir_var '?' is not set", "astexec_andor"));
+	is_lastret = ft_strcmp(lastret, "0");
+	if (!ft_strcmp(node->op, "&&") && !is_lastret)
 		ret = ast_execute((t_astnode **)&node->content);
-	else if (!ft_strcmp(node->op, "||") && g_childret)
+	else if (!ft_strcmp(node->op, "||") && is_lastret)
 		ret = ast_execute((t_astnode **)&node->content);
 	if (ret == -1)
 		return (-1);
@@ -32,6 +38,7 @@ int	astexec_amper(t_astnode **at)
 {
 	pid_t		pid;
 	t_astnode	*node;
+	int			ret;
 
 	node = *at;
 	pid = fork();
@@ -42,7 +49,9 @@ int	astexec_amper(t_astnode **at)
 		ast_execute((t_astnode **)&node->content);
 		return (-1);
 	}
-	g_childret = 0;
+	ret = env_set("?", "0", 0);
+	if (ret)
+		return (ret);
 	return (ast_execute((t_astnode **)&node->next));
 }
 

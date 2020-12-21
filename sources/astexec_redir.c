@@ -97,7 +97,7 @@ int			astexec_redir(t_astnode **ahead)
 	if ((ret = astpop_redir(ahead, &node)))
 		return (ret);
 	if (!node)
-		return (astexec_args(*ahead));
+		return (astexec_assign(*ahead));
 	ret = astredir_handler(ahead, node);
 	free_node(node->next);
 	free_node(node);

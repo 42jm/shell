@@ -24,10 +24,12 @@ int			execute_builtin(char **args)
 		ret = builtin_exit(argc, args);
 	else if (!ft_strcmp(*args, "cd"))
 		ret = builtin_cd(argc, args);
-	else if (!ft_strcmp(*args, "setenv"))
-		ret = builtin_setenv(argc, args);
-	else if (!ft_strcmp(*args, "unsetenv"))
-		ret = builtin_unsetenv(argc, args);
+	else if (!ft_strcmp(*args, "set"))
+		ret = builtin_set(argc, args);
+	else if (!ft_strcmp(*args, "unset"))
+		ret = builtin_unset(argc, args);
+	else if (!ft_strcmp(*args, "export"))
+		ret = builtin_export(argc, args);
 	else
 		ret = put_error_ret("BUILTIN NOT YET IMPLEMENTED", *args, 1);
 	return (ret);
@@ -47,7 +49,8 @@ int			execute_command(char **args)
 	pid_t	pid;
 	char	*command_path;
 	char	**envp;
-	int		wstatus;
+	int		i;
+	int		ret;
 
 	if (!(envp = env_struct_to_strarr(g_envlst)))
 		return (2);
@@ -58,23 +61,22 @@ int			execute_command(char **args)
 	}
 	if (!(pid = fork()))
 		return (pr_execve(command_path, args, envp));
-	if (pid > 0)
-	{
-		waitpid(pid, &wstatus, 0);
-		if (WIFEXITED(wstatus))
-			g_childret = WEXITSTATUS(wstatus);
-	}
 	free_strarr_all(envp);
 	free(command_path);
-	if (pid == -1)
-		return (put_error("the shell failed to fork", *args));
-	return (0);
+	if (pid > 0)
+	{
+		waitpid(pid, &i, 0);
+		if (WIFEXITED(i) && (ret = env_lastret_set(WEXITSTATUS(i))))
+			return (ret);
+		return (WIFEXITED(i) ? WEXITSTATUS(i) : 0);
+	}
+	return (put_error("the shell failed to fork", *args));
 }
 
 int			execute(char **args)
 {
-	static char	*builtins[] = { "echo", "cd", "exit", "setenv", \
-								"unsetenv", NULL };
+	static char	*builtins[] = { "echo", "cd", "exit", "set", \
+								"unset", "export", NULL };
 
 	if (args == NULL)
 		return (put_error("no arguments", "execute"));

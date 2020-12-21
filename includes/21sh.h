@@ -21,7 +21,6 @@
 # define MAX_INPUT_LENGTH 1025
 
 char			**g_lines;
-int				g_childret;
 static char		*g_oparr[12] =
 {
 	";", "&",
@@ -47,6 +46,7 @@ typedef struct	s_envvar
 t_list			*g_envlst;
 
 void			sighandle_ignore(int signum);
+void			sighandle_int(int signum);
 
 int				put_error(char *message, char *arg);
 int				put_error_ret(char *message, char *arg, int ret);
@@ -54,15 +54,16 @@ int				put_prompt(int fd);
 void			put_astlexed(t_astnode *node);
 void			put_astparsed(t_astnode *node, size_t tabs);
 
-size_t			ft_strclen_unquoted(char *s, char chr);
+size_t			ft_strclen_unquoted(char *s, char chr, char *quotes);
 size_t			ft_stralen_unquoted(char *s, char *chars);
 char			**ft_strcsplit_all(char *s, char c);
 int				read_userinput(int fd, char ***input);
+size_t			bashvar_len(char *str);
 int				expand_tilde(t_astnode *node);
 int				expand_param(t_astnode *node);
 int				expand_word(t_astnode *node);
 char			*parse_quotes(char *line);
-size_t			quotationlen(char *s);
+size_t			quotationlen(char *s, char *quotes);
 size_t			expansionlen(char *s);
 t_astnode		*token_new(char *type);
 int				token_delimit(t_astnode *token, char *input, size_t len);
@@ -76,10 +77,11 @@ size_t			astlex_oplen(char *ptr);
 int				ast_localredir(t_astnode **at, int dest, int src);
 int				ast_localclose(t_astnode **at, int fd);
 int				astredir_simple(t_astnode **at, int fd, char *op, char *path);
-int				astredir_aggregate(t_astnode **at, int fd, char *op, char *word);
+int				astredir_aggregate(t_astnode **at, int fd, char *op, char *w);
 int				astredir_heredoc(t_astnode **at, int fd, char *op, char *word);
 
 int				astexec_args(t_astnode *node);
+int				astexec_assign(t_astnode *node);
 int				astexec_simplecmd(t_astnode **anode);
 int				astexec_redir(t_astnode **ahead);
 int				astexec_andor(t_astnode **ahead);
@@ -99,20 +101,24 @@ int				get_command_path(char *command, char **envp, char **apath);
 int				execute(char **args);
 
 t_list			*env_getentry(char *varname);
+t_envvar		*env_getvar(char *varname);
 char			*env_getvalue(char *varname);
+int				env_init(int argc, char **argv, char **envp);
+t_list			*env_new(char *name, char *value, bool exportable);
 int				env_set(char *varname, char *valnew, bool exportable);
 int				env_unset(char *varname);
 int				env_put(bool exportonly);
+int				envput_export(void);
 void			env_free(t_list *entry);
 t_list			*env_splitnew(char *str, bool exportable);
-t_list			*env_init(char **envp);
 t_list			*env_strarr_to_struct(char **envp);
 char			**env_struct_to_strarr(t_list *entry);
+int				env_lastret_set(int val);
 
 int				builtin_echo(int argc, char **argv);
 int				builtin_exit(int argc, char **argv);
 int				builtin_cd(int argc, char **argv);
-int				builtin_setenv(int argc, char **argv);
-int				builtin_unsetenv(int argc, char **argv);
-int				builtin_env(int argc, char **argv);
+int				builtin_set(int argc, char **argv);
+int				builtin_unset(int argc, char **argv);
+int				builtin_export(int argc, char **argv);
 #endif
