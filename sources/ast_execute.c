@@ -29,5 +29,7 @@ int	ast_execute(t_astnode **at)
 		return (astexec_pipe(at));
 	else if (!ft_strcmp(node->op, "&&") || !ft_strcmp(node->op, "||"))
 		return (astexec_andor(at));
+	else if (!ft_strcmp(node->op, "()"))
+		return (astexec_paren(at));
 	return (astexec_simplecmd(at));
 }

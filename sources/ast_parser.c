@@ -14,11 +14,14 @@
 
 static int	handle_separ(t_astnode *token, t_astnode *prev, t_astnode *head)
 {
+	int	ret;
+
 	if (!prev)
 		return (put_error("nothing before token", token->op));
 	prev->next = NULL;
-	if (ast_parser(&head))
-		return (1);
+	ret = ast_parser(&head);
+	if (ret)
+		return (ret);
 	token->content = head;
 	return (ast_parser(&token->next));
 }
@@ -37,11 +40,33 @@ static int	token_handler(t_astnode **at, t_astnode *prev, t_astnode *head)
 	return (put_error(token->op, "token not handled"));
 }
 
+static int	curly_update(t_astnode *token, int curly)
+{
+	int	closing_curly;
+
+	if (curly && !token->op && !ft_strcmp(token->content, "}"))
+		return (curly - 1);
+	if (!token->op && !ft_strcmp(token->content, "{"))
+	{
+		closing_curly = 0;
+		while (token && closing_curly < curly + 1)
+		{
+			if (!token->op && !ft_strcmp(token->content, "}"))
+				closing_curly++;
+			token = token->next;
+		}
+		if (closing_curly == curly + 1)
+			return (curly + 1);
+	}
+	return (curly);
+}
+
 static int	parse_level(t_astnode **aroot, char **tokens_lv)
 {
 	t_astnode	*token;
 	t_astnode	*prev;
 	int			ret;
+	int			curly_opened;
 
 	if (!aroot)
 		return (put_error("no arguments", "parse_level"));
@@ -49,9 +74,11 @@ static int	parse_level(t_astnode **aroot, char **tokens_lv)
 		return (0);
 	token = *aroot;
 	prev = NULL;
+	curly_opened = 0;
 	while (token)
 	{
-		if (token->op && ft_arrstr(tokens_lv, token->op))
+		curly_opened = curly_update(token, curly_opened);
+		if (!curly_opened && token->op && ft_arrstr(tokens_lv, token->op))
 		{
 			ret = token_handler(&token, prev, *aroot);
 			*aroot = token;
@@ -74,6 +101,12 @@ int			ast_parser(t_astnode **aroot)
 	};
 
 	lvl = 0;
+	if (!*aroot)
+		return (0);
+	if ((ret = parse_curly_braces(aroot)))
+		return (ret);
+	if ((ret = parse_all_parentheses(*aroot)))
+		return (ret);
 	while (lvl < 3)
 	{
 		ret = parse_level(aroot, tokens[lvl]);

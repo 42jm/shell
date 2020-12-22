@@ -21,8 +21,9 @@
 # define MAX_INPUT_LENGTH 1025
 
 char			**g_lines;
-static char		*g_oparr[12] =
+static char		*g_oparr[16] =
 {
+	"(", "<(", ">(", ")",
 	";", "&",
 	"&&", "||",
 	"|",
@@ -69,6 +70,8 @@ t_astnode		*token_new(char *type);
 int				token_delimit(t_astnode *token, char *input, size_t len);
 int				handle_andor(t_astnode **at, t_astnode *prev, t_astnode *head);
 int				ast_parser(t_astnode **aroot);
+int				parse_curly_braces(t_astnode **aroot);
+int				parse_all_parentheses(t_astnode *head);
 int				ast_lexer(char *input, t_astnode **anode);
 int				ast_execute(t_astnode **aroot);
 
@@ -88,6 +91,8 @@ int				astexec_andor(t_astnode **ahead);
 int				astexec_semicol(t_astnode **at);
 int				astexec_amper(t_astnode **at);
 int				astexec_pipe(t_astnode **at);
+int				astexec_curly(t_astnode **at);
+int				astexec_paren(t_astnode **at);
 
 char			**ast_to_strarr(t_astnode *node);
 

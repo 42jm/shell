@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   astexec_simplecmd.c                                :+:      :+:    :+:   */
+/*   astexec_braces.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,34 +12,38 @@
 
 #include "21sh.h"
 
-int	astexec_args(t_astnode *head)
+int	astexec_curly(t_astnode **at)
 {
+	t_astnode	*head;
 	t_astnode	*node;
-	char		**args;
-	int			ret;
 
-	if (!head)
-		return (put_error("no arguments", "astexec_args"));
-	if (head->op && !ft_strcmp(head->op, "{}"))
-		return (astexec_curly(&head));
-	node = head;
-	while (node && !node->op)
-		node = node->next;
-	if (node)
-		return (put_error("ast operator found as argument", "astexec_args"));
-	if (!(args = ast_to_strarr(head)))
-		return (put_error("malloc failed", "astexec_args"));
-	ret = execute(args);
-	free_strarr_all(args);
-	return (ret);
+	head = *at;
+	node = head->content;
+	if (head->next)
+		return (put_error("a token is following the braces", "{}"));
+	if (!node || !node->op)
+		return (put_error("no op inside braces", "{}"));
+	return (ast_execute(&node));
 }
 
-int	astexec_simplecmd(t_astnode **at)
+int	astexec_paren(t_astnode **at)
 {
-	int	ret;
+	t_astnode	*head;
+	t_astnode	*node;
+	pid_t		pid;
 
-	ret = expand_word(*at);
-	if (ret)
-		return (ret);
-	return (astexec_redir(at));
+	head = *at;
+	node = head->content;
+	if (head->next)
+		return (put_error("a token is following the parentheses", head->op));
+	pid = fork();
+	if (pid == -1)
+		return (put_error("failed fork", head->op));
+	if (!pid)
+	{
+		ast_execute(&node);
+		return (-1);
+	}
+	waitpid(pid, NULL, 0);
+	return (ast_execute(&head->next));
 }

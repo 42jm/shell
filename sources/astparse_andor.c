@@ -16,6 +16,7 @@ static int	andor_list(t_astnode *token)
 {
 	t_astnode	*ptr;
 	t_astnode	*prev;
+	int			ret;
 
 	if (!token)
 		return (0);
@@ -29,8 +30,8 @@ static int	andor_list(t_astnode *token)
 		ptr = ptr->next;
 	}
 	prev->next = NULL;
-	if (ast_parser(&token->next))
-		return (1);
+	if ((ret = ast_parser(&token->next)))
+		return (ret);
 	token->content = token->next;
 	token->next = ptr;
 	return (andor_list(ptr));

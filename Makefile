@@ -17,13 +17,16 @@ SRC_NAME = main.c \
 			ast_put.c \
 			ast_free.c \
 			ast_parser.c \
+			astparse_parentheses.c \
 			astparse_andor.c \
+			astparse_curly.c \
 			astlex_token.c \
 			astlex_len.c \
 			astlex_op.c \
 			ast_lexer.c \
 			astexec_simplecmd.c \
 			astexec_assign.c \
+			astexec_braces.c \
 			astexec_redir.c \
 			astexec_separ.c \
 			astexec_pipe.c \

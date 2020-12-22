@@ -19,7 +19,7 @@ t_astnode	*token_new(char *ptr)
 	token = (t_astnode *)malloc(sizeof(t_astnode));
 	if (!token)
 	{
-		put_error("malloc failed to create struct", "token_new");
+		put_error("malloc failed", "token_new");
 		return (NULL);
 	}
 	token->op = NULL;
@@ -28,7 +28,7 @@ t_astnode	*token_new(char *ptr)
 		token->op = ft_strndup(ptr, astlex_oplen(ptr));
 		if (!token->op)
 		{
-			put_error("malloc failed to create op str", "token_new");
+			put_error("malloc failed", "token_new");
 			return (NULL);
 		}
 	}

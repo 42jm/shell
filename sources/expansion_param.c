@@ -43,7 +43,6 @@ static char	*param_getvalue(char *str, size_t len)
 	}
 	else
 		name = ft_strndup(str, len);
-	ft_putendl(name);
 	value = env_getvalue(name);
 	free(name);
 	return (value);
