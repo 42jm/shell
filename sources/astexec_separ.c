@@ -29,8 +29,8 @@ int	astexec_andor(t_astnode **at)
 		ret = ast_execute((t_astnode **)&node->content);
 	else if (!ft_strcmp(node->op, "||") && is_lastret)
 		ret = ast_execute((t_astnode **)&node->content);
-	if (ret == -1)
-		return (-1);
+	if (ret < 0)
+		return (ret);
 	return (ast_execute((t_astnode **)&node->next));
 }
 
@@ -58,9 +58,10 @@ int	astexec_amper(t_astnode **at)
 int	astexec_semicol(t_astnode **at)
 {
 	t_astnode	*node;
+	int			ret;
 
 	node = *at;
-	if (ast_execute((t_astnode **)&node->content) == -1)
-		return (-1);
+	if ((ret = ast_execute((t_astnode **)&node->content)) < 0)
+		return (ret);
 	return (ast_execute((t_astnode **)&node->next));
 }

@@ -31,6 +31,8 @@ int	astexec_paren(t_astnode **at)
 	t_astnode	*head;
 	t_astnode	*node;
 	pid_t		pid;
+	int			wstatus;
+	int			ret;
 
 	head = *at;
 	node = head->content;
@@ -41,9 +43,11 @@ int	astexec_paren(t_astnode **at)
 		return (put_error("failed fork", head->op));
 	if (!pid)
 	{
-		ast_execute(&node);
-		return (-1);
+		ret = ast_execute(&node);
+		return (ret < 0 ? ret : -ret - 1);
 	}
-	waitpid(pid, NULL, 0);
+	waitpid(pid, &wstatus, 0);
+	if (WIFEXITED(wstatus) && (ret = env_lastret_set(WEXITSTATUS(wstatus))))
+		return (ret);
 	return (ast_execute(&head->next));
 }

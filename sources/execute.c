@@ -41,7 +41,7 @@ static int	pr_execve(char *command_path, char **args, char **envp)
 	put_error("Execve error", command_path);
 	free_strarr_all(envp);
 	free(command_path);
-	return (-1);
+	return (-2);
 }
 
 int			execute_command(char **args)
