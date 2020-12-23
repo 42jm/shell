@@ -36,6 +36,7 @@ SRC_NAME = main.c \
 			astredir_simple.c \
 			astredir_local.c \
 			expansion.c \
+			expansion_remove.c \
 			expansion_param.c \
 			expansion_tilde.c \
 			env.c \
@@ -44,6 +45,7 @@ SRC_NAME = main.c \
 			env_new.c \
 			env_put.c \
 			execute.c \
+			exec_str_in_subshell.c \
 			file_tests.c \
 			bltn_echo.c \
 			bltn_exit.c \

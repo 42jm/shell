@@ -12,6 +12,35 @@
 
 #include "21sh.h"
 
+size_t			parenlen(char *str)
+{
+	size_t	len;
+	size_t	str_len;
+	size_t	count;
+	char	openchr;
+	char	closechr;
+
+	openchr = *str;
+	if (openchr == '(')
+		closechr = ')';
+	else if (openchr == '{')
+		closechr = '}';
+	else
+		return (0);
+	len = 1;
+	count = 1;
+	str_len = ft_strlen(str);
+	while (len < str_len && count)
+	{
+		if (str[len] == closechr)
+			count--;
+		else if (str[len] == openchr)
+			count++;
+		len++;
+	}
+	return (count ? 0 : len);
+}
+
 size_t			quotationlen(char *s, char *quotes)
 {
 	size_t	len;

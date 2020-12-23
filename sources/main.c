@@ -36,24 +36,28 @@ int			execute_firstline(char ***alines)
 	return (ret);
 }
 
-static int	prompt_loop(void)
+int			execute_all_lines(char **aline)
+{
+	int	ret;
+
+	ret = 0;
+	while (!ret && aline && *aline)
+	{
+		ret = execute_firstline(&aline);
+		aline++;
+	}
+	return (ret);
+}
+
+int			prompt_loop(void)
 {
 	char	**input;
-	char	**aline;
 	int		ret;
 
 	input = NULL;
-	ret = 0;
-	if (!(ret = put_prompt(1)) \
-	&& !(ret = read_userinput(0, &input)))
-	{
-		aline = input;
-		while (!ret && aline && *aline)
-		{
-			ret = execute_firstline(&aline);
-			aline++;
-		}
-	}
+	ret = put_prompt(1);
+	if (!ret && !(ret = read_userinput(0, &input)))
+		ret = execute_all_lines(input);
 	if (input)
 		free_strarr_all(input);
 	if (ret > 0)

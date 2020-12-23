@@ -47,7 +47,7 @@ static int	split_field(t_astnode *node, int *afields)
 
 	if (!node || !node->content || !afields)
 		return (put_error("no arguments", "field_split"));
-	len = ft_stralen_unquoted(node->content, "\t ");
+	len = ft_stralen_unquoted(node->content, "\t \n");
 	(*afields)++;
 	if (!len)
 		return (0);
@@ -56,40 +56,31 @@ static int	split_field(t_astnode *node, int *afields)
 	return (split_field(node->next, afields));
 }
 
-static int	remove_quotes(t_astnode *node)
+int			clean_fields(t_astnode *prev, t_astnode **anode, int fields)
 {
-	size_t	i;
-	size_t	len;
-	char	*tmp;
+	int			ret;
 
-	i = 0;
-	tmp = node->content;
-	while ((len = ft_stralen_unquoted(tmp + i, "\"'\\")))
+	if (fields < 0)
+		return (0);
+	while (fields--)
 	{
-		i += len - 1;
-		len = 1;
-		if (tmp[i] != '\\')
-		{
-			len = quotationlen(tmp + i, "\"'\\");
-			if (!len && ++i)
-				continue ;
-			if (ft_strdrop_inplace(&tmp, i + len - 1, i + len))
-				return (put_error("malloc failed (closing)", "remove_quotes"));
-			len -= 2;
-		}
-		if (ft_strdrop_inplace(&tmp, i, i + 1))
-			return (put_error("malloc failed (opening)", "remove_quotes"));
-		i += len;
+		if (remove_empty_field(prev, anode))
+			continue ;
+		if ((ret = remove_quotes(*anode)))
+			return (ret);
+		prev = *anode;
+		*anode = (*anode)->next;
 	}
-	node->content = tmp;
 	return (0);
 }
 
 int			expand_word(t_astnode *node)
 {
-	int	ret;
-	int	fields;
+	int			ret;
+	int			fields;
+	t_astnode	*prev;
 
+	prev = NULL;
 	while (node)
 	{
 		if (node->op)
@@ -104,12 +95,8 @@ int			expand_word(t_astnode *node)
 		fields = 0;
 		if ((ret = split_field(node, &fields)))
 			return (ret);
-		while (fields--)
-		{
-			if ((ret = remove_quotes(node)))
-				return (ret);
-			node = node->next;
-		}
+		if ((ret = clean_fields(prev, &node, fields)))
+			return (ret);
 	}
 	return (0);
 }

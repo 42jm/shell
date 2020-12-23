@@ -12,30 +12,53 @@
 
 #include "21sh.h"
 
-int			read_userinput(int fd, char ***ainput)
+char	*read_all(int fd)
 {
-	ssize_t	len;
-	size_t	ret;
+	static ssize_t	buf_size = 1024;
+	char			*buf;
+	ssize_t			len;
+
+	buf = ft_strnew(buf_size + 1);
+	len = read(fd, buf, buf_size);
+	if (len == buf_size || len == -1)
+	{
+		if (buf)
+			free(buf);
+		return (NULL);
+	}
+	return (buf);
+}
+
+int		format_input(char *in, char ***ainput)
+{
 	char	*buf;
 
-	buf = ft_strnew(MAX_INPUT_LENGTH);
-	len = read(fd, buf, MAX_INPUT_LENGTH);
-	ret = 0;
-	if (len < 0 && (ret = 1))
-		put_error("Failed read on input", NULL);
-	else if (len >= MAX_INPUT_LENGTH && (ret = 2))
-		put_error("Input too long", NULL);
-	if (ret)
-		return (ret);
+	if (!in)
+		return (put_error("no arguments", "ainput"));
+	buf = ft_strdup(in);
 	if (!*buf)
 	{
 		free(buf);
 		if (!(buf = ft_strdup("exit")))
-			return (put_error("failed to strdup 'exit'", NULL));
+			return (put_error("failed to strdup 'exit'", "format_input"));
 	}
 	*ainput = ft_strcsplit_all(buf, '\n');
-	if (!*ainput && (ret = 3))
-		put_error("strsplit failed", "read_userinput");
 	free(buf);
+	if (!*ainput)
+		return (put_error("strsplit failed", "read_userinput"));
+	return (0);
+}
+
+int		read_userinput(int fd, char ***ainput)
+{
+	size_t	ret;
+	char	*buf;
+
+	buf = read_all(fd);
+	if (!buf)
+		return (put_error_ret("failed read", "read_userinput", -1));
+	ret = format_input(buf, ainput);
+	if (buf)
+		free(buf);
 	return (ret);
 }

@@ -41,5 +41,7 @@ int			token_delimit(t_astnode *token, char *input, size_t len)
 {
 	if (!token->op && !(token->content = (void *)ft_strndup(input, len)))
 		return (put_error_ret("malloc failed", "token_delimit", 1));
-	return (ast_lexer(input + len, &token->next));
+	if (len < ft_strlen(input))
+		return (ast_lexer(input + len, &token->next));
+	return (0);
 }

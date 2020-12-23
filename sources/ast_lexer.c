@@ -35,7 +35,7 @@ static int	lexer_ignore(t_astnode **at, char *input, size_t *alen)
 	else if (ft_strchr("$`", input[len]))
 		len += expansionlen(input + len);
 	if (*alen != len)
-		*alen = len - 1;
+		*alen = len;
 	return (0);
 }
 
@@ -47,7 +47,7 @@ int			ast_lexer(char *input, t_astnode **at)
 		return (1);
 	*at = NULL;
 	len = 0;
-	while (input[len] && input[len] != '\n')
+	while (len < ft_strlen(input) && input[len] != '\n')
 	{
 		if (ft_strchr("\\'\"$`", input[len]) && lexer_ignore(at, input, &len))
 			return (1);
