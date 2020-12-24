@@ -36,6 +36,7 @@ SRC_NAME = main.c \
 			astredir_simple.c \
 			astredir_local.c \
 			expansion.c \
+			expansion_op.c \
 			expansion_remove.c \
 			expansion_param.c \
 			expansion_tilde.c \

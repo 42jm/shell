@@ -36,10 +36,18 @@ int	astexec_args(t_astnode *head)
 
 int	astexec_simplecmd(t_astnode **at)
 {
-	int	ret;
+	int			ret;
+	t_astnode	*node;
 
-	ret = expand_word(*at);
-	if (ret)
+	node = *at;
+	while (node)
+	{
+		if (node->op && \
+		(!ft_strcmp(node->op, "<()") || !ft_strcmp(node->op, ">()")))
+			return (expand_op(at, node));
+		node = node->next;
+	}
+	if ((ret = expand_word(*at)))
 		return (ret);
 	return (astexec_redir(at));
 }

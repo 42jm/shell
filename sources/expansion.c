@@ -83,19 +83,17 @@ int			expand_word(t_astnode *node)
 	prev = NULL;
 	while (node)
 	{
+		fields = 0;
 		if (node->op)
 		{
+			prev = node;
 			node = node->next;
 			continue ;
 		}
-		if ((ret = expand_tilde(node)))
-			return (ret);
-		if ((ret = expand_param(node)))
-			return (ret);
-		fields = 0;
-		if ((ret = split_field(node, &fields)))
-			return (ret);
-		if ((ret = clean_fields(prev, &node, fields)))
+		if ((ret = expand_tilde(node)) \
+		|| (ret = expand_param(node)) \
+		|| (ret = split_field(node, &fields)) \
+		|| (ret = clean_fields(prev, &node, fields)))
 			return (ret);
 	}
 	return (0);

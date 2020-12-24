@@ -20,8 +20,7 @@ void	free_node(t_astnode *node)
 	{
 		if (!node->op)
 			free(node->content);
-		else if (!ft_strcmp(node->op, ";") \
-		|| !ft_strcmp(node->op, "&") \
+		else if (!ft_strcmp(node->op, ";") || !ft_strcmp(node->op, "&") \
 		|| !ft_strcmp(node->op, "&&") \
 		|| !ft_strcmp(node->op, "||") \
 		|| !ft_strcmp(node->op, "|") \
@@ -30,7 +29,9 @@ void	free_node(t_astnode *node)
 		|| !ft_strcmp(node->op, "{}") \
 		|| !ft_strcmp(node->op, "(") \
 		|| !ft_strcmp(node->op, ")") \
-		|| !ft_strcmp(node->op, "()"))
+		|| !ft_strcmp(node->op, "()") \
+		|| !ft_strcmp(node->op, "<()") \
+		|| !ft_strcmp(node->op, ">()"))
 			free_ast(node->content);
 		else
 			put_error(node->op, "cannot free contents of unkown op node");

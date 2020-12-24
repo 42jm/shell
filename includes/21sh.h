@@ -65,6 +65,7 @@ size_t			bashvar_len(char *str);
 int				expand_tilde(t_astnode *node);
 int				expand_param(t_astnode *node);
 int				expand_word(t_astnode *node);
+int				expand_op(t_astnode **at, t_astnode *node);
 int				remove_empty_field(t_astnode *prev, t_astnode **anode);
 int				remove_quotes(t_astnode *node);
 char			*parse_quotes(char *line);
