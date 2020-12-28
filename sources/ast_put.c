@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include "shell21.h"
 
 void		put_astlexed(t_astnode *token)
 {

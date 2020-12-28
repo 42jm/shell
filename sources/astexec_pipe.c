@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include "shell21.h"
 
 static int	pipe_dupexe(t_astnode **at, int *fildes, int io)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include "shell21.h"
 
 int	builtin_exit(int argc, char **argv)
 {

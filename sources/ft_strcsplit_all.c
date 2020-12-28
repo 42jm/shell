@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include "shell21.h"
 
 static t_list	*get_next_split(char *s, size_t clen)
 {

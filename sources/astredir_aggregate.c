@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include "shell21.h"
 
 int	astredir_aggregate(t_astnode **at, int redir_fd, char *redir_op, char *word)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include "shell21.h"
 
 int	remove_empty_field(t_astnode *prev, t_astnode **anode)
 {

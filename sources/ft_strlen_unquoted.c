@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include "shell21.h"
 
 size_t	ft_strclen_unquoted(char *s, char chr, char *quotes)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include "shell21.h"
 
 t_envvar	*envvar_new(char *name, char *value, bool exportable)
 {

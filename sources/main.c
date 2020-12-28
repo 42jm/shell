@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include "shell21.h"
 
 int			execute_firstline(char ***alines)
 {
@@ -22,10 +22,12 @@ int			execute_firstline(char ***alines)
 	g_lines = *alines;
 	astroot = NULL;
 	ret = ast_lexer(*g_lines, &astroot);
+	put_astlexed(astroot);
 	if (!ret)
 	{
 		g_lines++;
 		ret = ast_parser(&astroot);
+		put_astparsed(astroot, 0);
 	}
 	if (!ret)
 		ret = ast_execute(&astroot);

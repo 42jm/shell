@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include "shell21.h"
 
 int	astexec_args(t_astnode *head)
 {
@@ -22,6 +22,8 @@ int	astexec_args(t_astnode *head)
 		return (put_error("no arguments", "astexec_args"));
 	if (head->op && !ft_strcmp(head->op, "{}"))
 		return (astexec_curly(&head));
+	if (head->op && !ft_strcmp(head->op, "()"))
+		return (astexec_paren(&head));
 	node = head;
 	while (node && !node->op)
 		node = node->next;
