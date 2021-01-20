@@ -6,7 +6,7 @@
 #    By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/12 09:27:03 by jmbomeyo          #+#    #+#              #
-#    Updated: 2019/11/01 17:52:00 by jmbomeyo         ###   ########.fr        #
+#    Updated: 2021/01/20 20:04:06 by quegonza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -137,7 +137,7 @@ $(NAME): $(OBJ)
 $(OBJ_DIR)%.o: %.c
 	@mkdir -p $(OBJ_DIR)
 	@printf "$(NAME): compiling $@\n"
-	@clang -Wall -Wextra -Werror -c $< -o $@ -I $(INC_DIR)
+	@gcc -Wall -Wextra -Werror -c $< -o $@ -I $(INC_DIR)
 
 clean:
 	@printf "$(NAME): removing objects\n"

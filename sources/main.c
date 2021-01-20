@@ -6,11 +6,12 @@
 /*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 12:16:49 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2020/10/15 14:09:52 by jmbomeyo         ###   ########.fr       */
+/*   Updated: 2021/01/20 22:50:10 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
+#include "quegonza.h"
 
 int			execute_firstline(char ***alines)
 {
@@ -56,7 +57,7 @@ int			prompt_loop(void)
 
 	input = NULL;
 	ret = put_prompt(1);
-	if (!ret && !(ret = read_userinput(0, &input)))
+	if (!ret && !(ret = read_userinput(&input)))
 		ret = execute_all_lines(input);
 	if (input)
 		free_strarr_all(input);
@@ -70,10 +71,13 @@ int			main(int argc, char **argv, char **envp)
 	int	ret;
 
 	g_lines = NULL;
-	signal(SIGINT, sighandle_int);
+	if (!ft_start_up())
+		return (ft_error("Initialization error\n", 1));
+//	signal(SIGINT, sighandle_int);
 	ret = env_init(argc, argv, envp);
 	while (ret >= 0)
 		ret = prompt_loop();
 	env_free(g_envlst);
+	ft_end_clean(NULL);
 	return (ret < 0 ? -ret - 1 : ret);
 }

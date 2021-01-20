@@ -6,11 +6,12 @@
 /*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 12:16:49 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2019/10/05 19:06:07 by jmbomeyo         ###   ########.fr       */
+/*   Updated: 2021/01/20 23:20:52 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
+#include "quegonza.h"
 
 char	*read_all(int fd)
 {
@@ -39,8 +40,7 @@ int		format_input(char *in, char ***ainput)
 	if (!*buf)
 	{
 		free(buf);
-		if (!(buf = ft_strdup("exit")))
-			return (put_error("failed to strdup 'exit'", "format_input"));
+		buf = ft_strdup("\n");
 	}
 	*ainput = ft_strcsplit_all(buf, '\n');
 	free(buf);
@@ -49,12 +49,14 @@ int		format_input(char *in, char ***ainput)
 	return (0);
 }
 
-int		read_userinput(int fd, char ***ainput)
+int		read_userinput(char ***ainput)
 {
 	size_t	ret;
 	char	*buf;
 
-	buf = read_all(fd);
+	buf = ft_get_user_input(&g_info);
+	if (!buf && g_info.ctrl_c && !(g_info.ctrl_c &= 0))
+		return (130);
 	if (!buf)
 		return (put_error_ret("failed read", "read_userinput", -1));
 	ret = format_input(buf, ainput);

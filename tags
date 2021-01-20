@@ -1,0 +1,232 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+CTRL_A	includes/quegonza.h	21;"	d
+CTRL_D	includes/quegonza.h	22;"	d
+CTRL_E	includes/quegonza.h	23;"	d
+CTRL_U	includes/quegonza.h	24;"	d
+CTRL_W	includes/quegonza.h	25;"	d
+CTRL_Y	includes/quegonza.h	26;"	d
+DEL	includes/quegonza.h	28;"	d
+ESC	includes/quegonza.h	27;"	d
+MAX_INPUT_LENGTH	includes/shell21.h	21;"	d
+QUEGONZA_H	includes/quegonza.h	14;"	d
+SHELL21_H	includes/shell21.h	14;"	d
+andor_list	sources/astparse_andor.c	/^static int	andor_list(t_astnode *token)$/;"	f	file:
+assign_local	sources/astexec_assign.c	/^static int	assign_local(t_astnode *node, char *name, char *value)$/;"	f	file:
+assign_local_reset	sources/astexec_assign.c	/^static int	assign_local_reset(char *name, char *value, bool exportable)$/;"	f	file:
+ast_execute	sources/ast_execute.c	/^int	ast_execute(t_astnode **at)$/;"	f
+ast_lexer	sources/ast_lexer.c	/^int			ast_lexer(char *input, t_astnode **at)$/;"	f
+ast_localclose	sources/astredir_local.c	/^int	ast_localclose(t_astnode **at, int fd)$/;"	f
+ast_localredir	sources/astredir_local.c	/^int	ast_localredir(t_astnode **at, int dst, int src)$/;"	f
+ast_parser	sources/ast_parser.c	/^int			ast_parser(t_astnode **aroot)$/;"	f
+ast_to_strarr	sources/ast_to_strarr.c	/^char			**ast_to_strarr(t_astnode *node)$/;"	f
+astexec_amper	sources/astexec_separ.c	/^int	astexec_amper(t_astnode **at)$/;"	f
+astexec_andor	sources/astexec_separ.c	/^int	astexec_andor(t_astnode **at)$/;"	f
+astexec_args	sources/astexec_simplecmd.c	/^int	astexec_args(t_astnode *head)$/;"	f
+astexec_assign	sources/astexec_assign.c	/^int			astexec_assign(t_astnode *node)$/;"	f
+astexec_curly	sources/astexec_braces.c	/^int	astexec_curly(t_astnode **at)$/;"	f
+astexec_paren	sources/astexec_braces.c	/^int	astexec_paren(t_astnode **at)$/;"	f
+astexec_pipe	sources/astexec_pipe.c	/^int			astexec_pipe(t_astnode **at)$/;"	f
+astexec_redir	sources/astexec_redir.c	/^int			astexec_redir(t_astnode **ahead)$/;"	f
+astexec_semicol	sources/astexec_separ.c	/^int	astexec_semicol(t_astnode **at)$/;"	f
+astexec_simplecmd	sources/astexec_simplecmd.c	/^int	astexec_simplecmd(t_astnode **at)$/;"	f
+astget_redirop	sources/astexec_redir.c	/^char		*astget_redirop(char *op)$/;"	f
+astlex_oplen	sources/astlex_op.c	/^size_t		astlex_oplen(char *ptr)$/;"	f
+astpop_redir	sources/astexec_redir.c	/^int			astpop_redir(t_astnode **ahead, t_astnode **aredir)$/;"	f
+astput_word	sources/ast_put.c	/^static void	astput_word(t_astnode *token, size_t tabs)$/;"	f	file:
+astredir_aggregate	sources/astredir_aggregate.c	/^int	astredir_aggregate(t_astnode **at, int redir_fd, char *redir_op, char *word)$/;"	f
+astredir_handler	sources/astexec_redir.c	/^int			astredir_handler(t_astnode **at, t_astnode *node)$/;"	f
+astredir_heredoc	sources/astredir_heredoc.c	/^int			astredir_heredoc(t_astnode **at, int fd, char *redir_op, char *word)$/;"	f
+astredir_simple	sources/astredir_simple.c	/^int	astredir_simple(t_astnode **at, int redir_fd, char *redir_op, char *path)$/;"	f
+bashvar_len	sources/expansion_param.c	/^size_t		bashvar_len(char *str)$/;"	f
+builtin_cd	sources/bltn_cd.c	/^int	builtin_cd(int argc, char **argv)$/;"	f
+builtin_echo	sources/bltn_echo.c	/^int	builtin_echo(int argc, char **argv)$/;"	f
+builtin_exit	sources/bltn_exit.c	/^int	builtin_exit(int argc, char **argv)$/;"	f
+builtin_export	sources/bltn_envs.c	/^int			builtin_export(int argc, char **argv)$/;"	f
+builtin_set	sources/bltn_envs.c	/^int			builtin_set(int argc, char **argv)$/;"	f
+builtin_unset	sources/bltn_envs.c	/^int			builtin_unset(int argc, char **argv)$/;"	f
+cap	includes/quegonza.h	/^	t_cap			cap;$/;"	m	struct:s_curs
+cd	includes/quegonza.h	/^	char		*cd;$/;"	m	struct:s_cap
+ce	includes/quegonza.h	/^	char		*ce;$/;"	m	struct:s_cap
+chk21	sources/tests.c	/^void	chk21(void)$/;"	f
+clean_fields	sources/expansion.c	/^int			clean_fields(t_astnode *prev, t_astnode **anode, int fields)$/;"	f
+cm	includes/quegonza.h	/^	char		*cm;$/;"	m	struct:s_cap
+col	includes/quegonza.h	/^	int				col;$/;"	m	struct:s_curs
+content	includes/shell21.h	/^	void				*content;$/;"	m	struct:s_astnode
+copy	includes/quegonza.h	/^	char			*copy;$/;"	m	struct:s_curs
+crsr_col	includes/quegonza.h	/^	int				crsr_col;$/;"	m	struct:s_curs
+crsr_row	includes/quegonza.h	/^	int				crsr_row;$/;"	m	struct:s_curs
+ctrl_c	includes/quegonza.h	/^	char			ctrl_c;$/;"	m	struct:s_curs
+curly_parser	sources/astparse_curly.c	/^static int	curly_parser(t_astnode *head)$/;"	f	file:
+curly_update	sources/ast_parser.c	/^static int	curly_update(t_astnode *token, int curly)$/;"	f	file:
+cursor	includes/quegonza.h	/^	int				cursor;$/;"	m	struct:s_curs
+dc	includes/quegonza.h	/^	char		*dc;$/;"	m	struct:s_cap
+env_export	sources/bltn_envs.c	/^static int	env_export(char *str)$/;"	f	file:
+env_free	sources/env.c	/^void	env_free(t_list *entry)$/;"	f
+env_getentry	sources/env_get.c	/^t_list		*env_getentry(char *varname)$/;"	f
+env_getvalue	sources/env_get.c	/^char		*env_getvalue(char *varname)$/;"	f
+env_getvar	sources/env_get.c	/^t_envvar	*env_getvar(char *varname)$/;"	f
+env_init	sources/env_convert.c	/^int			env_init(int argc, char **argv, char **envp)$/;"	f
+env_lastret_set	sources/env.c	/^int		env_lastret_set(int lastret)$/;"	f
+env_new	sources/env_new.c	/^t_list		*env_new(char *name, char *value, bool exportable)$/;"	f
+env_put	sources/env_put.c	/^int		env_put(bool exportonly)$/;"	f
+env_set	sources/env.c	/^int		env_set(char *varname, char *valnew, bool exportable)$/;"	f
+env_splitnew	sources/env_new.c	/^t_list		*env_splitnew(char *str, bool exportable)$/;"	f
+env_strarr_to_struct	sources/env_convert.c	/^t_list		*env_strarr_to_struct(char **envp)$/;"	f
+env_struct_to_strarr	sources/env_convert.c	/^char		**env_struct_to_strarr(t_list *entry)$/;"	f
+env_unset	sources/env.c	/^int		env_unset(char *varname)$/;"	f
+envput_export	sources/env_put.c	/^int		envput_export(void)$/;"	f
+envvar_new	sources/env_new.c	/^t_envvar	*envvar_new(char *name, char *value, bool exportable)$/;"	f
+exec_str_in_subshell	sources/exec_str_in_subshell.c	/^int			exec_str_in_subshell(char *in, char **aout)$/;"	f
+exec_subshell	sources/exec_str_in_subshell.c	/^static int	exec_subshell(int *sub_out, char *in)$/;"	f	file:
+execute	sources/execute.c	/^int			execute(char **args)$/;"	f
+execute_all_lines	sources/main.c	/^int			execute_all_lines(char **aline)$/;"	f
+execute_builtin	sources/execute.c	/^int			execute_builtin(char **args)$/;"	f
+execute_command	sources/execute.c	/^int			execute_command(char **args)$/;"	f
+execute_firstline	sources/main.c	/^int			execute_firstline(char ***alines)$/;"	f
+expand_op	sources/expansion_op.c	/^int			expand_op(t_astnode **at, t_astnode *node)$/;"	f
+expand_param	sources/expansion_param.c	/^int			expand_param(t_astnode *node)$/;"	f
+expand_substitute	sources/expansion_param.c	/^static int	expand_substitute(char **aarg, size_t *avar_i)$/;"	f	file:
+expand_tilde	sources/expansion_tilde.c	/^int	expand_tilde(t_astnode *node)$/;"	f
+expand_variable	sources/expansion_param.c	/^static int	expand_variable(char **aarg, size_t *avar_i)$/;"	f	file:
+expand_word	sources/expansion.c	/^int			expand_word(t_astnode *node)$/;"	f
+expansionlen	sources/astlex_len.c	/^size_t			expansionlen(char *s)$/;"	f
+expansionlen_until	sources/astlex_len.c	/^static size_t	expansionlen_until(char *s, char *endseq)$/;"	f	file:
+exportable	includes/shell21.h	/^	bool				exportable;$/;"	m	struct:s_envvar
+field_add	sources/expansion.c	/^static int	field_add(t_astnode *node, size_t n)$/;"	f	file:
+find_operator	sources/astlex_op.c	/^static char	*find_operator(char **oparr, char *ptr)$/;"	f	file:
+format_input	sources/read.c	/^int		format_input(char *in, char ***ainput)$/;"	f
+free_ast	sources/ast_free.c	/^void	free_ast(t_astnode *node)$/;"	f
+free_node	sources/ast_free.c	/^void	free_node(t_astnode *node)$/;"	f
+ft_addchar	sources/usefull_scratch.c	/^char	*ft_addchar(char *line, char *chr)$/;"	f
+ft_after_cursor	sources/line_edition.c	/^void	ft_after_cursor(char *new, char *line, int i, int rest)$/;"	f
+ft_astlen	sources/ast_to_strarr.c	/^static size_t	ft_astlen(t_astnode *node)$/;"	f	file:
+ft_clean_after_cursor	sources/termcap_tools.c	/^void	ft_clean_after_cursor(void)$/;"	f
+ft_ctrl_a	sources/size1_char_typing.c	/^void	ft_ctrl_a()$/;"	f
+ft_ctrl_d	sources/size1_char_typing.c	/^char	*ft_ctrl_d(char *line)$/;"	f
+ft_ctrl_e	sources/size1_char_typing.c	/^void	ft_ctrl_e()$/;"	f
+ft_ctrl_u	sources/size1_char_typing.c	/^char	*ft_ctrl_u(char *line)$/;"	f
+ft_ctrl_w	sources/size1_char_typing.c	/^char	*ft_ctrl_w(char *line)$/;"	f
+ft_ctrl_y	sources/size1_char_typing.c	/^char	*ft_ctrl_y(char *line)$/;"	f
+ft_current_char	sources/get_user_input.c	/^char	*ft_current_char(char *buf, int *len)$/;"	f
+ft_del_char	sources/line_edition.c	/^char	*ft_del_char(char *line)$/;"	f
+ft_display_history	sources/history.c	/^void	ft_display_history(void)$/;"	f
+ft_end_clean	sources/get_user_input.c	/^void	ft_end_clean(char *end_message)$/;"	f
+ft_erase_crsrline	sources/termcap_tools.c	/^void	ft_erase_crsrline(void)$/;"	f
+ft_error	sources/termcap_tools.c	/^int		ft_error(char *cause, int code)$/;"	f
+ft_free_tabzero	sources/history.c	/^void	ft_free_tabzero(char **tab)$/;"	f
+ft_get_cap	sources/start_up.c	/^int		ft_get_cap(t_cap *cap)$/;"	f
+ft_get_cursor_info	sources/cursor_info.c	/^void	ft_get_cursor_info()$/;"	f
+ft_get_cursor_pos	sources/cursor_info.c	/^void	ft_get_cursor_pos()$/;"	f
+ft_get_term_size	sources/cursor_info.c	/^void	ft_get_term_size()$/;"	f
+ft_get_user_input	sources/get_user_input.c	/^char	*ft_get_user_input()$/;"	f
+ft_getcol_fromstr	sources/size1_char_typing.c	/^int		ft_getcol_fromstr(int cursor)$/;"	f
+ft_getrow_fromstr	sources/size1_char_typing.c	/^int		ft_getrow_fromstr(int cursor)$/;"	f
+ft_history	sources/history.c	/^void	ft_history(char opt)$/;"	f
+ft_history_init	sources/history.c	/^char	**ft_history_init(void)$/;"	f
+ft_history_new	sources/history.c	/^char	**ft_history_new(void)$/;"	f
+ft_input_init	sources/get_user_input.c	/^void	ft_input_init()$/;"	f
+ft_insert_char	sources/line_edition.c	/^char	*ft_insert_char(char *line, char chr)$/;"	f
+ft_key_interaction	sources/get_user_input.c	/^int		ft_key_interaction()$/;"	f
+ft_line_len	sources/size1_char_typing.c	/^int		ft_line_len(int i)$/;"	f
+ft_line_rest	sources/line_edition.c	/^void	ft_line_rest(int rest, char *new, char *line)$/;"	f
+ft_line_validation	sources/get_user_input.c	/^int		ft_line_validation()$/;"	f
+ft_move_cursor	sources/cursor_mov.c	/^void	ft_move_cursor(char side, int nb)$/;"	f
+ft_mv_left	sources/cursor_mov.c	/^void	ft_mv_left()$/;"	f
+ft_mv_right	sources/cursor_mov.c	/^void	ft_mv_right()$/;"	f
+ft_nb_rows_after	sources/line_edition.c	/^int		ft_nb_rows_after(int cursor)$/;"	f
+ft_pos_before_nl	sources/cursor_mov.c	/^void	ft_pos_before_nl()$/;"	f
+ft_print_t_curs	sources/tests.c	/^void	ft_print_t_curs()$/;"	f
+ft_putc	sources/termcap_tools.c	/^int		ft_putc(int c)$/;"	f
+ft_putchar_spe	sources/usefull_scratch.c	/^void	ft_putchar_spe(char *c)$/;"	f
+ft_reach_next_word	sources/cursor_mov.c	/^int		ft_reach_next_word(void)$/;"	f
+ft_reach_previous_word	sources/cursor_mov.c	/^int		ft_reach_previous_word(void)$/;"	f
+ft_scroll	sources/size1_char_typing.c	/^void	ft_scroll(int nb, char opt)$/;"	f
+ft_sighandler_ctrl_c	sources/sighandlers.c	/^void	ft_sighandler_ctrl_c(int signum)$/;"	f
+ft_sighandler_ctrl_z_return	sources/sighandlers.c	/^void	ft_sighandler_ctrl_z_return(int signum)$/;"	f
+ft_sighandler_winsize_change	sources/sighandlers.c	/^void	ft_sighandler_winsize_change(int signum)$/;"	f
+ft_size1_char	sources/size1_char_typing.c	/^char	*ft_size1_char(char *line, char *chr)$/;"	f
+ft_size3_char	sources/size3_char_typing.c	/^void	ft_size3_char(char *chr)$/;"	f
+ft_size4_char	sources/size3_char_typing.c	/^char	*ft_size4_char(char *line, char *chr)$/;"	f
+ft_size6_char	sources/size3_char_typing.c	/^void	ft_size6_char(char *chr)$/;"	f
+ft_start_up	sources/start_up.c	/^int		ft_start_up(void)$/;"	f
+ft_str_first_word	sources/get_user_input.c	/^char	*ft_str_first_word(char *str)$/;"	f
+ft_stralen_unquoted	sources/ft_strlen_unquoted.c	/^size_t	ft_stralen_unquoted(char *s, char *chars)$/;"	f
+ft_strclen_unquoted	sources/ft_strlen_unquoted.c	/^size_t	ft_strclen_unquoted(char *s, char chr, char *quotes)$/;"	f
+ft_strcsplit_all	sources/ft_strcsplit_all.c	/^char			**ft_strcsplit_all(char *s, char c)$/;"	f
+ft_suppr_char	sources/line_edition.c	/^char	*ft_suppr_char(char *line)$/;"	f
+ft_termcap_init	sources/start_up.c	/^int		ft_termcap_init(void)$/;"	f
+ft_termcap_test	sources/tests.c	/^int		ft_termcap_test()$/;"	f
+ft_usecap	sources/termcap_tools.c	/^void	ft_usecap(char *cap)$/;"	f
+ft_valid_hdoc	sources/get_user_input.c	/^int		ft_valid_hdoc(int i)$/;"	f
+ft_valid_quotes	sources/get_user_input.c	/^int		ft_valid_quotes()$/;"	f
+g_envlst	includes/shell21.h	/^t_list					*g_envlst;$/;"	v
+g_info	includes/quegonza.h	/^t_curs				g_info;$/;"	v
+g_lines	includes/shell21.h	/^char			**g_lines;$/;"	v
+g_oparr	includes/shell21.h	/^static char		*g_oparr[16] =$/;"	v
+get_command_path	sources/file_tests.c	/^int	get_command_path(char *command, char **envp, char **apath)$/;"	f
+get_next_split	sources/ft_strcsplit_all.c	/^static t_list	*get_next_split(char *s, size_t clen)$/;"	f	file:
+handle_andor	sources/astparse_andor.c	/^int			handle_andor(t_astnode **atoken, t_astnode *prev, t_astnode *head)$/;"	f
+handle_redir	sources/astexec_redir.c	/^static int	handle_redir(t_astnode **at, int fd, char *op, char *word)$/;"	f	file:
+handle_separ	sources/ast_parser.c	/^static int	handle_separ(t_astnode *token, t_astnode *prev, t_astnode *head)$/;"	f	file:
+heredoc_write	sources/astredir_heredoc.c	/^static int	heredoc_write(int *fildes, char *word)$/;"	f	file:
+hist	includes/quegonza.h	/^	char			**hist;$/;"	m	struct:s_curs
+hist_pos	includes/quegonza.h	/^	int				hist_pos;$/;"	m	struct:s_curs
+lexer_ignore	sources/ast_lexer.c	/^static int	lexer_ignore(t_astnode **at, char *input, size_t *alen)$/;"	f	file:
+lexer_opnew	sources/ast_lexer.c	/^static int	lexer_opnew(t_astnode **at, char *input, size_t len)$/;"	f	file:
+line	includes/quegonza.h	/^	char			*line;$/;"	m	struct:s_curs
+main	sources/main.c	/^int			main(int argc, char **argv, char **envp)$/;"	f
+name	includes/shell21.h	/^	char				*name;$/;"	m	struct:s_envvar
+next	includes/shell21.h	/^	struct s_astnode	*next;$/;"	m	struct:s_astnode	typeref:struct:s_astnode::s_astnode
+node_isassign	sources/astexec_assign.c	/^static int	node_isassign(t_astnode *node)$/;"	f	file:
+node_isassign_all	sources/astexec_assign.c	/^static int	node_isassign_all(t_astnode *node)$/;"	f	file:
+op	includes/shell21.h	/^	char				*op;$/;"	m	struct:s_astnode
+param_getvalue	sources/expansion_param.c	/^static char	*param_getvalue(char *str, size_t len)$/;"	f	file:
+paren_count	sources/astparse_parentheses.c	/^t_astnode	*paren_count(t_astnode *node)$/;"	f
+parenlen	sources/astlex_len.c	/^size_t			parenlen(char *str)$/;"	f
+parentheses_parser	sources/astparse_parentheses.c	/^static int	parentheses_parser(t_astnode *head)$/;"	f	file:
+parse_all_parentheses	sources/astparse_parentheses.c	/^int			parse_all_parentheses(t_astnode *head)$/;"	f
+parse_curly_braces	sources/astparse_curly.c	/^int			parse_curly_braces(t_astnode **aroot)$/;"	f
+parse_level	sources/ast_parser.c	/^static int	parse_level(t_astnode **aroot, char **tokens_lv)$/;"	f	file:
+pipe_dupexe	sources/astexec_pipe.c	/^static int	pipe_dupexe(t_astnode **at, int *fildes, int io)$/;"	f	file:
+pr_execve	sources/execute.c	/^static int	pr_execve(char *command_path, char **args, char **envp)$/;"	f	file:
+process_substitute	sources/expansion_op.c	/^static int	process_substitute(t_astnode *node, int *fildes, int fd_child)$/;"	f	file:
+prompt	includes/quegonza.h	/^	int				prompt;$/;"	m	struct:s_curs
+prompt_loop	sources/main.c	/^int			prompt_loop(void)$/;"	f
+put_astlexed	sources/ast_put.c	/^void		put_astlexed(t_astnode *token)$/;"	f
+put_astparsed	sources/ast_put.c	/^void		put_astparsed(t_astnode *token, size_t tabs)$/;"	f
+put_error	sources/error.c	/^int	put_error(char *message, char *arg)$/;"	f
+put_error_ret	sources/error.c	/^int	put_error_ret(char *message, char *arg, int ret)$/;"	f
+put_prompt	sources/prompt.c	/^int	put_prompt(int fd)$/;"	f
+quotationlen	sources/astlex_len.c	/^size_t			quotationlen(char *s, char *quotes)$/;"	f
+read_all	sources/read.c	/^char	*read_all(int fd)$/;"	f
+read_subshell	sources/exec_str_in_subshell.c	/^static int	read_subshell(int *sub_out, char **aout)$/;"	f	file:
+read_userinput	sources/read.c	/^int		read_userinput(char ***ainput)$/;"	f
+remove_empty_field	sources/expansion_remove.c	/^int	remove_empty_field(t_astnode *prev, t_astnode **anode)$/;"	f
+remove_quotes	sources/expansion_remove.c	/^int	remove_quotes(t_astnode *node)$/;"	f
+replace_node_by_fdstr	sources/expansion_op.c	/^static int	replace_node_by_fdstr(t_astnode *node, int fd)$/;"	f	file:
+row	includes/quegonza.h	/^	int				row;$/;"	m	struct:s_curs
+s_astnode	includes/shell21.h	/^typedef struct			s_astnode$/;"	s
+s_cap	includes/quegonza.h	/^typedef struct	s_cap$/;"	s
+s_curs	includes/quegonza.h	/^typedef struct		s_curs$/;"	s
+s_envvar	includes/shell21.h	/^typedef struct			s_envvar$/;"	s
+s_termios_backup	includes/quegonza.h	/^	struct termios	s_termios_backup;$/;"	m	struct:s_curs	typeref:struct:s_curs::termios
+sighandle_ignore	sources/signals.c	/^void		sighandle_ignore(int signum)$/;"	f
+sighandle_int	sources/signals.c	/^void		sighandle_int(int signum)$/;"	f
+split_field	sources/expansion.c	/^static int	split_field(t_astnode *node, int *afields)$/;"	f	file:
+strlen	includes/quegonza.h	/^	int				strlen;$/;"	m	struct:s_curs
+t_astnode	includes/shell21.h	/^}						t_astnode;$/;"	t	typeref:struct:s_astnode
+t_cap	includes/quegonza.h	/^}				t_cap;$/;"	t	typeref:struct:s_cap
+t_curs	includes/quegonza.h	/^}					t_curs;$/;"	t	typeref:struct:s_curs
+t_envvar	includes/shell21.h	/^}						t_envvar;$/;"	t	typeref:struct:s_envvar
+test_file_existance	sources/file_tests.c	/^int	test_file_existance(char *command, char **envp, char **apath)$/;"	f
+test_file_validity	sources/file_tests.c	/^int	test_file_validity(char *path)$/;"	f
+token_delimit	sources/astlex_token.c	/^int			token_delimit(t_astnode *token, char *input, size_t len)$/;"	f
+token_handler	sources/ast_parser.c	/^static int	token_handler(t_astnode **at, t_astnode *prev, t_astnode *head)$/;"	f	file:
+token_new	sources/astlex_token.c	/^t_astnode	*token_new(char *ptr)$/;"	f
+unset_greaternbrs	sources/bltn_envs.c	/^static int	unset_greaternbrs(int i)$/;"	f	file:
+value	includes/shell21.h	/^	char				*value;$/;"	m	struct:s_envvar

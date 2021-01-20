@@ -6,7 +6,7 @@
 /*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/30 15:39:13 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2020/10/15 13:30:26 by jmbomeyo         ###   ########.fr       */
+/*   Updated: 2021/01/20 21:19:59 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # define MAX_INPUT_LENGTH 1025
 
 char			**g_lines;
+
 static char		*g_oparr[16] =
 {
 	"(", "<(", ">(", ")",
@@ -31,20 +32,20 @@ static char		*g_oparr[16] =
 	NULL
 };
 
-typedef struct	s_astnode
+typedef struct			s_astnode
 {
 	char				*op;
 	void				*content;
 	struct s_astnode	*next;
-}				t_astnode;
+}						t_astnode;
 
-typedef struct	s_envvar
+typedef struct			s_envvar
 {
-	bool	exportable;
-	char	*name;
-	char	*value;
-}				t_envvar;
-t_list			*g_envlst;
+	bool				exportable;
+	char				*name;
+	char				*value;
+}						t_envvar;
+t_list					*g_envlst;
 
 void			sighandle_ignore(int signum);
 void			sighandle_int(int signum);
@@ -58,7 +59,7 @@ void			put_astparsed(t_astnode *node, size_t tabs);
 size_t			ft_strclen_unquoted(char *s, char chr, char *quotes);
 size_t			ft_stralen_unquoted(char *s, char *chars);
 char			**ft_strcsplit_all(char *s, char c);
-int				read_userinput(int fd, char ***input);
+int				read_userinput(char ***input);
 int				format_input(char *in, char ***input);
 char			*read_all(int fd);
 size_t			bashvar_len(char *str);
