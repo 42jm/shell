@@ -2,7 +2,7 @@
 NAME = 21sh
 INC = -I includes -I libft/includes
 LIB = -L libft/ -lft -lncurses
-FLAGS = -Wall -Wextra -Werror -fsanitize=address
+FLAGS = -Wall -Wextra -Werror #-fsanitize=address
 
 # Files
 OBJ_DIR = objects/

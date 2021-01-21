@@ -55,6 +55,7 @@ int		read_userinput(char ***ainput)
 	char	*buf;
 
 	buf = ft_get_user_input(&g_info);
+	signal(SIGINT, sighandle_int);
 	if (!buf && g_info.ctrl_c && !(g_info.ctrl_c &= 0))
 		return (130);
 	if (!buf)

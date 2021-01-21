@@ -20,7 +20,6 @@ void		sighandle_ignore(int signum)
 void		sighandle_int(int signum)
 {
 	(void)signum;
-	ft_putchar('\n');
-	ft_putstr("\\_$> ");
+	ft_putstr("^C\n");
 	env_set("?", "130", 0);
 }

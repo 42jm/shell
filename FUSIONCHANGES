@@ -1,3 +1,0 @@
-signal calls in start_up.c moved inside ft_get_user_input()
-strdup returned string of ft_get_user_input() instead of strdup history entry
-in execute_all_lines() check if end of array before incrementing it

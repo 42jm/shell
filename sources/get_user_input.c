@@ -150,7 +150,7 @@ char	*ft_get_user_input()
 	 */
 	if (!(g_info.hist = ft_history_new()))
 		return (NULL);
-	return (ft_strdup(g_info.line));
+	return (g_info.line);
 }
 
 void	ft_end_clean(char *end_message)
