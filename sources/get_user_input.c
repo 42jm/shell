@@ -128,6 +128,9 @@ int		ft_line_validation()
 
 char	*ft_get_user_input()
 {
+	signal(SIGWINCH, ft_sighandler_winsize_change);
+	signal(SIGINT, ft_sighandler_ctrl_c);
+	signal(SIGCONT, ft_sighandler_ctrl_z_return);
 	g_info.hist_pos = 0;
 	g_info.strlen = 0;
 	if (!(g_info.line = ft_memalloc(1)))
@@ -147,7 +150,7 @@ char	*ft_get_user_input()
 	 */
 	if (!(g_info.hist = ft_history_new()))
 		return (NULL);
-	return (g_info.line);
+	return (ft_strdup(g_info.line));
 }
 
 void	ft_end_clean(char *end_message)

@@ -45,7 +45,8 @@ int			execute_all_lines(char **aline)
 	while (!ret && aline && *aline)
 	{
 		ret = execute_firstline(&aline);
-		aline++;
+		if (aline && *aline)
+			aline++;
 	}
 	return (ret);
 }

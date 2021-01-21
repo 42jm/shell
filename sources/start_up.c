@@ -87,9 +87,6 @@ int		ft_start_up(void)
 		return (0);
 	if (!ft_get_cap(&(g_info.cap)))
 		return (ft_error("ft_get_cap(): terminal capability missing\n", 0));
-	signal(SIGWINCH, ft_sighandler_winsize_change);
-	signal(SIGINT, ft_sighandler_ctrl_c);
-	signal(SIGCONT, ft_sighandler_ctrl_z_return);
 	if (!ft_history_init())
 		return (0);
 	return (1);

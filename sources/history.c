@@ -32,7 +32,7 @@ char	**ft_history_new(void)
 		return (g_info.hist);
 	if (!(hist = (char **)ft_memalloc(sizeof(char **) * (i + 2))))
 		return (NULL);
-	hist[0] = ft_strdup(g_info.line);
+	hist[0] = g_info.line;
 	i = -1;
 	while (g_info.hist[++i])
 		hist[i + 1] = g_info.hist[i];
