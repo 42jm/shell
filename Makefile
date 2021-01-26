@@ -2,7 +2,7 @@
 NAME = 21sh
 INC = -I includes -I libft/includes
 LIB = -L libft/ -lft -lncurses
-FLAGS = -Wall -Wextra -Werror #-fsanitize=address
+FLAGS = -Wall -Wextra -Werror -ggdb#-fsanitize=address
 
 # Files
 OBJ_DIR = objects/
@@ -55,6 +55,7 @@ SRC_NAME = main.c \
 	get_user_input.c \
 	history.c \
 	line_edition.c \
+	line_validation.c \
 	prompt.c \
 	read.c \
 	sighandlers.c \
@@ -74,7 +75,7 @@ OBJ = $(addprefix $(OBJ_DIR), $(SRC_NAME:.c=.o))
 
 all: $(NAME)
 
-$(NAME): $(OBJ) libft/libft.a
+$(NAME): $(OBJ) libft/libft.a Makefile
 	@printf "$(NAME): linking\n"
 	@clang $(FLAGS) -o $(NAME) $(OBJ) $(INC) $(LIB)
 

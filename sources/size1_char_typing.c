@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 00:50:07 by quegonza          #+#    #+#             */
-/*   Updated: 2021/01/20 20:33:32 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/01/26 20:24:10 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*ft_size1_char(char *line, char *chr)
 	char c;
 
 	c = chr[0];
+	if (c == '\n')
+		g_info.cursor = 0;
 	if ((32 <= c && c < DEL) || c == '\n')
 		line = ft_insert_char(line, c);
 	else if (c == DEL && g_info.strlen != g_info.cursor)
@@ -38,8 +40,8 @@ char	*ft_size1_char(char *line, char *chr)
 
 char	*ft_ctrl_u(char *line)
 {
-	(void)line;
-	ft_putstr("^U");
+	if (line)
+		ft_putstr("^U");
 	return (line);
 }
 
@@ -96,8 +98,11 @@ int		ft_line_len(int i)
 {
 	int		j;
 
-	j = i;
-	while (j && g_info.line[j] != '\n')
+	if (!i)
+		j = 0;
+	else
+		j = i - 1;
+	while (j > 0 && g_info.line[j] != '\n')
 		j--;
 	if (!j)
 		return (i - j + g_info.prompt);
@@ -113,10 +118,10 @@ int		ft_getcol_fromstr(int cursor)
 	col = g_info.crsr_col;
 	while (i > cursor)
 	{
-		if (g_info.line[i] == '\n')
-			col = ft_line_len(i) % g_info.col;
+		if (g_info.line[i - 1] == '\n')
+			col = ft_line_len(i - 1) % g_info.col;
 		else if (!col)
-			col = g_info.col;
+			col = g_info.col - 1;
 		else
 			col--;
 		i--;

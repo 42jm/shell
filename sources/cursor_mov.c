@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 03:53:16 by quegonza          #+#    #+#             */
-/*   Updated: 2021/01/08 09:32:26 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/01/26 19:09:07 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	ft_mv_left()
 	if (g_info.crsr_col == 0)
 	{
 		if (g_info.line[g_info.strlen - g_info.cursor - 1] == '\n')
-			ft_pos_before_nl();
-		if (g_info.crsr_row > 0)
+			tputs(tgoto(g_info.cap.cm, ft_getcol_fromstr(g_info.strlen - g_info.cursor - 1), g_info.crsr_row - 1), 1, ft_putc);
+		else if (g_info.crsr_row > 0)
 			tputs(tgoto(g_info.cap.cm, g_info.col - 1, g_info.crsr_row - 1),
 					1, ft_putc);
 		else
@@ -43,7 +43,6 @@ void	ft_mv_left()
 	}
 	else
 	{
-//		tputs (g_info.cap.le, 1, ft_putc);
 		tputs(tgoto(g_info.cap.cm, g_info.crsr_col - 1, g_info.crsr_row),
 			1, ft_putc);
 	}
@@ -70,7 +69,6 @@ void	ft_mv_right()
 	}
 	else
 	{
-		//tputs (g_info.cap.nd, 1, ft_putc);
 		tputs(tgoto(g_info.cap.cm, g_info.crsr_col + 1, g_info.crsr_row),
 			1, ft_putc);
 	}
@@ -83,23 +81,11 @@ void	ft_move_cursor(char side, int nb)
 	if (nb > 0)
 	{
 		if (side == 'L')
-		{
-			//g_info.cursor -= nb;
-			while (nb)
-			{
+			while (nb--)
 				ft_mv_left();
-				nb--;
-			}
-		}
 		else if (side == 'R')
-		{
-			//g_info.cursor += nb;
-			while (nb)
-			{
+			while (nb--)
 				ft_mv_right();
-				nb--;
-			}
-		}
 	}
 }
 

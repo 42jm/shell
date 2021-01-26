@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 06:31:50 by quegonza          #+#    #+#             */
-/*   Updated: 2021/01/07 07:39:15 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/01/22 06:13:18 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int		ft_start_up(void)
 	g_info.s_termios_backup = s_termios;
 	g_info.ctrl_c = 0;
 	g_info.copy = NULL;
+	g_info.temp = NULL;
 	s_termios.c_lflag &= ~(ICANON);
 	s_termios.c_lflag &= ~(ECHO);
 	if (tcsetattr(0, 0, &s_termios) == -1)
@@ -90,4 +91,14 @@ int		ft_start_up(void)
 	if (!ft_history_init())
 		return (0);
 	return (1);
+}
+
+void	ft_free_tabzero(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+		free(tab[i++]);
+	free(tab);
 }

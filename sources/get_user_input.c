@@ -6,11 +6,18 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 02:00:55 by quegonza          #+#    #+#             */
-/*   Updated: 2021/01/20 23:15:25 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/01/22 06:20:54 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "quegonza.h"
+
+void	ft_input_init()
+{
+	ft_get_cursor_info();
+	g_info.prompt = g_info.crsr_col;
+	g_info.cursor = 0;
+}
 
 char	*ft_current_char(char *buf, int *len)
 {
@@ -22,14 +29,6 @@ char	*ft_current_char(char *buf, int *len)
 		return (NULL);
 	}
 	return (buf);
-}
-
-void	ft_input_init()
-
-{
-	ft_get_cursor_info();
-	g_info.prompt = g_info.crsr_col;
-	g_info.cursor = 0;
 }
 
 int		ft_key_interaction()
@@ -56,94 +55,22 @@ int		ft_key_interaction()
 	return (1);
 }
 
-char	*ft_str_first_word(char *str)
-{
-	char	*word;
-	int		i;
-
-	i = 0;
-	while (ft_isprint(str[i]))
-		i++;
-	if (!(word = ft_memalloc(i + 1)))
-		return (NULL);
-	return (word = ft_strncpy(word, str, i));
-}
-
-int		ft_valid_hdoc(int i)
-{
-	char 	*eof;
-
-	i += 2;
-	while (g_info.line[i] == ' ' || g_info.line[i] == '\t')
-		i++;
-	eof = ft_str_first_word(&(g_info.line[i]));
-	i += ft_strlen(eof) - 1;
-	while (g_info.line[++i])
-		if (!(ft_strncmp(&(g_info.line[i]), eof, ft_strlen(eof))))
-		{
-			free(eof);
-			return (1);
-		}
-	free(eof);
-	return (0);
-}
-
-int		ft_valid_quotes()
-{
-	int		i;
-
-	i = -1;
-	while (g_info.line[++i])
-	{
-		if (g_info.line[i] == '\'')
-			while (g_info.line[++i] != '\'')
-			{
-				if (!g_info.line[i])
-					return (0);
-			}
-		else if (g_info.line[i] == '\"')
-			while (g_info.line[++i] != '\"')
-			{
-				if (!g_info.line[i])
-					return (0);
-			}
-		else if (g_info.line[i] == '<' && g_info.line[i + 1] == '<')
-			if (!ft_valid_hdoc(i))
-				return (0);
-	}
-	return (1);
-}
-
-int		ft_line_validation()
-{
-	if (g_info.strlen && g_info.line[g_info.strlen - 1] == '\n')
-	{
-		if (!ft_valid_quotes())
-			return (0);
-		g_info.line[g_info.strlen - 1] = '\0';
-		return (1);
-	}
-	return (0);
-}
-
 char	*ft_get_user_input()
 {
-	signal(SIGWINCH, ft_sighandler_winsize_change);
-	signal(SIGINT, ft_sighandler_ctrl_c);
-	signal(SIGCONT, ft_sighandler_ctrl_z_return);
-	g_info.hist_pos = 0;
+	ft_input_init();
+	g_info.hist_pos = -1;
 	g_info.strlen = 0;
 	if (!(g_info.line = ft_memalloc(1)))
 		return (NULL);
-	ft_input_init();
+	signal(SIGWINCH, ft_sighandler_winsize_change);
+	signal(SIGINT, ft_sighandler_ctrl_c);
+	signal(SIGCONT, ft_sighandler_ctrl_z_return);
 	while (!ft_line_validation())
-	{
 		if (!ft_key_interaction())
 		{
 			free(g_info.line);
 			return (NULL);
 		}
-	}
 	/*
 	   if (ft_strstr("<<", g_info.line) && !ft_strextended())
 	   return
@@ -161,6 +88,8 @@ void	ft_end_clean(char *end_message)
 	ft_free_tabzero(g_info.hist);
 	if (g_info.copy)
 		free(g_info.copy);
+	if (g_info.temp)
+		free(g_info.temp);
 	if (end_message)
 		ft_putstr(end_message);
 }

@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 00:55:41 by quegonza          #+#    #+#             */
-/*   Updated: 2021/01/18 21:18:22 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/01/25 19:37:45 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void	ft_size3_char(char *chr)
 			ft_mv_left();
 		else if (chr[2] == 'C' && g_info.cursor > 0)
 			ft_mv_right();
-		else if (chr[2] == 'A' && g_info.hist[0] && g_info.hist[g_info.hist_pos + 1])
+		else if (chr[2] == 'A' && g_info.hist[g_info.hist_pos + 1])
 			ft_history('+');
-		else if (chr[2] == 'B' && g_info.hist_pos > 0)
+		else if (chr[2] == 'B' && g_info.hist_pos > -1)
 			ft_history('-');
 		else if (chr[2] == 'H' && g_info.strlen - g_info.cursor > 0)
 			ft_ctrl_a();

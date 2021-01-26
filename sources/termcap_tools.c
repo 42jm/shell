@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 00:44:05 by quegonza          #+#    #+#             */
-/*   Updated: 2020/12/28 05:29:20 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/01/26 07:14:07 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_clean_after_cursor(void)
 	maxcol = g_info.col;
 	while (++i < maxcol)
 		ft_putchar(' ');
-	if (g_info.cursor + g_info.crsr_col >= g_info.col)
+	if (ft_getrow_fromstr(g_info.strlen) != g_info.crsr_row)
 	{
 		tputs(tgoto(g_info.cap.cm, 0, g_info.crsr_row + 1), 1, ft_putc);
 		tputs(g_info.cap.cd, g_info.row - g_info.crsr_row - 1, ft_putc);

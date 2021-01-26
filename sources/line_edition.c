@@ -6,35 +6,11 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 06:10:12 by quegonza          #+#    #+#             */
-/*   Updated: 2021/01/20 22:26:36 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/01/26 20:30:27 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "quegonza.h"
-
-int		ft_nb_rows_after(int cursor)
-{
-	int		i;
-	int		in;
-	int		nb_rows;
-
-	i = cursor;
-	nb_rows = 0;
-	while (g_info.line[i])
-	{
-		if (g_info.line[i] == '\n')
-		{
-			in = 0;
-			while (g_info.line[++i] && g_info.line[i] != '\n')
-			{
-				in++;
-			}
-			nb_rows += 1 + in / g_info.col;
-		}
-		i++;
-	}
-	return (nb_rows);
-}
 
 void	ft_line_rest(int rest, char *new, char *line)
 {
@@ -77,7 +53,9 @@ char	*ft_insert_char(char *line, char chr)
 		new[i] = line[i];
 	new[i] = chr;
 	ft_putchar(chr);
-	if (g_info.crsr_col == g_info.col - 1)
+//	if (chr == '\n')
+//		ft_putstr("---");
+	if (g_info.crsr_col == g_info.col - 1 && chr != '\n')
 		ft_putchar('\n');
 	ft_get_cursor_pos();
 	if (g_info.cursor)
@@ -89,11 +67,12 @@ char	*ft_insert_char(char *line, char chr)
 
 void	ft_after_cursor(char *new, char *line, int i, int rest)
 {
-	if (g_info.cursor + g_info.crsr_col >= g_info.col)
+	if (ft_getrow_fromstr(g_info.strlen) != g_info.crsr_row)
 	{
 		tputs(tgoto(g_info.cap.cm, 0, g_info.crsr_row + 1), 1, ft_putc);
 		tputs(g_info.cap.cd, g_info.row - g_info.crsr_row - 1, ft_putc);
-		tputs(tgoto(g_info.cap.cm, g_info.crsr_col, g_info.crsr_row), 1, ft_putc);
+		tputs(tgoto(g_info.cap.cm, g_info.crsr_col, g_info.crsr_row)
+			, 1, ft_putc);
 	}
 	ft_line_rest(rest, NULL, line);
 	while (--rest)
