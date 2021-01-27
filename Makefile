@@ -1,3 +1,9 @@
+# Colours
+NO_COLOR = \033[0m
+WAIT_COLOR = \033[1;33m
+OK_COLOR = \033[1;32m
+CLEAN_COLOR = \033[1;36m
+
 # Compilation
 NAME = 21sh
 INC = -I includes -I libft/includes
@@ -75,26 +81,29 @@ OBJ = $(addprefix $(OBJ_DIR), $(SRC_NAME:.c=.o))
 
 all: $(NAME)
 
-$(NAME): $(OBJ) libft/libft.a Makefile
-	@printf "$(NAME): linking\n"
+$(NAME): Makefile libft/libft.a $(OBJ)
+	@printf "\n$(WAIT_COLOR)$(NAME): linking\$(NO_COLOR)\n"
 	@clang $(FLAGS) -o $(NAME) $(OBJ) $(INC) $(LIB)
+	@echo "$(OK_COLOR)	+++ " $@ "   created +++	$(NO_COLOR)"
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	@printf "$(NAME): compiling $@\n"
 	@mkdir -p $(OBJ_DIR)
 	@clang $(FLAGS) -c $< -o $@ $(INC)
+	@echo -n "$(WAIT_COLOR)+$(NO_COLOR)"
 
 libft/libft.a:
 	@make --quiet -C libft
 
 clean:
 	@make --quiet -C libft clean
-	@printf "$(NAME): removing objects\n"
 	@rm -rf $(OBJ_DIR)
+	@echo "$(CLEAN_COLOR)	--- $(NAME) object files deleted ---$(NO_COLOR)"
 
-fclean: clean
+fclean:
 	@make --quiet -C libft fclean
-	@printf "$(NAME): removing $(NAME)\n"
+	@rm -rf $(OBJ_DIR)
+	@echo "$(CLEAN_COLOR)	--- $(NAME) object files deleted ---$(NO_COLOR)"
 	@rm -f $(NAME)
+	@echo "$(CLEAN_COLOR)	--- $(NAME)  deleted ---		$(NO_COLOR)"
 
 re:	fclean all

@@ -6,9 +6,15 @@
 #    By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/12 09:27:03 by jmbomeyo          #+#    #+#              #
-#    Updated: 2021/01/20 20:04:06 by quegonza         ###   ########.fr        #
+#    Updated: 2021/01/27 05:38:21 by quegonza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+#\/\/\/Colours
+NO_COLOR = \033[0m
+WAIT_COLOR = \033[1;33m
+OK_COLOR = \033[1;32m
+CLEAN_COLOR = \033[1;36m
 
 NAME = libft.a
 SRC = ft_atoi.c \
@@ -131,20 +137,20 @@ OBJ = $(addprefix $(OBJ_DIR), $(SRC:%.c=%.o))
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@printf "$(NAME): archiving\n"
 	@ar rcs $(NAME) $(OBJ)
+	@echo "$(OK_COLOR)\n ++ libft archived ++ $(NO_COLOR)"
 
 $(OBJ_DIR)%.o: %.c
 	@mkdir -p $(OBJ_DIR)
-	@printf "$(NAME): compiling $@\n"
-	@gcc -Wall -Wextra -Werror -c $< -o $@ -I $(INC_DIR)
+	@clang -Wall -Wextra -Werror -c $< -o $@ -I $(INC_DIR)
+	@echo -n "$(WAIT_COLOR)+$(NO_COLOR)"
 
 clean:
-	@printf "$(NAME): removing objects\n"
 	@rm -rf $(OBJ_DIR)
+	@echo "$(CLEAN_COLOR) -- libft .o files deleted --$(NO_COLOR)"
 
 fclean: clean
-	@printf "$(NAME): removing $(NAME)\n"
 	@rm -f $(NAME)
+	@echo "$(CLEAN_COLOR) -- libft.a deleted --$(NO_COLOR)"
 
 re: fclean all
