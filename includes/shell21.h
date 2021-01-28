@@ -6,7 +6,7 @@
 /*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/30 15:39:13 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2021/01/20 21:19:59 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/01/28 22:17:50 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,7 @@
 
 # define MAX_INPUT_LENGTH 1025
 
-char			**g_lines;
-
-static char		*g_oparr[16] =
-{
-	"(", "<(", ">(", ")",
-	";", "&",
-	"&&", "||",
-	"|",
-	"<", ">", ">>", "<&", ">&", "<<",
-	NULL
-};
+extern char			**g_lines;
 
 typedef struct			s_astnode
 {
@@ -45,7 +35,8 @@ typedef struct			s_envvar
 	char				*name;
 	char				*value;
 }						t_envvar;
-t_list					*g_envlst;
+
+extern t_list			*g_envlst;
 
 void			sighandle_ignore(int signum);
 void			sighandle_int(int signum);

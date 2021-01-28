@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 03:53:16 by quegonza          #+#    #+#             */
-/*   Updated: 2021/01/27 21:54:20 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/01/28 22:16:16 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@ void	ft_mv_left(void)
 	{
 		if (g_info.line[g_info.strlen - g_info.cursor - 1] == '\n')
 			tputs(tgoto(g_info.cap.cm, ft_getcol_fromstr(g_info.strlen
-			- g_info.cursor - 1), g_info.crsr_row - 1), 1, ft_putc);
+				- g_info.cursor - 1), g_info.crsr_row - 1), 1, ft_putc);
 		else if (g_info.crsr_row > 0)
 			tputs(tgoto(g_info.cap.cm, g_info.col - 1, g_info.crsr_row - 1),
-					1, ft_putc);
+				1, ft_putc);
 		else
 		{
 			ft_scroll(1, 'R');
 			tputs(tgoto(g_info.cap.cm, g_info.col - 1, g_info.crsr_row),
-					1, ft_putc);
+				1, ft_putc);
 		}
 	}
 	else

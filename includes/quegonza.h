@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 03:16:03 by quegonza          #+#    #+#             */
-/*   Updated: 2021/01/27 22:49:52 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/01/28 22:05:20 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef struct		s_curs
 	t_cap			cap;
 }					t_curs;
 
-t_curs				g_info;
+extern t_curs				g_info;
 
 void	ft_clean_after_cursor(void);
 void	ft_crsr_newline(void);

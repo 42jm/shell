@@ -6,12 +6,16 @@
 /*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 12:16:49 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2021/01/20 22:50:10 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/01/28 22:12:41 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
 #include "quegonza.h"
+
+char		**g_lines;
+t_list		*g_envlst;
+t_curs		g_info;
 
 int			execute_firstline(char ***alines)
 {
