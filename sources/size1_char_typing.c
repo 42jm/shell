@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 00:50:07 by quegonza          #+#    #+#             */
-/*   Updated: 2021/01/26 20:24:10 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/01/28 00:54:08 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int		ft_getcol_fromstr(int cursor)
 	while (i > cursor)
 	{
 		if (g_info.line[i - 1] == '\n')
-			col = ft_line_len(i - 1) % g_info.col;
+			col = ft_line_len(i) % g_info.col;
 		else if (!col)
 			col = g_info.col - 1;
 		else
@@ -151,16 +151,17 @@ int		ft_getrow_fromstr(int cursor)
 		if ((i -= col) > cursor)
 			row -= 1 + col / g_info.col;
 	}
-	while (i < cursor)
-	{
-		if (g_info.line[i++] == '\n' || col == g_info.col - 1)
+	if (i > 0)
+		while (i < cursor)
 		{
-			col = 0;
-			row++;
+			if (g_info.line[i++] == '\n' || col == g_info.col - 1)
+			{
+				col = 0;
+				row++;
+			}
+			else
+				col++;
 		}
-		else
-			col++;
-	}
 	return (row);
 }
 

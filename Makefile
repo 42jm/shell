@@ -8,7 +8,7 @@ CLEAN_COLOR = \033[1;36m
 NAME = 21sh
 INC = -I includes -I libft/includes
 LIB = -L libft/ -lft -lncurses
-FLAGS = -Wall -Wextra -Werror -ggdb#-fsanitize=address
+FLAGS = -Wall -Wextra -Werror
 
 # Files
 OBJ_DIR = objects/

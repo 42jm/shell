@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 02:00:55 by quegonza          #+#    #+#             */
-/*   Updated: 2021/01/22 06:20:54 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/01/28 00:58:18 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	ft_input_init()
 {
 	ft_get_cursor_info();
-	g_info.prompt = g_info.crsr_col;
 	g_info.cursor = 0;
 }
 
@@ -60,6 +59,7 @@ char	*ft_get_user_input()
 	ft_input_init();
 	g_info.hist_pos = -1;
 	g_info.strlen = 0;
+	g_info.prompt = g_info.crsr_col;
 	if (!(g_info.line = ft_memalloc(1)))
 		return (NULL);
 	signal(SIGWINCH, ft_sighandler_winsize_change);

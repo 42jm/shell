@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 03:16:03 by quegonza          #+#    #+#             */
-/*   Updated: 2021/01/26 06:01:45 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/01/27 22:49:52 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ typedef struct	s_cap
 	char		*ce;
 	char		*cm;
 	char		*dc;
-//	char		*le;
-//	char		*nd;
 }				t_cap;
 
 typedef struct		s_curs

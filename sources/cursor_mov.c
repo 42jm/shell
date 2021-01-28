@@ -6,31 +6,19 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 03:53:16 by quegonza          #+#    #+#             */
-/*   Updated: 2021/01/26 19:09:07 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/01/27 21:54:20 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "quegonza.h"
 
-void	ft_pos_before_nl()
-{
-	int		len;
-	int		i;
-
-	i = g_info.strlen - g_info.cursor - 1;
-	len = 0;
-	while (--i && g_info.line[i] != '\n')
-		len++;
-	tputs(tgoto(g_info.cap.cm, len % g_info.col, g_info.crsr_row - 1),
-			1, ft_putc);
-}
-
-void	ft_mv_left()
+void	ft_mv_left(void)
 {
 	if (g_info.crsr_col == 0)
 	{
 		if (g_info.line[g_info.strlen - g_info.cursor - 1] == '\n')
-			tputs(tgoto(g_info.cap.cm, ft_getcol_fromstr(g_info.strlen - g_info.cursor - 1), g_info.crsr_row - 1), 1, ft_putc);
+			tputs(tgoto(g_info.cap.cm, ft_getcol_fromstr(g_info.strlen
+			- g_info.cursor - 1), g_info.crsr_row - 1), 1, ft_putc);
 		else if (g_info.crsr_row > 0)
 			tputs(tgoto(g_info.cap.cm, g_info.col - 1, g_info.crsr_row - 1),
 					1, ft_putc);
@@ -50,7 +38,7 @@ void	ft_mv_left()
 	(g_info.cursor)++;
 }
 
-void	ft_mv_right()
+void	ft_mv_right(void)
 {
 	if (g_info.line[g_info.strlen - g_info.cursor] == '\n')
 		tputs(tgoto(g_info.cap.cm, 0, g_info.crsr_row + 1),
@@ -99,7 +87,7 @@ int		ft_reach_next_word(void)
 		i++;
 		ft_mv_right();
 	}
-	while (g_info.line[i] && ft_isprint(g_info.line[i]) && g_info.line[i] != ' ')
+	while (g_info.line[i] != ' ' && ft_isprint(g_info.line[i]))
 	{
 		ft_mv_right();
 		i++;
@@ -116,9 +104,7 @@ int		ft_reach_previous_word(void)
 	{
 		ft_mv_left();
 		while (--i && (g_info.line[i] == ' ' || !(g_info.line[i])))
-		{
 			ft_mv_left();
-		}
 		while (i > 0 && ft_isprint(g_info.line[i]) && g_info.line[i] != ' ')
 		{
 			ft_mv_left();
