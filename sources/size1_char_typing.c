@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 00:50:07 by quegonza          #+#    #+#             */
-/*   Updated: 2021/01/28 00:54:08 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/01/28 22:59:36 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*ft_size1_char(char *line, char *chr)
 		line = ft_del_char(line);
 	else if (c == CTRL_A && g_info.strlen != g_info.cursor)
 		ft_ctrl_a();
-	else if (c == CTRL_D && !(g_info.strlen))
+	else if (c == CTRL_D)
 		line = ft_ctrl_d(line);
 	else if (c == CTRL_E && g_info.cursor)
 		ft_ctrl_e();
@@ -185,8 +185,16 @@ void	ft_ctrl_a()
 
 char	*ft_ctrl_d(char *line)
 {
-	free(g_info.line);
-	line = ft_strdup("exit\n");
+	if (!(g_info.strlen))
+	{
+		g_info.exit = 1;
+		free(g_info.line);
+		g_info.line = ft_strdup("exit");
+	}
+	else if (g_info.cursor)
+	{
+		line = ft_suppr_char(line);
+	}
 	return (line);
 }
 

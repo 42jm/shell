@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 03:16:03 by quegonza          #+#    #+#             */
-/*   Updated: 2021/01/28 22:05:20 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/01/28 22:55:45 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct		s_curs
 	char			*line;
 	char			*temp;
 	char			*copy;
-	char			ctrl_c;
+	char			exit;
 	struct termios	s_termios_backup;
 	t_cap			cap;
 }					t_curs;

@@ -6,7 +6,7 @@
 /*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 12:16:49 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2021/01/20 23:20:52 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/01/28 23:17:43 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ int		read_userinput(char ***ainput)
 
 	buf = ft_get_user_input(&g_info);
 	signal(SIGINT, sighandle_int);
-	if (!buf && g_info.ctrl_c && !(g_info.ctrl_c &= 0))
-		return (130);
 	if (!buf)
 		return (put_error_ret("failed read", "read_userinput", -1));
 	ret = format_input(buf, ainput);

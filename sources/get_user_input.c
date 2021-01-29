@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 02:00:55 by quegonza          #+#    #+#             */
-/*   Updated: 2021/01/28 00:58:18 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/01/28 23:39:41 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ int		ft_key_interaction()
 	char	chr[16];
 	int		len;
 
-	if (g_info.ctrl_c && !(g_info.ctrl_c &= 0))
-		return (0);
 	if (!ft_current_char(chr, &len))
 		return (0);
 	else if (len == 1)
@@ -65,12 +63,15 @@ char	*ft_get_user_input()
 	signal(SIGWINCH, ft_sighandler_winsize_change);
 	signal(SIGINT, ft_sighandler_ctrl_c);
 	signal(SIGCONT, ft_sighandler_ctrl_z_return);
+	g_info.exit = 0;
 	while (!ft_line_validation())
+	{
 		if (!ft_key_interaction())
 		{
 			free(g_info.line);
 			return (NULL);
 		}
+	}
 	/*
 	   if (ft_strstr("<<", g_info.line) && !ft_strextended())
 	   return
