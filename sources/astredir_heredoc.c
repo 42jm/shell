@@ -14,9 +14,11 @@
 
 static int	heredoc_write(int *fildes, char *word)
 {
-	signal(SIGINT, sighandle_ignore);
+	int	ret;
+
+	ret = 0;
 	if (close(fildes[0]) == -1)
-		return (put_error("child failed to close pipe (read)", "heredoc"));
+		ret = put_error("child failed to close pipe (read)", "heredoc");
 	while (*g_lines)
 	{
 		if (!ft_strcmp(*g_lines, word))
@@ -27,10 +29,10 @@ static int	heredoc_write(int *fildes, char *word)
 	if (*g_lines && !ft_strcmp(*g_lines, word))
 		g_lines++;
 	else
-		return (put_error("delimitor word not found", word));
+		ret = put_error("delimitor word not found", word);
 	if (close(fildes[1]) == -1)
-		return (put_error("child failed to close pipe (write)", "heredoc"));
-	return (-1);
+		ret = put_error("child failed to close pipe (write)", "heredoc");
+	return (ret);
 }
 
 int			astredir_heredoc(t_astnode **at, int fd, char *redir_op, char *word)
@@ -39,13 +41,17 @@ int			astredir_heredoc(t_astnode **at, int fd, char *redir_op, char *word)
 	pid_t	pid;
 	int		ret;
 
-	if (!g_lines || !*g_lines)
+	if (!g_lines)
 		return (put_error("no arguments", "astredir_heredoc"));
 	if (pipe(fildes) == -1)
 		return (put_error("pipe failed", redir_op));
 	pid = fork();
 	if (!pid)
-		return (heredoc_write(fildes, word));
+	{
+		heredoc_write(fildes, word);
+		//return (-1);
+		exit(0);
+	}
 	if (close(fildes[1]) == -1)
 		return (put_error("parent failed to close pipe write side", "heredoc"));
 	ret = ast_localredir(at, fildes[0], fd);
