@@ -49,7 +49,7 @@ int	astexec_simplecmd(t_astnode **at)
 			return (expand_op(at, node));
 		node = node->next;
 	}
-	if ((ret = expand_word(*at)))
+	if ((ret = expand_word(at)))
 		return (ret);
 	return (astexec_redir(at));
 }

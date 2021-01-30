@@ -20,7 +20,8 @@
 
 # define MAX_INPUT_LENGTH 1025
 
-extern char			**g_lines;
+extern char				**g_lines;
+extern t_list			*g_envlst;
 
 typedef struct			s_astnode
 {
@@ -36,7 +37,6 @@ typedef struct			s_envvar
 	char				*value;
 }						t_envvar;
 
-extern t_list			*g_envlst;
 
 void			sighandle_ignore(int signum);
 void			sighandle_int(int signum);
@@ -56,9 +56,9 @@ char			*read_all(int fd);
 size_t			bashvar_len(char *str);
 int				expand_tilde(t_astnode *node);
 int				expand_param(t_astnode *node);
-int				expand_word(t_astnode *node);
+int				expand_word(t_astnode **ahead);
 int				expand_op(t_astnode **at, t_astnode *node);
-int				remove_empty_field(t_astnode *prev, t_astnode **anode);
+int				remove_empty_field(t_astnode *p, t_astnode **n, t_astnode **h);
 int				remove_quotes(t_astnode *node);
 char			*parse_quotes(char *line);
 size_t			quotationlen(char *s, char *quotes);

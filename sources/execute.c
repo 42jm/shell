@@ -84,5 +84,7 @@ int			execute(char **args)
 		return (execute_builtin(args));
 	if (*args == NULL || (**args == '\0' && args[1] == NULL))
 		return (0);
+	if (**args == '\0')
+		return (put_error("command is empty", "execute"));
 	return (execute_command(args));
 }

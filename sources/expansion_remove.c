@@ -12,7 +12,7 @@
 
 #include "shell21.h"
 
-int	remove_empty_field(t_astnode *prev, t_astnode **anode)
+int	remove_empty_field(t_astnode *prev, t_astnode **anode, t_astnode **ahead)
 {
 	t_astnode	*node;
 	t_astnode	*next;
@@ -24,7 +24,10 @@ int	remove_empty_field(t_astnode *prev, t_astnode **anode)
 		return (0);
 	next = node->next;
 	free_node(node);
-	prev->next = next;
+	if (prev)
+		prev->next = next;
+	else
+		*ahead = next;
 	*anode = next;
 	return (1);
 }
