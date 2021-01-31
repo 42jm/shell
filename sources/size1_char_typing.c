@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 00:50:07 by quegonza          #+#    #+#             */
-/*   Updated: 2021/01/28 22:59:36 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/01/31 20:53:00 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,8 @@ int		ft_line_len(int i)
 	while (j > 0 && g_info.line[j] != '\n')
 		j--;
 	if (!j)
-		return (i - j + g_info.prompt);
-	return (i - j);
+		return (i + g_info.prompt);
+	return (i - j - 1);
 }
 
 int		ft_getcol_fromstr(int cursor)
@@ -118,13 +118,13 @@ int		ft_getcol_fromstr(int cursor)
 	col = g_info.crsr_col;
 	while (i > cursor)
 	{
-		if (g_info.line[i - 1] == '\n')
+		i--;
+		if (g_info.line[i] == '\n')
 			col = ft_line_len(i) % g_info.col;
 		else if (!col)
 			col = g_info.col - 1;
 		else
 			col--;
-		i--;
 	}
 	while (i < cursor)
 	{
@@ -148,14 +148,15 @@ int		ft_getrow_fromstr(int cursor)
 	while (i > cursor)
 	{
 		col = ft_line_len(i);
-		if ((i -= col) > cursor)
+		if ((i = i - col - 1) > cursor)
 			row -= 1 + col / g_info.col;
 	}
-	if (i > 0)
+	if (i >= 0)
 		while (i < cursor)
 		{
-			if (g_info.line[i++] == '\n' || col == g_info.col - 1)
+			if (g_info.line[i++] == '\n' || col >= g_info.col - 1)
 			{
+				ft_putnbr(i);
 				col = 0;
 				row++;
 			}
@@ -192,9 +193,7 @@ char	*ft_ctrl_d(char *line)
 		g_info.line = ft_strdup("exit");
 	}
 	else if (g_info.cursor)
-	{
 		line = ft_suppr_char(line);
-	}
 	return (line);
 }
 
