@@ -8,7 +8,7 @@ CLEAN_COLOR = \033[1;36m
 NAME = 21sh
 INC = -I includes -I libft/includes
 LIB = -L libft/ -lft -lncurses
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -fsanitize=address
 
 # Files
 OBJ_DIR = objects/
@@ -89,7 +89,7 @@ $(NAME): Makefile libft/libft.a $(OBJ)
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@mkdir -p $(OBJ_DIR)
 	@clang $(FLAGS) -c $< -o $@ $(INC)
-	@echo -n "$(WAIT_COLOR)+$(NO_COLOR)"
+	@printf "$(WAIT_COLOR)+$(NO_COLOR)"
 
 libft/libft.a:
 	@make --quiet -C libft

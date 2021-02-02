@@ -6,7 +6,7 @@
 #    By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/12 09:27:03 by jmbomeyo          #+#    #+#              #
-#    Updated: 2021/01/27 05:38:21 by quegonza         ###   ########.fr        #
+#    Updated: 2021/02/02 13:37:28 by quegonza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -143,7 +143,7 @@ $(NAME): $(OBJ)
 $(OBJ_DIR)%.o: %.c
 	@mkdir -p $(OBJ_DIR)
 	@clang -Wall -Wextra -Werror -c $< -o $@ -I $(INC_DIR)
-	@echo -n "$(WAIT_COLOR)+$(NO_COLOR)"
+	@printf "$(WAIT_COLOR)+$(NO_COLOR)"
 
 clean:
 	@rm -rf $(OBJ_DIR)
