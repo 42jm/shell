@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 00:50:07 by quegonza          #+#    #+#             */
-/*   Updated: 2021/01/31 20:53:00 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/02 01:19:09 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_size1_char(char *line, char *chr)
 
 	c = chr[0];
 	if (c == '\n')
-		g_info.cursor = 0;
+		ft_ctrl_e();
 	if ((32 <= c && c < DEL) || c == '\n')
 		line = ft_insert_char(line, c);
 	else if (c == DEL && g_info.strlen != g_info.cursor)
@@ -76,94 +76,19 @@ char	*ft_ctrl_y(char *line)
 {
 	char	*res;
 	int		copylen;
-	int		len;
+	int		i;
 
 	copylen = ft_strlen(g_info.copy);
 	if (!(res = ft_memalloc(g_info.strlen + copylen + 1)))
 		return (NULL);
-	len = g_info.strlen - g_info.cursor;
-	ft_strncpy(res, line, len);
-	ft_strcpy(&res[len], g_info.copy);
-	ft_strcpy(&res[len + copylen], &line[len]);
+	i = g_info.strlen - g_info.cursor;
+	ft_strncpy(res, line, i);
+	ft_strcpy(&res[i], g_info.copy);
+	ft_strcpy(&res[i + copylen], &line[i]);
 	g_info.strlen += copylen;
-	ft_putstr(&res[len]);
-	g_info.cursor = 0;
-	ft_get_cursor_pos();
-	ft_move_cursor('L', ft_strlen(&line[len]));
+	ft_putstr(&res[i]);
 	free(line);
 	return (res);
-}
-
-int		ft_line_len(int i)
-{
-	int		j;
-
-	if (!i)
-		j = 0;
-	else
-		j = i - 1;
-	while (j > 0 && g_info.line[j] != '\n')
-		j--;
-	if (!j)
-		return (i + g_info.prompt);
-	return (i - j - 1);
-}
-
-int		ft_getcol_fromstr(int cursor)
-{
-	int		i;
-	int		col;
-
-	i = g_info.strlen - g_info.cursor;
-	col = g_info.crsr_col;
-	while (i > cursor)
-	{
-		i--;
-		if (g_info.line[i] == '\n')
-			col = ft_line_len(i) % g_info.col;
-		else if (!col)
-			col = g_info.col - 1;
-		else
-			col--;
-	}
-	while (i < cursor)
-	{
-		if (g_info.line[i++] == '\n' || col == g_info.col - 1)
-			col = 0;
-		else
-			col++;
-	}
-	return (col);
-}
-
-int		ft_getrow_fromstr(int cursor)
-{
-	int		i;
-	int		row;
-	int		col;
-
-	i = g_info.strlen - g_info.cursor;
-	row = g_info.crsr_row;
-	col = g_info.crsr_col;
-	while (i > cursor)
-	{
-		col = ft_line_len(i);
-		if ((i = i - col - 1) > cursor)
-			row -= 1 + col / g_info.col;
-	}
-	if (i >= 0)
-		while (i < cursor)
-		{
-			if (g_info.line[i++] == '\n' || col >= g_info.col - 1)
-			{
-				ft_putnbr(i);
-				col = 0;
-				row++;
-			}
-			else
-				col++;
-		}
-	return (row);
 }
 
 void	ft_ctrl_e()
@@ -201,7 +126,6 @@ void	ft_scroll(int nb, char opt)
 {
 	if (opt == 'R')
 	{
-//		tputs(tgoto(g_info.cap.cm, g_info.col - 1, 0), 1, ft_putc);
 		while (--nb >= 0)
 		{
 			tputs(tgetstr("sr", NULL), g_info.row, ft_putc);
@@ -209,7 +133,6 @@ void	ft_scroll(int nb, char opt)
 	}
 	if (opt == 'F')
 	{
-//		tputs(tgoto(g_info.cap.cm, 0, g_info.row - 1), 1, ft_putc);
 		while (--nb >= 0)
 		{
 			tputs(tgetstr("sf", NULL), g_info.row, ft_putc);

@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 00:55:41 by quegonza          #+#    #+#             */
-/*   Updated: 2021/01/25 19:37:45 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/01 23:20:27 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,7 @@ char	*ft_size4_char(char *line, char *chr)
 	if (chr[0] == ESC && chr[1] == '[')
 	{
 		if (!ft_strcmp("3~", &chr[2]) && g_info.cursor > 0)
-		{
 			line = ft_suppr_char(line);
-		}
 	}
 	return (line);
 }

@@ -6,27 +6,16 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 02:00:55 by quegonza          #+#    #+#             */
-/*   Updated: 2021/01/31 20:06:32 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/02 00:30:11 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "quegonza.h"
 
-void	ft_input_init()
-{
-	ft_get_cursor_info();
-	g_info.cursor = 0;
-}
-
 char	*ft_current_char(char *buf, int *len)
 {
 	ft_bzero(buf, 16);
-	*len = read(0, buf, 16);
-	if (*len == -1)
-	{
-		ft_putstr("\nread() returned -1\n");
-		return (NULL);
-	}
+	*len = read(g_info.fd, buf, 16);
 	return (buf);
 }
 
@@ -45,16 +34,13 @@ int		ft_key_interaction()
 		g_info.line = ft_size4_char(g_info.line, chr);
 	else if (len == 6)
 		ft_size6_char(chr);
-	/*
-	   else
-	   ft_putchar_spe(chr);
-	 */
 	return (1);
 }
 
 char	*ft_get_user_input()
 {
-	ft_input_init();
+	ft_get_cursor_info();
+	g_info.cursor = 0;
 	g_info.hist_pos = -1;
 	g_info.strlen = 0;
 	g_info.prompt = g_info.crsr_col;
@@ -65,17 +51,11 @@ char	*ft_get_user_input()
 	signal(SIGCONT, ft_sighandler_ctrl_z_return);
 	g_info.exit = 0;
 	while (!ft_line_validation())
-	{
 		if (!ft_key_interaction())
 		{
 			free(g_info.line);
 			return (NULL);
 		}
-	}
-	/*
-	   if (ft_strstr("<<", g_info.line) && !ft_strextended())
-	   return
-	 */
 	if (!(g_info.hist = ft_history_new()))
 		return (NULL);
 	return (g_info.line);
@@ -94,34 +74,3 @@ void	ft_end_clean(char *end_message)
 	if (end_message)
 		ft_putstr(end_message);
 }
-
-/*
-int		main(int ac, char **av)
-{
-	char			*str;
-
-	(void)av;
-	if (ac == 1)
-	{
-		if (!ft_start_up())
-			return (-1);
-//		chk21();
-		ft_putchar('\n');
-		while ("LOOP!")
-		{
-			ft_putstr("\\_$> ");
-			if (!(str = ft_get_user_input(&g_info)))
-				break ;
-			if (!ft_strncmp("exit", str, 3))
-				break ;
-		}
-		ft_ctrl_e();
-		ft_putstr("\n_____\n");
-		ft_display_history();
-		ft_end_clean("");
-	}
-	else
-		ft_putstr("Too many arguments\n");
-	return (0);
-}
-*/

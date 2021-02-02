@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 06:31:50 by quegonza          #+#    #+#             */
-/*   Updated: 2021/01/28 23:34:45 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/01 22:55:10 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,6 @@ int		ft_get_cap(t_cap *cap)
 		return (ft_error("`cm' capability not found", 0));
 	if (!(cap->dc = tgetstr("dc", NULL)))
 		return (ft_error("`dc' capability not found", 0));
-	/*
-	if (!(cap->le = tgetstr("le", NULL)))
-		return (ft_error("`le' capability not found", 0));
-	if (!(cap->nd = tgetstr("nd", NULL)))
-		return (ft_error("`nd' capability not found", 0));
-		*/
 	return (1);
 }
 
@@ -89,6 +83,27 @@ int		ft_start_up(void)
 		return (ft_error("ft_get_cap(): terminal capability missing\n", 0));
 	if (!ft_history_init())
 		return (0);
+	if (!ft_stdin_init())
+		return (0);
+	return (1);
+}
+
+int		ft_stdin_init(void)
+{
+	char *pathname;
+
+	if (STDIN_FILENO != 0)
+	{
+		ft_putstr("STDIN_FILENO =");
+		ft_putnbr(STDIN_FILENO);
+		ft_putstr("\n");
+	}
+	if (!isatty(STDIN_FILENO))
+		return (ft_error("isatty(): STDIN_FILENO error\n", 0));
+	if (!(pathname = ttyname(STDIN_FILENO)))
+		return (ft_error("ttyname(): STDIN_FILENO error\n", 0));
+	if ((g_info.fd = open(pathname, O_NONBLOCK)) == -1)
+		return (ft_error("open(): error on tty\n", 0));
 	return (1);
 }
 

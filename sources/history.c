@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 23:15:06 by quegonza          #+#    #+#             */
-/*   Updated: 2021/01/27 23:52:13 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/01 23:43:42 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,7 @@ char	**ft_history_new(void)
 void	ft_history(char opt)
 {
 	ft_ctrl_a();
-	ft_erase_crsrline();
-	if (ft_getrow_fromstr(g_info.strlen) != g_info.crsr_row)
-	{
-		tputs(tgoto(g_info.cap.cm, 0, g_info.crsr_row + 1), 1, ft_putc);
-		tputs(g_info.cap.cd, g_info.row - g_info.crsr_row - 1, ft_putc);
-		tputs(tgoto(g_info.cap.cm, g_info.crsr_col, g_info.crsr_row),
-					1, ft_putc);
-	}
+	ft_clean_after_cursor();
 	if (g_info.hist_pos == -1)
 		g_info.temp = ft_strdup(g_info.line);
 	free(g_info.line);
