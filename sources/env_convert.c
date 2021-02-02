@@ -12,7 +12,7 @@
 
 #include "shell21.h"
 
-t_list		*env_strarr_to_struct(char **envp)
+t_list	*env_strarr_to_struct(char **envp)
 {
 	t_list		*head;
 	t_list		*entry;
@@ -41,7 +41,7 @@ t_list		*env_strarr_to_struct(char **envp)
 	return (head);
 }
 
-char		**env_struct_to_strarr(t_list *entry)
+char	**env_struct_to_strarr(t_list *entry)
 {
 	size_t		len;
 	size_t		i;
@@ -69,15 +69,24 @@ char		**env_struct_to_strarr(t_list *entry)
 	return (envp);
 }
 
-int			env_init(int argc, char **argv, char **envp)
+int	env_init(int argc, char **argv, char **envp)
 {
-	int		ret;
+	int	ret;
 
 	g_envlst = env_strarr_to_struct(envp);
-	ret = g_envlst ? 0 : 1;
+	ret = 1;
+	if (g_envlst)
+		ret = 0;
 	if (!ret)
 		ret = env_set("?", "0", 0);
 	if (!ret)
-		ret = builtin_set(argc == 1 ? 0 : argc, argv);
-	return (ret > 0 ? -ret - 1 : ret);
+	{
+		if (argc == 1)
+			ret = builtin_set(0, argv);
+		else
+			ret = builtin_set(argc, argv);
+	}
+	if (ret > 0)
+		return (-ret - 1);
+	return (ret);
 }

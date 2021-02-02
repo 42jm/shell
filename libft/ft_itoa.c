@@ -33,7 +33,7 @@ static int	ft_chrcount(int n)
 	return (count);
 }
 
-char		*ft_itoa(int n)
+char	*ft_itoa(int n)
 {
 	int		chr_count;
 	char	*str;
@@ -54,7 +54,7 @@ char		*ft_itoa(int n)
 	}
 	while (--chr_count >= sign)
 	{
-		str[chr_count] = '0' + (1 + sign * -2) * (n % 10);
+		str[chr_count] = '0' + (1 + -2 * sign) * (n % 10);
 		n /= 10;
 	}
 	return (str);

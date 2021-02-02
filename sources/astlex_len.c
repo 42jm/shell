@@ -12,36 +12,36 @@
 
 #include "shell21.h"
 
-size_t			parenlen(char *str)
+size_t	parenlen(char *str)
 {
 	size_t	len;
 	size_t	str_len;
 	size_t	count;
-	char	openchr;
-	char	closechr;
+	char	parenchr[2];
 
-	openchr = *str;
-	if (openchr == '(')
-		closechr = ')';
-	else if (openchr == '{')
-		closechr = '}';
-	else
+	parenchr[0] = *str;
+	parenchr[1] = '}';
+	if (parenchr[0] == '(')
+		parenchr[1] = ')';
+	else if (parenchr[0] != '{')
 		return (0);
 	len = 1;
 	count = 1;
 	str_len = ft_strlen(str);
 	while (len < str_len && count)
 	{
-		if (str[len] == closechr)
+		if (str[len] == parenchr[1])
 			count--;
-		else if (str[len] == openchr)
+		else if (str[len] == parenchr[0])
 			count++;
 		len++;
 	}
-	return (count ? 0 : len);
+	if (count)
+		return (0);
+	return (len);
 }
 
-size_t			quotationlen(char *s, char *quotes)
+size_t	quotationlen(char *s, char *quotes)
 {
 	size_t	len;
 	char	quote;
@@ -72,25 +72,22 @@ size_t			quotationlen(char *s, char *quotes)
 static size_t	expansionlen_until(char *s, char *endseq)
 {
 	size_t	len;
-	size_t	tmp;
+	int		tmp;
 
 	len = 0;
 	while (s[len])
 	{
+		tmp = -1;
 		if (ft_strchr("$`", s[len]))
-		{
-			if (!(tmp = expansionlen(s + len)))
-				return (0);
-			len += tmp;
-		}
+			tmp = expansionlen(s + len);
 		else if (ft_strchr("\\'\"", s[len]))
-		{
-			if (!(tmp = quotationlen(s + len, "\\'\"")))
-				return (0);
-			len += tmp;
-		}
+			tmp = quotationlen(s + len, "\\'\"");
 		else if (!ft_strncmp(s + len, endseq, ft_strlen(endseq)))
 			return (len + ft_strlen(endseq));
+		if (!tmp)
+			return (0);
+		if (tmp > 0)
+			len += tmp;
 		else
 			len++;
 	}
@@ -98,24 +95,26 @@ static size_t	expansionlen_until(char *s, char *endseq)
 	return (0);
 }
 
-size_t			expansionlen(char *s)
+size_t	expansionlen(char *s)
 {
 	size_t	len;
 	size_t	tmp;
 	char	*endseq;
 
 	endseq = NULL;
-	len = 1;
-	if (!ft_strncmp(s, "$((", 3) && (len = 3))
+	if (!ft_strncmp(s, "$((", 3))
 		endseq = "))";
-	else if (!ft_strncmp(s, "$(", 2) && (len = 2))
+	else if (!ft_strncmp(s, "$(", 2))
 		endseq = ")";
-	else if (!ft_strncmp(s, "${", 2) && (len = 2))
+	else if (!ft_strncmp(s, "${", 2))
 		endseq = "}";
 	else if (*s == '`')
 		endseq = "`";
 	else
 		return (bashvar_len(s + 1));
+	len = 1;
+	if (*s == '$')
+		len += ft_strlen(endseq);
 	tmp = expansionlen_until(s + len, endseq);
 	if (!tmp)
 		return (0);

@@ -29,7 +29,8 @@ int	astexec_args(t_astnode *head)
 		node = node->next;
 	if (node)
 		return (put_error("ast operator found as argument", "astexec_args"));
-	if (!(args = ast_to_strarr(head)))
+	args = ast_to_strarr(head);
+	if (!args)
 		return (put_error("malloc failed", "astexec_args"));
 	ret = execute(args);
 	free_strarr_all(args);
@@ -44,12 +45,13 @@ int	astexec_simplecmd(t_astnode **at)
 	node = *at;
 	while (node)
 	{
-		if (node->op && \
-		(!ft_strcmp(node->op, "<()") || !ft_strcmp(node->op, ">()")))
-			return (expand_op(at, node));
+		if (node->op)
+			if (!ft_strcmp(node->op, "<()") || !ft_strcmp(node->op, ">()"))
+				return (expand_op(at, node));
 		node = node->next;
 	}
-	if ((ret = expand_word(at)))
+	ret = expand_words(at);
+	if (ret)
 		return (ret);
 	return (astexec_redir(at));
 }

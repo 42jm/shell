@@ -12,7 +12,7 @@
 
 #include "shell21.h"
 
-int			execute_builtin(char **args)
+int	execute_builtin(char **args)
 {
 	int	argc;
 	int	ret;
@@ -44,38 +44,50 @@ static int	pr_execve(char *command_path, char **args, char **envp)
 	return (-2);
 }
 
-int			execute_command(char **args)
+static int	execmd_wait(pid_t pid)
+{
+	int	i;
+	int	ret;
+
+	waitpid(pid, &i, 0);
+	if (WIFEXITED(i))
+	{
+		ret = env_lastret_set(WEXITSTATUS(i));
+		if (ret)
+			return (ret);
+	}
+	if (WIFEXITED(i))
+		return (WEXITSTATUS(i));
+	return (0);
+}
+
+int	execute_command(char **args)
 {
 	pid_t	pid;
 	char	*command_path;
 	char	**envp;
-	int		i;
-	int		ret;
 
-	if (!(envp = env_struct_to_strarr(g_envlst)))
+	envp = env_struct_to_strarr(g_envlst);
+	if (!envp)
 		return (2);
 	if (get_command_path(args[0], envp, &command_path))
 	{
 		free_strarr_all(envp);
 		return (3);
 	}
-	if (!(pid = fork()))
+	pid = fork();
+	if (!pid)
 		return (pr_execve(command_path, args, envp));
 	free_strarr_all(envp);
 	free(command_path);
 	if (pid > 0)
-	{
-		waitpid(pid, &i, 0);
-		if (WIFEXITED(i) && (ret = env_lastret_set(WEXITSTATUS(i))))
-			return (ret);
-		return (WIFEXITED(i) ? WEXITSTATUS(i) : 0);
-	}
+		return (execmd_wait(pid));
 	return (put_error("the shell failed to fork", *args));
 }
 
-int			execute(char **args)
+int	execute(char **args)
 {
-	static char	*builtins[] = { "echo", "cd", "exit", "set", \
+	static char	*builtins[] = {"echo", "cd", "exit", "set", \
 								"unset", "export", NULL };
 
 	if (args == NULL)

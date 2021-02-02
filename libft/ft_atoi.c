@@ -19,7 +19,7 @@ static long long int	sub_iter(char *str, long long int sum)
 	return (sum);
 }
 
-int						ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
 	char	*s;
 	int		sign;

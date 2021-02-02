@@ -17,7 +17,11 @@ void	ft_lstiter(t_list *lst, void (*f)(t_list *lmnt))
 	if (lst && f)
 	{
 		(*f)(lst);
-		while ((lst = lst->next))
+		lst = lst->next;
+		while (lst)
+		{
 			(*f)(lst);
+			lst = lst->next;
+		}
 	}
 }

@@ -16,28 +16,24 @@ static int	exec_subshell(int *sub_out, char *in)
 {
 	int		tmp;
 	int		ret;
-	int		ret_nice;
 	char	**in_arr;
 
 	if (close(sub_out[0]) == -1)
 		return (put_error("failed to closed unused pipe", "exec_subshell"));
-	if ((tmp = dup(1)) == -1)
+	tmp = dup(1);
+	if (tmp == -1)
 		return (put_error("failed to backup stdout", "exec_subshell"));
 	if (dup2(sub_out[1], 1) == -1)
 		return (put_error("failed to set new stdout", "exec_subshell"));
 	in_arr = NULL;
-	if (!(ret = format_input(in, &in_arr)))
+	ret = format_input(in, &in_arr);
+	if (!ret)
 		ret = execute_all_lines(in_arr);
-	if (!(ret_nice = 0) && in_arr)
+	if (in_arr)
 		free_strarr_all(in_arr);
-	if (dup2(tmp, 1) == -1)
-		ret_nice = put_error("failed to reset to og stdout", "exec_subshell");
-	if (close(tmp) == -1)
-		ret_nice = put_error("failed to close stdout backup", "exec_subshell");
-	if (close(sub_out[1]) == -1)
-		ret_nice = put_error("failed to closed used pipe", "exec_subshell");
-	if (!ret && ret_nice)
-		ret = ret_nice;
+	dup2(tmp, 1);
+	close(tmp);
+	close(sub_out[1]);
 	return (ret);
 }
 
@@ -55,22 +51,23 @@ static int	read_subshell(int *sub_out, char **aout)
 	return (ret);
 }
 
-int			exec_str_in_subshell(char *in, char **aout)
+int	exec_str_in_subshell(char *in, char **aout)
 {
 	int		sub_out[2];
 	pid_t	pid;
 	int		ret;
 
-	if (!in)
-		return (put_error("no arguments", "exec_str_in_subshell"));
 	if (*in == '\0')
-		return ((*aout = ft_strdup("")) ? 0 : put_error("malloc failed", NULL));
-	if (pipe(sub_out) == -1 || (pid = fork()) == -1)
-		return (put_error("pipe/fork failed", "exec_str_in_subshell"));
+	{
+		*aout = ft_strdup("");
+		return (0);
+	}
+	pipe(sub_out);
+	pid = fork();
 	if (!pid)
 	{
-		ret = exec_subshell(sub_out, in);
-		return (ret < 0 ? ret : -ret - 1);
+		exec_subshell(sub_out, in);
+		exit(0);
 	}
 	ret = read_subshell(sub_out, aout);
 	if (!ret && waitpid(pid, NULL, 0) == -1)

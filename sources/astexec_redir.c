@@ -12,34 +12,31 @@
 
 #include "shell21.h"
 
-char		*astget_redirop(char *op)
+char	*astget_redirop(char *op)
 {
 	if (!op)
 		return (NULL);
 	while (ft_isdigit(*op))
 		op++;
-	if (!ft_strcmp(op, "<") || !ft_strcmp(op, ">") || !ft_strcmp(op, ">>") \
-	|| !ft_strcmp(op, "<&") || !ft_strcmp(op, ">&") \
-	|| !ft_strcmp(op, "<<"))
+	if (!ft_strcmp(op, "<") || !ft_strcmp(op, ">") || !ft_strcmp(op, ">>"))
+		return (op);
+	if (!ft_strcmp(op, "<&") || !ft_strcmp(op, ">&") || !ft_strcmp(op, "<<"))
 		return (op);
 	return (NULL);
 }
 
 static int	handle_redir(t_astnode **at, int fd, char *op, char *word)
 {
-	if (!ft_strcmp(op, "<") \
-	|| !ft_strcmp(op, ">") \
-	|| !ft_strcmp(op, ">>"))
+	if (!ft_strcmp(op, "<") || !ft_strcmp(op, ">") || !ft_strcmp(op, ">>"))
 		return (astredir_simple(at, fd, op, word));
-	else if (!ft_strcmp(op, "<&") \
-	|| !ft_strcmp(op, ">&"))
+	else if (!ft_strcmp(op, "<&") || !ft_strcmp(op, ">&"))
 		return (astredir_aggregate(at, fd, op, word));
 	else if (!ft_strcmp(op, "<<"))
 		return (astredir_heredoc(at, fd, op, word));
 	return (put_error("invalid redirection operator", op));
 }
 
-int			astredir_handler(t_astnode **at, t_astnode *node)
+int	astredir_handler(t_astnode **at, t_astnode *node)
 {
 	int		fd;
 	char	*redir_op;
@@ -47,7 +44,8 @@ int			astredir_handler(t_astnode **at, t_astnode *node)
 
 	if (!node || !node->op)
 		return (put_error("no arguments", "astredir_handler"));
-	if (!(redir_op = astget_redirop(node->op)))
+	redir_op = astget_redirop(node->op);
+	if (!redir_op)
 		return (put_error("node is not a redir_op", node->op));
 	if (!node->next || node->next->op)
 		return (put_error("no word following redir_op", redir_op));
@@ -60,7 +58,7 @@ int			astredir_handler(t_astnode **at, t_astnode *node)
 	return (handle_redir(at, fd, redir_op, word));
 }
 
-int			astpop_redir(t_astnode **ahead, t_astnode **aredir)
+int	astpop_redir(t_astnode **ahead, t_astnode **aredir)
 {
 	t_astnode	*node;
 	t_astnode	*prev;
@@ -86,7 +84,7 @@ int			astpop_redir(t_astnode **ahead, t_astnode **aredir)
 	return (0);
 }
 
-int			astexec_redir(t_astnode **ahead)
+int	astexec_redir(t_astnode **ahead)
 {
 	t_astnode	*node;
 	int			ret;
@@ -94,7 +92,8 @@ int			astexec_redir(t_astnode **ahead)
 	if (!ahead)
 		return (put_error("no arguments", "astexec_redir"));
 	node = NULL;
-	if ((ret = astpop_redir(ahead, &node)))
+	ret = astpop_redir(ahead, &node);
+	if (ret)
 		return (ret);
 	if (!node)
 		return (astexec_assign(*ahead));

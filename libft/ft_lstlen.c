@@ -22,8 +22,12 @@ size_t	ft_lstlen(t_list **alst)
 	{
 		lst = *alst;
 		len++;
-		while ((lst = lst->next))
+		lst = lst->next;
+		while (lst)
+		{
 			len++;
+			lst = lst->next;
+		}
 	}
 	return (len);
 }

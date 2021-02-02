@@ -19,7 +19,8 @@ char	*ft_strcrop(char *str, size_t start, size_t end)
 
 	if (end == 0 || end < start || ft_strlen(str) < end)
 		return (NULL);
-	if (!(crop = (char *)malloc(sizeof(char) * (end - start + 1))))
+	crop = (char *)malloc(sizeof(char) * (end - start + 1));
+	if (!crop)
 		return (NULL);
 	crop[end - start] = '\0';
 	i = 0;

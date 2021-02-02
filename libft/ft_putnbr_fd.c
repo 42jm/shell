@@ -19,7 +19,7 @@ static void	ft_iter(int n, int fd, int sign)
 	ft_putchar_fd((char)('0' + sign * (n % 10)), fd);
 }
 
-void		ft_putnbr_fd(int n, int fd)
+void	ft_putnbr_fd(int n, int fd)
 {
 	if (n < 0)
 	{

@@ -27,7 +27,8 @@ int	astredir_simple(t_astnode **at, int redir_fd, char *redir_op, char *path)
 	if (!ft_strcmp(redir_op, ">>"))
 		flags = O_CREAT | O_WRONLY | O_APPEND;
 	rights = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
-	if ((word_fd = open(path, flags, rights)) == -1)
+	word_fd = open(path, flags, rights);
+	if (word_fd == -1)
 		return (put_error("failed to open file", path));
 	return (ast_localredir(at, word_fd, redir_fd));
 }

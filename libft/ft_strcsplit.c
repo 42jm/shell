@@ -46,7 +46,7 @@ static size_t	ft_nextlen(char *s, char c)
 	return (len);
 }
 
-char			**ft_strcsplit(char const *s, char c)
+char	**ft_strcsplit(char const *s, char c)
 {
 	char	*str;
 	size_t	str_count;

@@ -20,30 +20,34 @@ static int	andor_list(t_astnode *token)
 
 	if (!token)
 		return (0);
-	if (!(ptr = token->next))
+	ptr = token->next;
+	if (!ptr)
 		return (put_error("syntax error near token", token->op));
 	prev = token;
-	while (ptr && (!ptr->op \
-	|| (ft_strcmp(ptr->op, "&&") && ft_strcmp(ptr->op, "||"))))
+	while (ptr)
 	{
+		if (ptr->op && (!ft_strcmp(ptr->op, "&&") || !ft_strcmp(ptr->op, "||")))
+			break ;
 		prev = ptr;
 		ptr = ptr->next;
 	}
 	prev->next = NULL;
-	if ((ret = ast_parser(&token->next)))
+	ret = ast_parser(&token->next);
+	if (ret)
 		return (ret);
 	token->content = token->next;
 	token->next = ptr;
 	return (andor_list(ptr));
 }
 
-int			handle_andor(t_astnode **atoken, t_astnode *prev, t_astnode *head)
+int	handle_andor(t_astnode **atoken, t_astnode *prev, t_astnode *head)
 {
 	t_astnode	*ptr;
 
 	if (!prev)
 		return (put_error("syntax error near token", head->op));
-	if (!(ptr = token_new(";")))
+	ptr = token_new(";");
+	if (!ptr)
 		return (1);
 	prev->next = NULL;
 	if (ast_parser(&head))

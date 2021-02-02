@@ -24,11 +24,12 @@ char	*ft_strdup(char *str)
 	dup = (char *)malloc((sz + 1) * sizeof(char));
 	ft_bzero(dup, sz + 1);
 	i = 0;
-	if (dup)
-		while (i < sz)
-		{
-			dup[i] = str[i];
-			i++;
-		}
+	if (!dup)
+		return (NULL);
+	while (i < sz)
+	{
+		dup[i] = str[i];
+		i++;
+	}
 	return (dup);
 }

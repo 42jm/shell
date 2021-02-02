@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-int		ft_putusage(char *exename, char *usage)
+int	ft_putusage(char *exename, char *usage)
 {
 	ft_putstr_fd("usage: ", 2);
 	ft_putstr_fd(exename, 2);

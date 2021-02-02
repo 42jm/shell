@@ -33,7 +33,7 @@ static long long int	ft_chrcount(long long int n)
 	return (count);
 }
 
-char					*ft_ltoa(long long int n)
+char	*ft_ltoa(long long int n)
 {
 	long long int		chr_count;
 	char				*str;
@@ -54,7 +54,7 @@ char					*ft_ltoa(long long int n)
 	}
 	while (--chr_count >= sign)
 	{
-		str[chr_count] = '0' + (1 + sign * -2) * (n % 10);
+		str[chr_count] = '0' + (1 + -2 * sign) * (n % 10);
 		n /= 10;
 	}
 	return (str);

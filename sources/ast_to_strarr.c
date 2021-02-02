@@ -25,7 +25,7 @@ static size_t	ft_astlen(t_astnode *node)
 	return (len);
 }
 
-char			**ast_to_strarr(t_astnode *node)
+char	**ast_to_strarr(t_astnode *node)
 {
 	size_t	len;
 	char	**strarr;

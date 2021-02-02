@@ -30,7 +30,7 @@ char	*read_all(int fd)
 	return (buf);
 }
 
-int		format_input(char *in, char ***ainput)
+int	format_input(char *in, char ***ainput)
 {
 	char	*buf;
 
@@ -49,7 +49,7 @@ int		format_input(char *in, char ***ainput)
 	return (0);
 }
 
-int		read_userinput(char ***ainput)
+int	read_userinput(char ***ainput)
 {
 	size_t	ret;
 	char	*buf;

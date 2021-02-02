@@ -64,6 +64,7 @@ SRC_NAME = main.c \
 	line_validation.c \
 	prompt.c \
 	read.c \
+	sh_neg.c \
 	sighandlers.c \
 	signals.c \
 	size1_char_typing.c \

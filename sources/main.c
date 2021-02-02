@@ -17,7 +17,7 @@ char		**g_lines;
 t_list		*g_envlst;
 t_curs		g_info;
 
-int			execute_firstline(char ***alines)
+int	execute_firstline(char ***alines)
 {
 	char		**tmp;
 	t_astnode	*astroot;
@@ -41,7 +41,7 @@ int			execute_firstline(char ***alines)
 	return (ret);
 }
 
-int			execute_all_lines(char **aline)
+int	execute_all_lines(char **aline)
 {
 	int	ret;
 
@@ -55,14 +55,16 @@ int			execute_all_lines(char **aline)
 	return (ret);
 }
 
-int			prompt_loop(void)
+int	prompt_loop(void)
 {
 	char	**input;
 	int		ret;
 
 	input = NULL;
 	ret = put_prompt(1);
-	if (!ret && !(ret = read_userinput(&input)))
+	if (!ret)
+		ret = read_userinput(&input);
+	if (!ret)
 		ret = execute_all_lines(input);
 	if (input)
 		free_strarr_all(input);
@@ -71,18 +73,19 @@ int			prompt_loop(void)
 	return (ret);
 }
 
-int			main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	int	ret;
 
 	g_lines = NULL;
 	if (!ft_start_up())
 		return (ft_error("Initialization error\n", 1));
-//	signal(SIGINT, sighandle_int);
 	ret = env_init(argc, argv, envp);
 	while (ret >= 0)
 		ret = prompt_loop();
 	env_free(g_envlst);
 	ft_end_clean(NULL);
-	return (ret < 0 ? -ret - 1 : ret);
+	if (ret < 0)
+		return (-ret - 1);
+	return (ret);
 }

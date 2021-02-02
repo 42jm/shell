@@ -12,7 +12,7 @@
 
 #include "shell21.h"
 
-void		put_astlexed(t_astnode *token)
+void	put_astlexed(t_astnode *token)
 {
 	if (!token)
 		return ;
@@ -38,7 +38,7 @@ static void	astput_word(t_astnode *token, size_t tabs)
 	put_astparsed(token->next, tabs);
 }
 
-void		put_astparsed(t_astnode *token, size_t tabs)
+void	put_astparsed(t_astnode *token, size_t tabs)
 {
 	size_t	i;
 

@@ -90,22 +90,24 @@ static int	parse_level(t_astnode **aroot, char **tokens_lv)
 	return (-1);
 }
 
-int			ast_parser(t_astnode **aroot)
+int	ast_parser(t_astnode **aroot)
 {
 	int			ret;
 	size_t		lvl;
 	static char	*tokens[3][3] = {
-		{ ";", "&", NULL },
-		{ "&&", "||", NULL },
-		{ "|", NULL, NULL }
+		{";", "&", NULL },
+		{"&&", "||", NULL },
+		{"|", NULL, NULL }
 	};
 
 	lvl = 0;
 	if (!*aroot)
 		return (0);
-	if ((ret = parse_curly_braces(aroot)))
+	ret = parse_curly_braces(aroot);
+	if (ret)
 		return (ret);
-	if ((ret = parse_all_parentheses(*aroot)))
+	ret = parse_all_parentheses(*aroot);
+	if (ret)
 		return (ret);
 	while (lvl < 3)
 	{

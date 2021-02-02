@@ -26,7 +26,7 @@ static int	pipe_dupexe(t_astnode **at, int *fildes, int io)
 	return (ret);
 }
 
-int			astexec_pipe(t_astnode **at)
+int	astexec_pipe(t_astnode **at)
 {
 	int			fildes[2];
 	pid_t		pid;
@@ -46,7 +46,7 @@ int			astexec_pipe(t_astnode **at)
 	{
 		signal(SIGINT, sighandle_ignore);
 		pipe_dupexe((t_astnode **)&node->content, fildes, 1);
-		return (-1);
+		exit(0);
 	}
 	return (pipe_dupexe((t_astnode **)&node->next, fildes, 0));
 }

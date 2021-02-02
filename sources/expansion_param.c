@@ -12,7 +12,7 @@
 
 #include "shell21.h"
 
-size_t		bashvar_len(char *str)
+size_t	bashvar_len(char *str)
 {
 	size_t	len;
 
@@ -56,10 +56,10 @@ static int	expand_substitute(char **aarg, size_t *avar_i)
 	char	*out;
 	char	*tmp;
 
-	if (!(len = parenlen(*aarg + *avar_i + 1)))
+	len = parenlen(*aarg + *avar_i + 1);
+	if (!len)
 		return (put_error("bad argument", "expand_subsitute"));
-	if (!(in = ft_strndup(*aarg + *avar_i + 2, len - 2)))
-		return (put_error("malloc failed", "expand_substitute"));
+	in = ft_strndup(*aarg + *avar_i + 2, len - 2);
 	out = NULL;
 	ret = exec_str_in_subshell(in, &out);
 	free(in);
@@ -87,12 +87,14 @@ static int	expand_variable(char **aarg, size_t *avar_i)
 
 	arg = *aarg;
 	var_i = *avar_i;
-	if (!(var_len = bashvar_len(arg + var_i + 1)) && ++(*avar_i))
+	var_len = bashvar_len(arg + var_i + 1);
+	if (!var_len && ++(*avar_i))
 		return (0);
 	if (arg[var_i + 1] == '{' && arg[var_i + 2] == '}')
 		return (put_error("bad substitution", "${}"));
 	var_value = param_getvalue(arg + var_i + 1, var_len);
-	if (!(tmp = ft_strreplace(arg, var_value, var_i, var_i + var_len + 1)))
+	tmp = ft_strreplace(arg, var_value, var_i, var_i + var_len + 1);
+	if (!tmp)
 		return (put_error("str replace call failed", "expand_param"));
 	free(arg);
 	arg = tmp;
@@ -103,7 +105,7 @@ static int	expand_variable(char **aarg, size_t *avar_i)
 	return (0);
 }
 
-int			expand_param(t_astnode *node)
+int	expand_param(t_astnode *node)
 {
 	char	*arg;
 	size_t	var_i;
@@ -112,8 +114,8 @@ int			expand_param(t_astnode *node)
 	if (!node->content)
 		return (0);
 	arg = node->content;
-	var_i = 0;
-	while ((var_i = ft_strclen_unquoted(arg + var_i, '$', "\\'")))
+	var_i = ft_strclen_unquoted(arg, '$', "\\'");
+	while (var_i)
 	{
 		var_i--;
 		if (arg[var_i + 1] == '(')
@@ -122,6 +124,7 @@ int			expand_param(t_astnode *node)
 			ret = expand_variable(&arg, &var_i);
 		if (ret)
 			return (ret);
+		var_i = ft_strclen_unquoted(arg + var_i, '$', "\\'");
 	}
 	node->content = arg;
 	return (0);

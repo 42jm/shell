@@ -40,7 +40,8 @@ static int	parentheses_parser(t_astnode *head)
 		return (put_error("no closing parentheses", head->op));
 	if (head == node)
 		return (put_error("empty parentheses", head->op));
-	if (!(new_op = ft_strjoin(head->op, ")")))
+	new_op = ft_strjoin(head->op, ")");
+	if (!new_op)
 		return (put_error("malloc failed", "parentheses_parser"));
 	free(head->op);
 	head->op = new_op;
@@ -51,7 +52,7 @@ static int	parentheses_parser(t_astnode *head)
 	return (ast_parser((t_astnode **)&head->content));
 }
 
-int			parse_all_parentheses(t_astnode *head)
+int	parse_all_parentheses(t_astnode *head)
 {
 	int			ret;
 	t_astnode	*node;
@@ -61,13 +62,17 @@ int			parse_all_parentheses(t_astnode *head)
 	{
 		if (node->op)
 		{
+			ret = 0;
 			if (!ft_strcmp(node->op, ")"))
 				return (put_error("nothing to close", ")"));
-			if (!ft_strcmp(node->op, "(") \
-			|| !ft_strcmp(node->op, "<(") \
-			|| !ft_strcmp(node->op, ">("))
-				if ((ret = parentheses_parser(node)))
-					return (ret);
+			else if (!ft_strcmp(node->op, "("))
+				ret = parentheses_parser(node);
+			else if (!ft_strcmp(node->op, "<("))
+				ret = parentheses_parser(node);
+			else if (!ft_strcmp(node->op, ">("))
+				ret = parentheses_parser(node);
+			if (ret)
+				return (ret);
 		}
 		node = node->next;
 	}

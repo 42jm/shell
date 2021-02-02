@@ -12,9 +12,12 @@
 
 #include <libft.h>
 
-int	ft_toupper(int c)
+int	ft_toupper(int i)
 {
-	if ((int)'a' <= c && c <= (int)'z')
-		return (c + (int)'A' - (int)'a');
+	char	c;
+
+	c = (char)i;
+	if ('a' <= c && c <= 'z')
+		return ((int)(c + 'A' - 'a'));
 	return (c);
 }

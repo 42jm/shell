@@ -22,14 +22,16 @@ static int	get_diff(char c1, char c2)
 	return ((int)(uc1 - uc2));
 }
 
-int			ft_strcmp_ci(const char *s1, const char *s2)
+int	ft_strcmp_ci(const char *s1, const char *s2)
 {
 	int	diff;
 
-	while (!(diff = get_diff(*s1, *s2)) && *s1 && *s2)
+	diff = get_diff(*s1, *s2);
+	while (!diff && *s1 && *s2)
 	{
 		s1++;
 		s2++;
+		diff = get_diff(*s1, *s2);
 	}
 	return (diff);
 }

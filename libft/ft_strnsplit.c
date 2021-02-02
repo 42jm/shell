@@ -14,10 +14,12 @@
 
 static size_t	ft_splitcount(size_t len, size_t n)
 {
-	return (len / n + (len % n ? 1 : 0));
+	if (len % n)
+		return (len / n + 1);
+	return (len / n);
 }
 
-char			**ft_strnsplit(char const *s, size_t n)
+char	**ft_strnsplit(char const *s, size_t n)
 {
 	char	*str;
 	size_t	str_count;

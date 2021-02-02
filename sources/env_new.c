@@ -40,7 +40,7 @@ t_envvar	*envvar_new(char *name, char *value, bool exportable)
 	return (var);
 }
 
-t_list		*env_new(char *name, char *value, bool exportable)
+t_list	*env_new(char *name, char *value, bool exportable)
 {
 	t_envvar	*var;
 	t_list		*entry;
@@ -63,7 +63,7 @@ t_list		*env_new(char *name, char *value, bool exportable)
 	return (entry);
 }
 
-t_list		*env_splitnew(char *str, bool exportable)
+t_list	*env_splitnew(char *str, bool exportable)
 {
 	char	*ptr;
 	char	*name;

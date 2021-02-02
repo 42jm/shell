@@ -35,7 +35,7 @@ static int	heredoc_write(int *fildes, char *word)
 	return (ret);
 }
 
-int			astredir_heredoc(t_astnode **at, int fd, char *redir_op, char *word)
+int	astredir_heredoc(t_astnode **at, int fd, char *redir_op, char *word)
 {
 	int		fildes[2];
 	pid_t	pid;
@@ -49,7 +49,6 @@ int			astredir_heredoc(t_astnode **at, int fd, char *redir_op, char *word)
 	if (!pid)
 	{
 		heredoc_write(fildes, word);
-		//return (-1);
 		exit(0);
 	}
 	if (close(fildes[1]) == -1)

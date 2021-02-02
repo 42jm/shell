@@ -12,7 +12,7 @@
 
 #include "shell21.h"
 
-t_list		*env_getentry(char *varname)
+t_list	*env_getentry(char *varname)
 {
 	t_list		*entry;
 	t_envvar	*var;
@@ -41,7 +41,7 @@ t_envvar	*env_getvar(char *varname)
 	return (entry->content);
 }
 
-char		*env_getvalue(char *varname)
+char	*env_getvalue(char *varname)
 {
 	t_envvar	*var;
 

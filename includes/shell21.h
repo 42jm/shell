@@ -23,20 +23,19 @@
 extern char				**g_lines;
 extern t_list			*g_envlst;
 
-typedef struct			s_astnode
+typedef struct s_astnode
 {
 	char				*op;
 	void				*content;
 	struct s_astnode	*next;
 }						t_astnode;
 
-typedef struct			s_envvar
+typedef struct s_envvar
 {
 	bool				exportable;
 	char				*name;
 	char				*value;
 }						t_envvar;
-
 
 void			sighandle_ignore(int signum);
 void			sighandle_int(int signum);
@@ -56,7 +55,7 @@ char			*read_all(int fd);
 size_t			bashvar_len(char *str);
 int				expand_tilde(t_astnode *node);
 int				expand_param(t_astnode *node);
-int				expand_word(t_astnode **ahead);
+int				expand_words(t_astnode **ahead);
 int				expand_op(t_astnode **at, t_astnode *node);
 int				remove_empty_field(t_astnode *p, t_astnode **n, t_astnode **h);
 int				remove_quotes(t_astnode *node);
@@ -127,4 +126,6 @@ int				builtin_cd(int argc, char **argv);
 int				builtin_set(int argc, char **argv);
 int				builtin_unset(int argc, char **argv);
 int				builtin_export(int argc, char **argv);
+
+int				sh_neg(int nb);
 #endif

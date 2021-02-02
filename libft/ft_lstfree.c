@@ -18,7 +18,7 @@ static void	free_content(void *content, size_t content_size)
 	(void)content_size;
 }
 
-void		ft_lstfree(t_list *lst)
+void	ft_lstfree(t_list *lst)
 {
 	ft_lstdel(&lst, &free_content);
 }

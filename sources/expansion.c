@@ -51,12 +51,13 @@ static int	split_field(t_astnode *node, int *afields)
 	(*afields)++;
 	if (!len)
 		return (0);
-	if ((ret = field_add(node, len)))
+	ret = field_add(node, len);
+	if (ret)
 		return (ret);
 	return (split_field(node->next, afields));
 }
 
-int			clean_fields(t_astnode **ap, t_astnode **an, t_astnode **ah, int i)
+int	clean_fields(t_astnode **ap, t_astnode **an, t_astnode **ah, int i)
 {
 	int			ret;
 
@@ -66,7 +67,8 @@ int			clean_fields(t_astnode **ap, t_astnode **an, t_astnode **ah, int i)
 	{
 		if (remove_empty_field(*ap, an, ah))
 			continue ;
-		if ((ret = remove_quotes(*an)))
+		ret = remove_quotes(*an);
+		if (ret)
 			return (ret);
 		*ap = *an;
 		*an = (*an)->next;
@@ -74,7 +76,21 @@ int			clean_fields(t_astnode **ap, t_astnode **an, t_astnode **ah, int i)
 	return (0);
 }
 
-int			expand_word(t_astnode **ahead)
+static int	exp_word(t_astnode **ah, t_astnode **an, t_astnode **ap, int *af)
+{
+	int	ret;
+
+	ret = expand_tilde(*an);
+	if (!ret)
+		ret = expand_param(*an);
+	if (!ret)
+		ret = split_field(*an, af);
+	if (!ret)
+		ret = clean_fields(ap, an, ah, *af);
+	return (ret);
+}
+
+int	expand_words(t_astnode **ahead)
 {
 	int			ret;
 	int			fields;
@@ -85,7 +101,8 @@ int			expand_word(t_astnode **ahead)
 		return (0);
 	prev = NULL;
 	node = *ahead;
-	while (node)
+	ret = 0;
+	while (!ret && node)
 	{
 		fields = 0;
 		if (node->op)
@@ -94,11 +111,7 @@ int			expand_word(t_astnode **ahead)
 			node = node->next;
 			continue ;
 		}
-		if ((ret = expand_tilde(node)) \
-		|| (ret = expand_param(node)) \
-		|| (ret = split_field(node, &fields)) \
-		|| (ret = clean_fields(&prev, &node, ahead, fields)))
-			return (ret);
+		ret = exp_word(ahead, &node, &prev, &fields);
 	}
-	return (0);
+	return (ret);
 }

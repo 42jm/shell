@@ -19,7 +19,7 @@ char	*ft_current_char(char *buf, int *len)
 	return (buf);
 }
 
-int		ft_key_interaction()
+int	ft_key_interaction()
 {
 	char	chr[16];
 	int		len;

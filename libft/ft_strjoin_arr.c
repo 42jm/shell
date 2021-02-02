@@ -20,12 +20,14 @@ char	*ft_strjoin_arr(char **arr, size_t n, char sep)
 	size_t	i;
 
 	i = 0;
-	len = sep ? n - 1 : 0;
+	len = 0;
+	if (sep)
+		len = n - 1;
 	while (i < n)
 		len += ft_strlen(arr[i++]);
-	if (!(join = (char *)malloc((len + 1) * sizeof(char))))
+	join = ft_strnew(len);
+	if (!join)
 		return (NULL);
-	join[len] = '\0';
 	i = 0;
 	ptr = join;
 	while (i < n)
@@ -33,8 +35,7 @@ char	*ft_strjoin_arr(char **arr, size_t n, char sep)
 		len = ft_strlen(arr[i]);
 		ft_memcpy(ptr, arr[i], len);
 		ptr += len;
-		i++;
-		if (sep && i < n)
+		if (++i < n && sep)
 			*ptr++ = sep;
 	}
 	return (join);

@@ -34,7 +34,7 @@ static t_list	*get_next_split(char *s, size_t clen)
 	return (lmnt);
 }
 
-char			**ft_strcsplit_all(char *s, char c)
+char	**ft_strcsplit_all(char *s, char c)
 {
 	t_list	*head;
 	t_list	*lmnt;

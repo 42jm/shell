@@ -22,7 +22,8 @@ char	*ft_strcdup(char *str, char chr)
 		i++;
 	if (!str[i])
 		return (ft_strdup(str));
-	if (!(cdup = ft_strnew(i)))
+	cdup = ft_strnew(i);
+	if (!cdup)
 		return (NULL);
 	while (--i >= 0)
 		cdup[i] = str[i];

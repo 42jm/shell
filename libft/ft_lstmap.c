@@ -21,14 +21,14 @@ t_list	*ft_lstmap(t_list *lst, t_list *(*f)(t_list *lmnt))
 		return (NULL);
 	new = (*f)(lst);
 	out = new;
-	while ((lst = lst->next))
+	lst = lst->next;
+	while (lst)
 	{
 		new->next = (*f)(lst);
 		if (!new->next)
-		{
 			return (NULL);
-		}
 		new = new->next;
+		lst = lst->next;
 	}
 	return (out);
 }

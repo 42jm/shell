@@ -12,7 +12,7 @@
 
 #include <libft.h>
 
-uint64_t		ft_atollu(char *s)
+uint64_t	ft_atollu(char *s)
 {
 	uint64_t	sum;
 

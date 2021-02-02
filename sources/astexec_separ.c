@@ -47,7 +47,7 @@ int	astexec_amper(t_astnode **at)
 	if (!pid)
 	{
 		ast_execute((t_astnode **)&node->content);
-		return (-1);
+		exit(0);
 	}
 	ret = env_set("?", "0", 0);
 	if (ret)
@@ -61,7 +61,8 @@ int	astexec_semicol(t_astnode **at)
 	int			ret;
 
 	node = *at;
-	if ((ret = ast_execute((t_astnode **)&node->content)) < 0)
+	ret = ast_execute((t_astnode **)&node->content);
+	if (ret < 0)
 		return (ret);
 	return (ast_execute((t_astnode **)&node->next));
 }

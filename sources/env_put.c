@@ -12,7 +12,7 @@
 
 #include "shell21.h"
 
-int		envput_export(void)
+int	envput_export(void)
 {
 	t_list		*entry;
 	t_envvar	*var;
@@ -38,7 +38,7 @@ int		envput_export(void)
 	return (0);
 }
 
-int		env_put(bool exportonly)
+int	env_put(bool exportonly)
 {
 	t_list		*entry;
 	t_envvar	*var;

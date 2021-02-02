@@ -18,7 +18,8 @@ static int	lexer_opnew(t_astnode **at, char *input, size_t len)
 		return (token_delimit(*at, input, len));
 	if (len != 0)
 		return (put_error("non-existant token has len != 0", "lexer"));
-	if (!(*at = token_new(input)))
+	*at = token_new(input);
+	if (!*at)
 		return (1);
 	return (token_delimit(*at, input, astlex_oplen(input)));
 }
@@ -28,8 +29,12 @@ static int	lexer_ignore(t_astnode **at, char *input, size_t *alen)
 	size_t	len;
 
 	len = *alen;
-	if (!*at && !(*at = token_new(NULL)))
-		return (1);
+	if (!*at)
+	{
+		*at = token_new(NULL);
+		if (!*at)
+			return (1);
+	}
 	if (ft_strchr("\\'\"", input[len]))
 		len += quotationlen(input + len, "\\'\"");
 	else if (ft_strchr("$`", input[len]))
@@ -39,7 +44,16 @@ static int	lexer_ignore(t_astnode **at, char *input, size_t *alen)
 	return (0);
 }
 
-int			ast_lexer(char *input, t_astnode **at)
+static int	lex_default_case(size_t *alen, t_astnode **at)
+{
+	*alen = 1;
+	*at = token_new(NULL);
+	if (!*at)
+		return (1);
+	return (0);
+}
+
+int	ast_lexer(char *input, t_astnode **at)
 {
 	size_t		len;
 
@@ -59,9 +73,8 @@ int			ast_lexer(char *input, t_astnode **at)
 			input++;
 		else if (*at && !(*at)->op)
 			len++;
-		else if ((len = 1))
-			if (!(*at = token_new(NULL)))
-				return (1);
+		else if (lex_default_case(&len, at))
+			return (1);
 	}
 	if (*at)
 		return (token_delimit(*at, input, len));

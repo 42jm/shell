@@ -40,7 +40,8 @@ int	remove_quotes(t_astnode *node)
 
 	i = 0;
 	tmp = node->content;
-	while ((len = ft_stralen_unquoted(tmp + i, "\"'\\")))
+	len = ft_stralen_unquoted(tmp + i, "\"'\\");
+	while (len)
 	{
 		i += len - 1;
 		len = 1;
@@ -49,13 +50,12 @@ int	remove_quotes(t_astnode *node)
 			len = quotationlen(tmp + i, "\"'\\");
 			if (!len && ++i)
 				continue ;
-			if (ft_strdrop_inplace(&tmp, i + len - 1, i + len))
-				return (put_error("malloc failed (closing)", "remove_quotes"));
+			ft_strdrop_inplace(&tmp, i + len - 1, i + len);
 			len -= 2;
 		}
-		if (ft_strdrop_inplace(&tmp, i, i + 1))
-			return (put_error("malloc failed (opening)", "remove_quotes"));
+		ft_strdrop_inplace(&tmp, i, i + 1);
 		i += len;
+		len = ft_stralen_unquoted(tmp + i, "\"'\\");
 	}
 	node->content = tmp;
 	return (0);

@@ -42,12 +42,15 @@ int	astexec_paren(t_astnode **at)
 	if (pid == -1)
 		return (put_error("failed fork", head->op));
 	if (!pid)
-	{
-		ret = ast_execute(&node);
-		return (ret < 0 ? ret : -ret - 1);
-	}
+		ast_execute(&node);
+	if (!pid)
+		exit(0);
 	waitpid(pid, &wstatus, 0);
-	if (WIFEXITED(wstatus) && (ret = env_lastret_set(WEXITSTATUS(wstatus))))
-		return (ret);
+	if (WIFEXITED(wstatus))
+	{
+		ret = env_lastret_set(WEXITSTATUS(wstatus));
+		if (ret)
+			return (ret);
+	}
 	return (ast_execute(&head->next));
 }

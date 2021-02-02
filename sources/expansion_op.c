@@ -34,7 +34,9 @@ static int	process_substitute(t_astnode *node, int *fildes, int fd_child)
 	int	ret;
 	int	tmp;
 
-	if ((tmp = dup(fd_child)) == -1)
+	close(fildes[1 - fd_child]);
+	tmp = dup(fd_child);
+	if (tmp == -1)
 		return (put_error("failed to backup fd", node->op));
 	if ((dup2(fildes[fd_child], fd_child)) == -1)
 		return (put_error("failed to set new fd", node->op));
@@ -43,10 +45,11 @@ static int	process_substitute(t_astnode *node, int *fildes, int fd_child)
 		ret = put_error("failed to reset fd to backup", node->op);
 	if (close(tmp) == -1)
 		ret = put_error("failed to close fd backup", node->op);
+	close(fildes[fd_child]);
 	return (ret);
 }
 
-int			expand_op(t_astnode **at, t_astnode *node)
+int	expand_op(t_astnode **at, t_astnode *node)
 {
 	int		ret;
 	int		fildes[2];
@@ -54,20 +57,22 @@ int			expand_op(t_astnode **at, t_astnode *node)
 	int		fd_paren;
 	pid_t	pid;
 
-	if (pipe(fildes) == -1 || (pid = fork()) == -1)
-		return (put_error("pipe/fork failed", "substitute_process"));
-	fd_child = *node->op == '<' ? 1 : 0;
+	if (pipe(fildes) == -1)
+		return (put_error("pipe failed", "substitute_process"));
+	pid = fork();
+	if (pid == -1)
+		return (put_error("fork failed", "substitute_process"));
+	fd_child = 0;
+	if (*node->op == '<')
+		fd_child = 1;
 	fd_paren = 1 - fd_child;
 	if (!pid)
-	{
-		close(fildes[fd_paren]);
-		ret = process_substitute(node->content, fildes, fd_child);
-		close(fildes[fd_child]);
-		return (ret < 0 ? ret : -ret - 1);
-	}
+		process_substitute(node->content, fildes, fd_child);
+	if (!pid)
+		exit(0);
 	close(fildes[fd_child]);
-	if ((ret = replace_node_by_fdstr(node, fildes[fd_paren])))
-		return (ret);
+	if (replace_node_by_fdstr(node, fildes[fd_paren]))
+		return (1);
 	ret = astexec_simplecmd(at);
 	close(fildes[fd_paren]);
 	return (ret);

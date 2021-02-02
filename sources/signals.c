@@ -12,12 +12,12 @@
 
 #include "shell21.h"
 
-void		sighandle_ignore(int signum)
+void	sighandle_ignore(int signum)
 {
 	(void)signum;
 }
 
-void		sighandle_int(int signum)
+void	sighandle_int(int signum)
 {
 	(void)signum;
 	ft_putstr("^C\n");

@@ -17,7 +17,8 @@ int	ast_localclose(t_astnode **at, int fd)
 	int	tmp;
 	int	ret;
 
-	if ((tmp = dup(fd)) == -1)
+	tmp = dup(fd);
+	if (tmp == -1)
 		return (put_error("failed to store fd", "localclose"));
 	if (close(fd) == -1)
 		return (put_error("failed to close fd", "localclose"));
@@ -34,7 +35,8 @@ int	ast_localredir(t_astnode **at, int dst, int src)
 	int	tmp_src;
 	int	ret;
 
-	if ((tmp_src = dup(src)) == -1)
+	tmp_src = dup(src);
+	if (tmp_src == -1)
 		return (put_error("failed to store source fd", "localredir"));
 	if (dup2(dst, src) == -1)
 		return (put_error("failed to replace source fd", "localredir"));

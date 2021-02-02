@@ -35,7 +35,7 @@ static int	unset_greaternbrs(int i)
 	return (0);
 }
 
-int			builtin_set(int argc, char **argv)
+int	builtin_set(int argc, char **argv)
 {
 	int		i;
 	char	*nbr;
@@ -46,17 +46,17 @@ int			builtin_set(int argc, char **argv)
 	if (argc == 1)
 		return (env_put(0));
 	i = 0;
-	while (i < (argc = argc ? argc : 1))
+	if (!argc)
+		argc = 1;
+	while (i < argc)
 	{
-		if (!(nbr = ft_itoa(i)))
-			return (put_error("malloc failed", "envset_nbr"));
+		nbr = ft_itoa(i);
 		ret = env_set(nbr, argv[i++], 0);
 		free(nbr);
 		if (ret)
 			return (ret);
 	}
-	if (!(nbr = ft_itoa(argc - 1)))
-		return (put_error("malloc failed", "builtin_set"));
+	nbr = ft_itoa(argc - 1);
 	ret = env_set("#", nbr, 0);
 	free(nbr);
 	if (ret)
@@ -64,7 +64,7 @@ int			builtin_set(int argc, char **argv)
 	return (unset_greaternbrs(i));
 }
 
-int			builtin_unset(int argc, char **argv)
+int	builtin_unset(int argc, char **argv)
 {
 	if (argc < 2)
 		return (put_error("Not enough arguments", *argv));
@@ -84,23 +84,25 @@ static int	env_export(char *str)
 		entry = env_splitnew(str, 1);
 	else
 		entry = env_new(str, NULL, 1);
-	if (!entry)
-		return (put_error("malloc failed", "env_export"));
 	var_new = entry->content;
 	var_old = env_getvar(var_new->name);
 	if (var_old)
 	{
 		if (!ft_strchr(str, '=') && var_old->value)
-			if (!(var_new->value = ft_strdup(var_old->value)))
+		{
+			var_new->value = ft_strdup(var_old->value);
+			if (!var_new->value)
 				return (put_error("malloc failed", "env_export"));
-		if ((ret = env_unset(var_old->name)))
+		}
+		ret = env_unset(var_old->name);
+		if (ret)
 			return (ret);
 	}
 	ft_lstappend(&g_envlst, entry);
 	return (0);
 }
 
-int			builtin_export(int argc, char **argv)
+int	builtin_export(int argc, char **argv)
 {
 	int	ret;
 

@@ -12,6 +12,25 @@
 
 #include "shell21.h"
 
+static int	is_op_known(char *op)
+{
+	if (!ft_strcmp(op, ";") || !ft_strcmp(op, "&"))
+		return (1);
+	if (!ft_strcmp(op, "&&") || !ft_strcmp(op, "||"))
+		return (1);
+	if (!ft_strcmp(op, "{") || !ft_strcmp(op, "}"))
+		return (1);
+	if (!ft_strcmp(op, "(") || !ft_strcmp(op, ")"))
+		return (1);
+	if (!ft_strcmp(op, "{}") || !ft_strcmp(op, "()"))
+		return (1);
+	if (!ft_strcmp(op, "<()") || !ft_strcmp(op, ">()"))
+		return (1);
+	if (!ft_strcmp(op, "|"))
+		return (1);
+	return (0);
+}
+
 void	free_node(t_astnode *node)
 {
 	if (!node)
@@ -20,18 +39,7 @@ void	free_node(t_astnode *node)
 	{
 		if (!node->op)
 			free(node->content);
-		else if (!ft_strcmp(node->op, ";") || !ft_strcmp(node->op, "&") \
-		|| !ft_strcmp(node->op, "&&") \
-		|| !ft_strcmp(node->op, "||") \
-		|| !ft_strcmp(node->op, "|") \
-		|| !ft_strcmp(node->op, "{") \
-		|| !ft_strcmp(node->op, "}") \
-		|| !ft_strcmp(node->op, "{}") \
-		|| !ft_strcmp(node->op, "(") \
-		|| !ft_strcmp(node->op, ")") \
-		|| !ft_strcmp(node->op, "()") \
-		|| !ft_strcmp(node->op, "<()") \
-		|| !ft_strcmp(node->op, ">()"))
+		else if (is_op_known(node->op))
 			free_ast(node->content);
 		else
 			put_error(node->op, "cannot free contents of unkown op node");

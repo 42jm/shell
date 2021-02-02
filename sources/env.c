@@ -12,7 +12,7 @@
 
 #include "shell21.h"
 
-int		env_lastret_set(int lastret)
+int	env_lastret_set(int lastret)
 {
 	char	*str;
 	int		ret;
@@ -25,7 +25,7 @@ int		env_lastret_set(int lastret)
 	return (ret);
 }
 
-int		env_set(char *varname, char *valnew, bool exportable)
+int	env_set(char *varname, char *valnew, bool exportable)
 {
 	t_list		*entry;
 	t_envvar	*var;
@@ -54,7 +54,7 @@ int		env_set(char *varname, char *valnew, bool exportable)
 	return (0);
 }
 
-int		env_unset(char *varname)
+int	env_unset(char *varname)
 {
 	t_list		*entry;
 	t_envvar	*var;

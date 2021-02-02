@@ -21,9 +21,11 @@ static int	node_isassign(t_astnode *node)
 		return (0);
 	word = node->content;
 	len = ft_strclen(word, '=');
-	if (len < 2 \
-	|| ft_strchr("#?0123456789", *word) \
-	|| bashvar_len(word) != len - 1)
+	if (len < 2)
+		return (0);
+	if (ft_strchr("#?0123456789", *word))
+		return (0);
+	if (bashvar_len(word) != len - 1)
 		return (0);
 	return (1);
 }
@@ -55,9 +57,11 @@ static int	assign_local(t_astnode *node, char *name, char *value)
 
 	og_value = NULL;
 	og_exportable = 1;
-	if ((og_var = env_getvar(name)))
+	og_var = env_getvar(name);
+	if (og_var)
 	{
-		if (!(og_value = ft_strdup(og_var->value)))
+		og_value = ft_strdup(og_var->value);
+		if (!og_value)
 			return (put_error("malloc failed", "assign_local"));
 		og_exportable = og_var->exportable;
 	}
@@ -73,7 +77,7 @@ static int	assign_local(t_astnode *node, char *name, char *value)
 	return (ret);
 }
 
-int			astexec_assign(t_astnode *node)
+int	astexec_assign(t_astnode *node)
 {
 	int		ret;
 	char	*name;

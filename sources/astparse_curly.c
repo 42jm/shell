@@ -31,8 +31,7 @@ static int	curly_parser(t_astnode *head)
 	}
 	if (!node->next)
 		return (put_error("curly not closed", "{"));
-	if (!(head->op = ft_strdup("{}")))
-		return (put_error("malloc failed", "curly_parser"));
+	head->op = ft_strdup("{}");
 	free(head->content);
 	head->content = head->next;
 	head->next = node->next->next;
@@ -41,7 +40,7 @@ static int	curly_parser(t_astnode *head)
 	return (ast_parser((t_astnode **)&head->content));
 }
 
-int			parse_curly_braces(t_astnode **aroot)
+int	parse_curly_braces(t_astnode **aroot)
 {
 	int			ret;
 	t_astnode	*node;
@@ -54,8 +53,13 @@ int			parse_curly_braces(t_astnode **aroot)
 		if (!ft_strcmp(node->content, "}"))
 			return (put_error("nothing to close", "}"));
 		if (!ft_strcmp(node->content, "{"))
-			if ((ret = curly_parser(node)))
+		{
+			ret = curly_parser(node);
+			if (ret)
 				return (ret);
+			if (!node->op)
+				return (put_error("malloc failed", "curly_parser"));
+		}
 	}
 	return (0);
 }

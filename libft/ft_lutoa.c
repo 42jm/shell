@@ -27,7 +27,7 @@ static size_t	ft_chrcount(uint64_t n)
 	return (count);
 }
 
-char			*ft_lutoa(uint64_t n)
+char	*ft_lutoa(uint64_t n)
 {
 	size_t	chr_count;
 	char	*str;

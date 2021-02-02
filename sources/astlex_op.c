@@ -35,12 +35,11 @@ static char	*find_operator(char **oparr, char *ptr)
 	return (op);
 }
 
-size_t		astlex_oplen(char *ptr)
+size_t	astlex_oplen(char *ptr)
 {
 	size_t		len_digits;
 	size_t		len_op;
-	static char	*oparr[16] =
-	{
+	static char	*oparr[16] = {
 		"(", "<(", ">(", ")",
 		";", "&",
 		"&&", "||",

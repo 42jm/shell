@@ -16,15 +16,23 @@ void	ft_putchar_binary_fd(char byte, int fd)
 {
 	char	*binstr;
 
-	binstr = (char *)malloc(sizeof(char) * 8);
-	binstr[0] = byte & 0x80 ? '1' : '0';
-	binstr[1] = byte & 0x40 ? '1' : '0';
-	binstr[2] = byte & 0x20 ? '1' : '0';
-	binstr[3] = byte & 0x10 ? '1' : '0';
-	binstr[4] = byte & 0x08 ? '1' : '0';
-	binstr[5] = byte & 0x04 ? '1' : '0';
-	binstr[6] = byte & 0x02 ? '1' : '0';
-	binstr[7] = byte & 0x01 ? '1' : '0';
+	binstr = ft_strdup("00000000");
+	if (byte & 0x80)
+		binstr[0] = '1';
+	if (byte & 0x40)
+		binstr[1] = '1';
+	if (byte & 0x20)
+		binstr[2] = '1';
+	if (byte & 0x10)
+		binstr[3] = '1';
+	if (byte & 0x08)
+		binstr[4] = '1';
+	if (byte & 0x04)
+		binstr[5] = '1';
+	if (byte & 0x02)
+		binstr[6] = '1';
+	if (byte & 0x01)
+		binstr[7] = '1';
 	ft_putstr_fd(binstr, fd);
 	free(binstr);
 }
