@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 03:53:16 by quegonza          #+#    #+#             */
-/*   Updated: 2021/01/28 22:16:16 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/05 11:14:28 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int		ft_reach_next_word(void)
 {
 	int		i;
 
-	i = g_info.strlen - g_info.cursor;
+	i = g_info.strlen - g_info.cursor + 1;
 	while (g_info.line[i] == ' ' && g_info.line[i])
 	{
 		i++;
