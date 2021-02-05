@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 00:55:41 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/01 23:20:27 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/05 13:41:58 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@ void	ft_size3_char(char *chr)
 			ft_ctrl_a();
 		else if (chr[2] == 'F' && g_info.cursor > 0)
 			ft_ctrl_e();
+/*
+		else
+			ft_putchar_spe(chr);
+		*/
 	}
 }
 
@@ -50,9 +54,9 @@ void	ft_size6_char(char *chr)
 			ft_scroll(1, 'R');
 		else if (!ft_strcmp("1;5B", &chr[2]))
 			ft_scroll(1, 'F');
-		else if (!ft_strcmp("1;5C", &chr[2]) && g_info.cursor)
+		else if (!ft_strcmp("1;2C", &chr[2]) && g_info.cursor)
 			ft_reach_next_word();
-		else if (!ft_strcmp("1;5D", &chr[2]) && g_info.strlen)
+		else if (!ft_strcmp("1;2D", &chr[2]) && g_info.cursor != g_info.strlen)
 			ft_reach_previous_word();
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 00:50:07 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/05 11:06:38 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/05 12:45:13 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ char	*ft_size1_char(char *line, char *chr)
 		line = ft_ctrl_w(line);
 	else if (c == CTRL_Y)
 		line = ft_ctrl_y(line);
+	else
+		ft_putchar_spe(chr);
 	return (line);
 }
 

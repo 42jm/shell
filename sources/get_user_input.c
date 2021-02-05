@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 02:00:55 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/02 13:33:01 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/05 13:04:34 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 char	*ft_current_char(char *buf, int *len)
 {
+	*len = 0;
 	ft_bzero(buf, 16);
 	*len = read(g_info.fd, buf, 16);
 	return (buf);
@@ -34,6 +35,8 @@ int	ft_key_interaction()
 		g_info.line = ft_size4_char(g_info.line, chr);
 	else if (len == 6)
 		ft_size6_char(chr);
+	else if (len > 0)
+		ft_putchar_spe(chr);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 03:53:16 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/05 11:14:28 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/05 13:53:50 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,12 @@ int		ft_reach_next_word(void)
 	int		i;
 
 	i = g_info.strlen - g_info.cursor + 1;
-	while (g_info.line[i] == ' ' && g_info.line[i])
+	while ((g_info.line[i] == ' ' || g_info.line[i] == '\n') && g_info.line[i])
 	{
 		i++;
 		ft_mv_right();
 	}
-	while (g_info.line[i] != ' ' && ft_isprint(g_info.line[i]))
+	while (g_info.line[i] != ' ' && ft_isalnum(g_info.line[i]))
 	{
 		ft_mv_right();
 		i++;
@@ -105,7 +105,7 @@ int		ft_reach_previous_word(void)
 		ft_mv_left();
 		while (--i && (g_info.line[i] == ' ' || !(g_info.line[i])))
 			ft_mv_left();
-		while (i > 0 && ft_isprint(g_info.line[i]) && g_info.line[i] != ' ')
+		while (i > 0 && ft_isalnum(g_info.line[i]) && g_info.line[i] != ' ')
 		{
 			ft_mv_left();
 			i--;
