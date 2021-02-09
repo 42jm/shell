@@ -8,7 +8,7 @@ CLEAN_COLOR = \033[1;36m
 NAME = 21sh
 INC = -I includes -I libft/includes
 LIB = -L libft/ -lft -lncurses
-FLAGS = -Wall -Wextra -Werror -fsanitize=address
+FLAGS = -Wall -Wextra -Werror -ggdb
 
 # Files
 OBJ_DIR = objects/
@@ -42,6 +42,7 @@ SRC_NAME = main.c \
 	bltn_exit.c \
 	cursor_info.c \
 	cursor_mov.c \
+	copy_paste.c \
 	env.c \
 	env_convert.c \
 	env_get.c \

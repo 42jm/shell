@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 06:10:12 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/02 00:31:40 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/09 21:13:33 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_line_rest(int rest, char *new, char *line)
 	if (new)
 	{
 		ft_get_cursor_info();
-		if (g_info.crsr_row == g_info.row - 1 && 
+		if (g_info.crsr_row == g_info.row - 1 &&
 			g_info.crsr_col == g_info.col - 1)
 		{
 			ft_putchar('\n');

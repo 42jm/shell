@@ -6,7 +6,11 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 00:55:41 by quegonza          #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2021/02/05 13:15:00 by quegonza         ###   ########.fr       */
+=======
 /*   Updated: 2021/02/05 13:41:58 by quegonza         ###   ########.fr       */
+>>>>>>> d03b3b20539656a1461134f1c2d45af7d9392aec
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +62,7 @@ void	ft_size6_char(char *chr)
 			ft_reach_next_word();
 		else if (!ft_strcmp("1;2D", &chr[2]) && g_info.cursor != g_info.strlen)
 			ft_reach_previous_word();
+		else
+			ft_putchar_spe(chr);
 	}
 }

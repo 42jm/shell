@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 05:44:26 by quegonza          #+#    #+#             */
-/*   Updated: 2021/01/28 23:28:12 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/09 21:06:52 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,17 @@ char	*ft_str_first_word(char *str)
 
 int		ft_valid_hdoc(int i)
 {
-	char 	*eof;
+	char	*eof;
+	int		eoflen;
 
 	i += 2;
 	while (g_info.line[i] == ' ' || g_info.line[i] == '\t')
 		i++;
 	eof = ft_str_first_word(&(g_info.line[i]));
-	i += ft_strlen(eof) - 1;
+	eoflen = ft_strlen(eof);
+	i += eoflen - 1;
 	while (g_info.line[++i])
-		if (!(ft_strncmp(&(g_info.line[i]), eof, ft_strlen(eof))))
+		if (!(ft_strncmp(&(g_info.line[i]), eof, eoflen)))
 		{
 			free(eof);
 			return (1);
@@ -44,7 +46,7 @@ int		ft_valid_hdoc(int i)
 	return (0);
 }
 
-int		ft_valid_quotes()
+int		ft_valid_quotes(void)
 {
 	int		i;
 
@@ -70,7 +72,7 @@ int		ft_valid_quotes()
 	return (1);
 }
 
-int		ft_line_validation()
+int		ft_line_validation(void)
 {
 	if (g_info.exit && !(g_info.exit &= 0))
 		return (1);

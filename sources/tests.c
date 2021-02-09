@@ -6,13 +6,13 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 06:38:03 by quegonza          #+#    #+#             */
-/*   Updated: 2020/12/12 19:27:46 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/09 21:08:46 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "quegonza.h"
 
-void	ft_print_t_curs()
+void	ft_print_t_curs(void)
 {
 	ft_putstr("\nrow=");
 	ft_putnbr(g_info.row);
@@ -29,7 +29,7 @@ void	ft_print_t_curs()
 	ft_putstr("\n");
 }
 
-int		ft_termcap_test()
+int		ft_termcap_test(void)
 {
 	int	val;
 

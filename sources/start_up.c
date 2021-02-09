@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 06:31:50 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/01 22:55:10 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/09 21:07:44 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 
 int		ft_termcap_init(void)
 {
-	int ret;
-	char *term_type;
+	int		ret;
+	char	*term_type;
 
 	term_type = getenv("TERM");
 	if (term_type == NULL)

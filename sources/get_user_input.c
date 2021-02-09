@@ -6,7 +6,11 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 02:00:55 by quegonza          #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2021/02/09 21:06:07 by quegonza         ###   ########.fr       */
+=======
 /*   Updated: 2021/02/05 13:04:34 by quegonza         ###   ########.fr       */
+>>>>>>> d03b3b20539656a1461134f1c2d45af7d9392aec
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +24,7 @@ char	*ft_current_char(char *buf, int *len)
 	return (buf);
 }
 
-int	ft_key_interaction()
+int		ft_key_interaction(void)
 {
 	char	chr[16];
 	int		len;
@@ -40,7 +44,7 @@ int	ft_key_interaction()
 	return (1);
 }
 
-char	*ft_get_user_input()
+char	*ft_get_user_input(void)
 {
 	ft_get_cursor_info();
 	g_info.cursor = 0;

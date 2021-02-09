@@ -6,7 +6,11 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 03:53:16 by quegonza          #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2021/02/09 20:21:30 by quegonza         ###   ########.fr       */
+=======
 /*   Updated: 2021/02/05 13:53:50 by quegonza         ###   ########.fr       */
+>>>>>>> d03b3b20539656a1461134f1c2d45af7d9392aec
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,14 +107,14 @@ int		ft_reach_previous_word(void)
 	if (i > 0)
 	{
 		ft_mv_left();
-		while (--i && (g_info.line[i] == ' ' || !(g_info.line[i])))
+		while (--i && (g_info.line[i] == ' ' || g_info.line[i] == '\n'))
 			ft_mv_left();
 		while (i > 0 && ft_isalnum(g_info.line[i]) && g_info.line[i] != ' ')
 		{
 			ft_mv_left();
 			i--;
 		}
-		if (g_info.line[i] == ' ')
+		if (i)
 		{
 			ft_mv_right();
 			i++;

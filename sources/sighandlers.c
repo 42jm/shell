@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 06:43:28 by quegonza          #+#    #+#             */
-/*   Updated: 2021/01/28 23:46:38 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/09 21:11:26 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,3 @@ void	ft_sighandler_ctrl_z_return(int signum)
 	ft_get_cursor_info();
 	ft_get_user_input(&g_info);
 }
-

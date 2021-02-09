@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 06:16:23 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/02 00:36:12 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/09 21:14:31 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@
 **'42' would be the row where the cursor is on and '1' the (first) column
 */
 
-void	ft_get_cursor_pos()
+void	ft_get_cursor_pos(void)
 {
 	int		i;
 	char	buf[15];
 
 	write(1, "\033[6n", 4);
 	ft_bzero(buf, 15);
-	if(read(1, buf, 14) == -1)
+	if (read(1, buf, 14) == -1)
 		return ;
 	i = -1;
 	while (buf[++i])
@@ -41,7 +41,7 @@ void	ft_get_cursor_pos()
 		}
 }
 
-void	ft_get_term_size()
+void	ft_get_term_size(void)
 {
 	struct winsize ws;
 
@@ -50,7 +50,7 @@ void	ft_get_term_size()
 	g_info.row = ws.ws_row;
 }
 
-void	ft_get_cursor_info()
+void	ft_get_cursor_info(void)
 {
 	ft_get_term_size();
 	ft_get_cursor_pos();
@@ -99,16 +99,15 @@ int		ft_getrow_fromstr(int cursor)
 			row -= 1;
 		row = row - col / g_info.col;
 	}
-	if (i >= 0)
-		while (i < cursor)
+	while (i >= 0 && i < cursor)
+	{
+		if (g_info.line[i++] == '\n' || col >= g_info.col - 1)
 		{
-			if (g_info.line[i++] == '\n' || col >= g_info.col - 1)
-			{
-				col = 0;
-				row++;
-			}
-			else
-				col++;
+			col = 0;
+			row++;
 		}
+		else
+			col++;
+	}
 	return (row);
 }
