@@ -33,10 +33,8 @@ char	*ft_size1_char(char *line, char *chr)
 		line = ft_ctrl_u(line);
 	else if (c == CTRL_W && g_info.strlen != g_info.cursor)
 		line = ft_ctrl_w(line);
-	else if (c == CTRL_Y)
+	else if (c == CTRL_Y && g_info.copy[0])
 		line = ft_ctrl_y(line);
-	else
-		ft_putchar_spe(chr);
 	return (line);
 }
 

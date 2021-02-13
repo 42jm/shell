@@ -35,8 +35,6 @@ int		ft_key_interaction(void)
 		g_info.line = ft_size4_char(g_info.line, chr);
 	else if (len == 6)
 		ft_size6_char(chr);
-	else if (len > 0)
-		ft_putchar_spe(chr);
 	return (1);
 }
 

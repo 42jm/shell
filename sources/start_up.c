@@ -73,8 +73,8 @@ int		ft_start_up(void)
 	if (tcgetattr(0, &s_termios) == -1)
 		return (0);
 	g_info.s_termios_backup = s_termios;
-	g_info.copy = NULL;
-	g_info.temp = NULL;
+	g_info.copy = ft_memalloc(1);
+	g_info.temp = ft_memalloc(1);
 	s_termios.c_lflag &= ~(ICANON);
 	s_termios.c_lflag &= ~(ECHO);
 	if (tcsetattr(0, 0, &s_termios) == -1)

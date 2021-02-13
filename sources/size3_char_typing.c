@@ -28,10 +28,6 @@ void	ft_size3_char(char *chr)
 			ft_ctrl_a();
 		else if (chr[2] == 'F' && g_info.cursor > 0)
 			ft_ctrl_e();
-/*
-		else
-			ft_putchar_spe(chr);
-		*/
 	}
 }
 
@@ -58,7 +54,5 @@ void	ft_size6_char(char *chr)
 			ft_reach_next_word();
 		else if (!ft_strcmp("1;2D", &chr[2]) && g_info.cursor != g_info.strlen)
 			ft_reach_previous_word();
-		else
-			ft_putchar_spe(chr);
 	}
 }

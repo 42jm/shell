@@ -46,7 +46,10 @@ void	ft_history(char opt)
 	ft_ctrl_a();
 	ft_clean_after_cursor();
 	if (g_info.hist_pos == -1)
+	{
+		free(g_info.temp);
 		g_info.temp = ft_strdup(g_info.line);
+	}
 	free(g_info.line);
 	if (opt == '+')
 		(g_info.hist_pos)++;

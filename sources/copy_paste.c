@@ -20,8 +20,7 @@ char	*ft_ctrl_u(char *line)
 
 	len = g_info.strlen - g_info.cursor;
 	i = 0;
-	if (g_info.copy)
-		free(g_info.copy);
+	free(g_info.copy);
 	if (!(g_info.copy = ft_memalloc(len + 1)))
 		return (NULL);
 	ft_strncpy(g_info.copy, &line[i], len);
@@ -47,8 +46,7 @@ char	*ft_ctrl_w(char *line)
 	len = g_info.strlen - g_info.cursor;
 	i = ft_reach_previous_word();
 	len -= i;
-	if (g_info.copy)
-		free(g_info.copy);
+	free(g_info.copy);
 	if (!(g_info.copy = ft_memalloc(len + 1)))
 		return (NULL);
 	ft_strncpy(g_info.copy, &line[i], len);
