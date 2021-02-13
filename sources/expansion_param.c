@@ -110,6 +110,7 @@ int	expand_param(t_astnode *node)
 	char	*arg;
 	size_t	var_i;
 	int		ret;
+	size_t	tmp;
 
 	if (!node->content)
 		return (0);
@@ -124,7 +125,10 @@ int	expand_param(t_astnode *node)
 			ret = expand_variable(&arg, &var_i);
 		if (ret)
 			return (ret);
-		var_i = ft_strclen_unquoted(arg + var_i, '$', "\\'");
+		tmp = ft_strclen_unquoted(arg + var_i, '$', "\\'");
+		if (!tmp)
+			break ;
+		var_i += tmp;
 	}
 	node->content = arg;
 	return (0);
