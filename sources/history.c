@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 23:15:06 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/01 23:43:42 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/14 15:22:35 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 char	**ft_history_init(void)
 {
-	if (!(g_info.hist = (char **)ft_memalloc(sizeof(char **))))
+	g_info.hist = (char **)ft_memalloc(sizeof(char **));
+	if (!(g_info.hist))
 		return (NULL);
 	g_info.hist[0] = NULL;
 	return (g_info.hist);
@@ -30,7 +31,8 @@ char	**ft_history_new(void)
 		i++;
 	if (!(g_info.line[0]) || (i > 1 && !ft_strcmp(g_info.line, g_info.hist[0])))
 		return (g_info.hist);
-	if (!(hist = (char **)ft_memalloc(sizeof(char **) * (i + 2))))
+	hist = (char **)ft_memalloc(sizeof(char **) * (i + 2));
+	if (!hist)
 		return (NULL);
 	hist[0] = ft_strdup(g_info.line);
 	i = -1;

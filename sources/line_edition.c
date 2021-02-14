@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 06:10:12 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/09 21:13:33 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/13 19:56:28 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void	ft_line_rest(int rest, char *new, char *line)
 	if (new)
 	{
 		ft_get_cursor_info();
-		if (g_info.crsr_row == g_info.row - 1 &&
-			g_info.crsr_col == g_info.col - 1)
+		if (g_info.crsr_row == g_info.row - 1
+			&& g_info.crsr_col == g_info.col - 1)
 		{
 			ft_putchar('\n');
 			(g_info.crsr_row)--;
@@ -45,7 +45,8 @@ char	*ft_insert_char(char *line, char chr)
 	int		i;
 	int		lim;
 
-	if (!(new = (char *)ft_memalloc(g_info.strlen + 2)))
+	new = (char *)ft_memalloc(g_info.strlen + 2);
+	if (!new)
 		return (NULL);
 	i = -1;
 	lim = g_info.strlen - g_info.cursor;
@@ -69,7 +70,8 @@ char	*ft_suppr_char(char *line)
 	int		i;
 	int		lim;
 
-	if (!(new = (char *)ft_memalloc(g_info.strlen)))
+	new = (char *)ft_memalloc(g_info.strlen);
+	if (!new)
 		return (NULL);
 	i = -1;
 	lim = g_info.strlen - g_info.cursor;
@@ -92,7 +94,8 @@ char	*ft_del_char(char *line)
 	int		i;
 	int		lim;
 
-	if (!(new = (char *)ft_memalloc(g_info.strlen)))
+	new = (char *)ft_memalloc(g_info.strlen);
+	if (!new)
 		return (NULL);
 	i = -1;
 	lim = g_info.strlen - g_info.cursor - 1;

@@ -42,6 +42,7 @@ SRC_NAME = main.c \
 	bltn_exit.c \
 	cursor_info.c \
 	cursor_mov.c \
+	cursor_pos_fromstr.c \
 	copy_paste.c \
 	env.c \
 	env_convert.c \
@@ -69,6 +70,7 @@ SRC_NAME = main.c \
 	sighandlers.c \
 	signals.c \
 	size1_char_typing.c \
+	size2_char_typing.c \
 	size3_char_typing.c \
 	start_up.c \
 	termcap_tools.c \

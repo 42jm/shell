@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 03:16:03 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/09 21:20:55 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/14 15:50:08 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define ESC	27
 # define DEL	127
 
-typedef struct		s_cap
+typedef struct s_cap
 {
 	char			*cd;
 	char			*ce;
@@ -35,7 +35,7 @@ typedef struct		s_cap
 	char			*dc;
 }					t_cap;
 
-typedef struct		s_curs
+typedef struct s_curs
 {
 	int				fd;
 	int				row;
@@ -59,30 +59,29 @@ extern t_curs		g_info;
 
 void				ft_clean_after_cursor(void);
 void				ft_crsr_newline(void);
-void				ft_ctrl_a();
+void				ft_ctrl_a(void);
 char				*ft_ctrl_d(char *line);
-void				ft_ctrl_e();
+void				ft_ctrl_e(void);
 char				*ft_ctrl_u(char *line);
 char				*ft_ctrl_w(char *line);
 char				*ft_ctrl_y(char *line);
 char				*ft_current_char(char *buf, int *i);
-void				ft_display_history();
+void				ft_display_history(void);
 char				*ft_del_char(char *line);
 void				ft_end_clean(char *end_message);
-void				ft_erase_crsrline(void);
 int					ft_error(char *cause, int code);
 void				ft_free_tabzero(char **tab);
 int					ft_get_cap(t_cap *cap);
 void				ft_get_cursor_info(void);
 void				ft_get_cursor_pos(void);
 void				ft_get_term_size(void);
-char				*ft_get_user_input();
+char				*ft_get_user_input(void);
 int					ft_getrow_fromstr(int cursor);
 int					ft_getcol_fromstr(int cursor);
 void				ft_history(char opt);
-char				**ft_history_init();
-char				**ft_history_new();
-void				ft_input_init();
+char				**ft_history_init(void);
+char				**ft_history_new(void);
+void				ft_input_init(void);
 char				*ft_insert_char(char *line, char chr);
 int					ft_line_len(int i);
 int					ft_line_validation(void);
@@ -97,6 +96,7 @@ void				ft_sighandler_winsize_change(int signum);
 void				ft_sighandler_ctrl_c(int signum);
 void				ft_sighandler_ctrl_z_return(int signum);
 char				*ft_size1_char(char *line, char *chr);
+char				*ft_size2_char(char *line, char *chr);
 void				ft_size3_char(char *chr);
 char				*ft_size4_char(char *line, char *chr);
 void				ft_size6_char(char *chr);

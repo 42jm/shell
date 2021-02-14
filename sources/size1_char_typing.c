@@ -14,7 +14,7 @@
 
 char	*ft_size1_char(char *line, char *chr)
 {
-	char c;
+	char	c;
 
 	c = chr[0];
 	if (c == '\n')

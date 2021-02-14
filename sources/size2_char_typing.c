@@ -1,38 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sighandlers.c                                      :+:      :+:    :+:   */
+/*   size2_char_typing.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/07 06:43:28 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/14 15:54:30 by quegonza         ###   ########.fr       */
+/*   Created: 2021/02/13 19:49:37 by quegonza          #+#    #+#             */
+/*   Updated: 2021/02/13 19:49:49 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "quegonza.h"
-#include "shell21.h"
 
-void	ft_sighandler_winsize_change(int signum)
+char	*ft_size2_char(char *line, char *chr)
 {
-	(void)signum;
-	ft_get_cursor_info();
-}
-
-void	ft_sighandler_ctrl_c(int signum)
-{
-	(void)signum;
-	ft_putstr("^C\n");
-	g_info.line[0] = '\0';
-	env_set("?", "130", 0);
-	g_info.exit = 1;
-}
-
-void	ft_sighandler_ctrl_z_return(int signum)
-{
-	(void)signum;
-	ft_putchar('\n');
-	g_info.line[0] = '\0';
-	g_info.exit = 1;
-	ft_get_cursor_info();
+	if (chr[0] == '~' || chr[0] == '^' || chr[0] == '`')
+	{
+		line = ft_insert_char(line, chr[0]);
+		line = ft_insert_char(line, chr[1]);
+	}
+	return (line);
 }

@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 20:57:00 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/09 21:02:08 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/13 20:02:35 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,12 @@ char	*ft_ctrl_u(char *line)
 	len = g_info.strlen - g_info.cursor;
 	i = 0;
 	free(g_info.copy);
-	if (!(g_info.copy = ft_memalloc(len + 1)))
+	g_info.copy = ft_memalloc(len + 1);
+	if (!(g_info.copy))
 		return (NULL);
 	ft_strncpy(g_info.copy, &line[i], len);
-	if (!(res = ft_memalloc(g_info.strlen - len + 1)))
+	res = ft_memalloc(g_info.strlen - len + 1);
+	if (!res)
 		return (NULL);
 	ft_strncpy(res, &line[len], ft_strlen(&line[len]));
 	ft_ctrl_a();
@@ -47,10 +49,12 @@ char	*ft_ctrl_w(char *line)
 	i = ft_reach_previous_word();
 	len -= i;
 	free(g_info.copy);
-	if (!(g_info.copy = ft_memalloc(len + 1)))
+	g_info.copy = ft_memalloc(len + 1);
+	if (!(g_info.copy))
 		return (NULL);
 	ft_strncpy(g_info.copy, &line[i], len);
-	if (!(res = ft_memalloc(g_info.strlen - len + 1)))
+	res = ft_memalloc(g_info.strlen - len + 1);
+	if (!res)
 		return (NULL);
 	ft_strncpy(res, line, i);
 	ft_strncpy(&res[i], &line[i + len], ft_strlen(&line[i + len]));
@@ -70,7 +74,8 @@ char	*ft_ctrl_y(char *line)
 	int		i;
 
 	copylen = ft_strlen(g_info.copy);
-	if (!(res = ft_memalloc(g_info.strlen + copylen + 1)))
+	res = ft_memalloc(g_info.strlen + copylen + 1);
+	if (!res)
 		return (NULL);
 	i = g_info.strlen - g_info.cursor;
 	ft_strncpy(res, line, i);

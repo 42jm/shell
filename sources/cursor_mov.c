@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 03:53:16 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/09 20:21:30 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/14 15:20:58 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	ft_move_cursor(char side, int nb)
 	}
 }
 
-int		ft_reach_next_word(void)
+int 	ft_reach_next_word(void)
 {
 	int		i;
 
@@ -95,7 +95,7 @@ int		ft_reach_next_word(void)
 	return (i);
 }
 
-int		ft_reach_previous_word(void)
+int 	ft_reach_previous_word(void)
 {
 	int		i;
 

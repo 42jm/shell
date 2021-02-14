@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 06:31:50 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/09 21:07:44 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/14 15:36:07 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 ** Then load its capabilities from termcap data base with TGETENT()
 */
 
-int		ft_termcap_init(void)
+int 	ft_termcap_init(void)
 {
 	int		ret;
 	char	*term_type;
@@ -45,15 +45,19 @@ int		ft_termcap_init(void)
 ** Gets all string capabilities needed with TGETSTR() and stores them
 */
 
-int		ft_get_cap(t_cap *cap)
+int 	ft_get_cap(t_cap *cap)
 {
-	if (!(cap->cd = tgetstr("cd", NULL)))
+	cap->cd = tgetstr("cd", NULL);
+	if (!(cap->cd))
 		return (ft_error("`cd' capability not found", 0));
-	if (!(cap->ce = tgetstr("ce", NULL)))
+	cap->ce = tgetstr("ce", NULL);
+	if (!(cap->ce))
 		return (ft_error("`ce' capability not found", 0));
-	if (!(cap->cm = tgetstr("cm", NULL)))
+	cap->cm = tgetstr("cm", NULL);
+	if (!(cap->cm))
 		return (ft_error("`cm' capability not found", 0));
-	if (!(cap->dc = tgetstr("dc", NULL)))
+	cap->dc = tgetstr("dc", NULL);
+	if (!(cap->dc))
 		return (ft_error("`dc' capability not found", 0));
 	return (1);
 }
@@ -64,7 +68,7 @@ int		ft_get_cap(t_cap *cap)
 ** flag 'ECHO'   - Keyboard touches are not printed on terminal.
 */
 
-int		ft_start_up(void)
+int 	ft_start_up(void)
 {
 	struct termios	s_termios;
 
@@ -75,8 +79,8 @@ int		ft_start_up(void)
 	g_info.s_termios_backup = s_termios;
 	g_info.copy = ft_memalloc(1);
 	g_info.temp = ft_memalloc(1);
-	s_termios.c_lflag &= ~(ICANON);
-	s_termios.c_lflag &= ~(ECHO);
+	s_termios.c_lflag &= ~ (ICANON);
+	s_termios.c_lflag &= ~ (ECHO);
 	if (tcsetattr(0, 0, &s_termios) == -1)
 		return (0);
 	if (!ft_get_cap(&(g_info.cap)))
@@ -88,9 +92,9 @@ int		ft_start_up(void)
 	return (1);
 }
 
-int		ft_stdin_init(void)
+int 	ft_stdin_init(void)
 {
-	char *pathname;
+	char	*pathname;
 
 	if (STDIN_FILENO != 0)
 	{
@@ -100,9 +104,11 @@ int		ft_stdin_init(void)
 	}
 	if (!isatty(STDIN_FILENO))
 		return (ft_error("isatty(): STDIN_FILENO error\n", 0));
-	if (!(pathname = ttyname(STDIN_FILENO)))
+	pathname = ttyname(STDIN_FILENO);
+	if (!pathname)
 		return (ft_error("ttyname(): STDIN_FILENO error\n", 0));
-	if ((g_info.fd = open(pathname, O_NONBLOCK)) == -1)
+	g_info.fd = open(pathname, O_NONBLOCK);
+	if (g_info.fd == -1)
 		return (ft_error("open(): error on tty\n", 0));
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 06:38:03 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/09 21:08:46 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/14 15:36:55 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_print_t_curs(void)
 	ft_putstr("\n");
 }
 
-int		ft_termcap_test(void)
+int 	ft_termcap_test(void)
 {
 	int	val;
 
@@ -152,7 +152,7 @@ int		ft_termcap_test(void)
 
 void	chk21(void)
 {
-	char *term_type;
+	char	*term_type;
 
 	ft_get_cursor_info();
 	term_type = getenv("TERM");
