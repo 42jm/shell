@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 00:50:07 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/09 21:07:20 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/14 17:35:57 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ char	*ft_size1_char(char *line, char *chr)
 void	ft_ctrl_a(void)
 {
 	ft_get_cursor_info();
-	g_info.crsr_col = ft_getcol_fromstr(0);
 	g_info.crsr_row = ft_getrow_fromstr(0);
+	g_info.crsr_col = ft_getcol_fromstr(0);
 	tputs(tgoto(g_info.cap.cm, g_info.crsr_col, g_info.crsr_row), 1, ft_putc);
 	g_info.cursor = g_info.strlen;
 }
@@ -50,8 +50,8 @@ void	ft_ctrl_a(void)
 void	ft_ctrl_e(void)
 {
 	ft_get_cursor_info();
-	g_info.crsr_col = ft_getcol_fromstr(g_info.strlen);
 	g_info.crsr_row = ft_getrow_fromstr(g_info.strlen);
+	g_info.crsr_col = ft_getcol_fromstr(g_info.strlen);
 	tputs(tgoto(g_info.cap.cm, g_info.crsr_col, g_info.crsr_row), 1, ft_putc);
 	g_info.cursor = 0;
 }

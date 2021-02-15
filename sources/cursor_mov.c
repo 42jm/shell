@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 03:53:16 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/14 15:20:58 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/14 18:58:31 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,41 +80,46 @@ void	ft_move_cursor(char side, int nb)
 int 	ft_reach_next_word(void)
 {
 	int		i;
+	int 	nb;
 
-	i = g_info.strlen - g_info.cursor + 1;
+	ft_get_cursor_pos();
+	i = g_info.strlen - g_info.cursor;
+	nb = i;
 	while ((g_info.line[i] == ' ' || g_info.line[i] == '\n') && g_info.line[i])
-	{
 		i++;
-		ft_mv_right();
-	}
-	while (g_info.line[i] != ' ' && ft_isalnum(g_info.line[i]))
-	{
-		ft_mv_right();
+	while (g_info.line[i] != ' ' && ft_isprint(g_info.line[i]) && g_info.line[i])
 		i++;
-	}
+	g_info.crsr_row = ft_getrow_fromstr(i);
+	g_info.crsr_col = ft_getcol_fromstr(i);
+	tputs(tgoto(g_info.cap.cm, g_info.crsr_col, g_info.crsr_row), 1, ft_putc);
+	nb = i - nb;
+	g_info.cursor -= nb;
+	if (g_info.cursor < 0)
+		g_info.cursor = 0;
 	return (i);
 }
 
 int 	ft_reach_previous_word(void)
 {
 	int		i;
+	int 	nb;
 
 	i = g_info.strlen - g_info.cursor;
 	if (i > 0)
 	{
-		ft_mv_left();
+		ft_get_cursor_pos();
+		nb = i;
 		while (--i && (g_info.line[i] == ' ' || g_info.line[i] == '\n'))
-			ft_mv_left();
-		while (i > 0 && ft_isalnum(g_info.line[i]) && g_info.line[i] != ' ')
-		{
-			ft_mv_left();
+			;
+		while (i > 0 && ft_isprint(g_info.line[i]) && g_info.line[i] != ' ')
 			i--;
-		}
 		if (i)
-		{
-			ft_mv_right();
 			i++;
-		}
+		g_info.crsr_row = ft_getrow_fromstr(i);
+		g_info.crsr_col = ft_getcol_fromstr(i);
+		tputs(tgoto(g_info.cap.cm, g_info.crsr_col, g_info.crsr_row), 1, ft_putc);
+		nb = nb - i;
+		g_info.cursor += nb;
 	}
 	return (i);
 }
