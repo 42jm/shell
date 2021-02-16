@@ -59,7 +59,7 @@ static int	split_field(t_astnode *node, int *afields)
 
 int	clean_fields(t_astnode **ap, t_astnode **an, t_astnode **ah, int i)
 {
-	int			ret;
+	char	*str;
 
 	if (i < 0)
 		return (0);
@@ -67,9 +67,11 @@ int	clean_fields(t_astnode **ap, t_astnode **an, t_astnode **ah, int i)
 	{
 		if (remove_empty_field(*ap, an, ah))
 			continue ;
-		ret = remove_quotes(*an);
-		if (ret)
-			return (ret);
+		str = remove_quotes((char *)((*an)->content));
+		if (!str)
+			return (put_error("malloc failed", "clean_fields"));
+		free((*an)->content);
+		(*an)->content = str;
 		*ap = *an;
 		*an = (*an)->next;
 	}

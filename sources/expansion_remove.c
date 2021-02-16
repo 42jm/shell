@@ -32,31 +32,31 @@ int	remove_empty_field(t_astnode *prev, t_astnode **anode, t_astnode **ahead)
 	return (1);
 }
 
-int	remove_quotes(t_astnode *node)
+char	*remove_quotes(char *ptr)
 {
 	size_t	i;
 	size_t	len;
-	char	*tmp;
+	char	*str;
 
 	i = 0;
-	tmp = node->content;
-	len = ft_stralen_unquoted(tmp + i, "\"'\\");
-	while (len)
+	str = ft_strdup(ptr);
+	if (str)
+		len = ft_stralen_unquoted(str + i, "\"'\\");
+	while (str && len)
 	{
 		i += len - 1;
 		len = 1;
-		if (tmp[i] != '\\')
+		if (str[i] != '\\')
 		{
-			len = quotationlen(tmp + i, "\"'\\");
+			len = quotationlen(str + i, "\"'\\");
 			if (!len && ++i)
 				continue ;
-			ft_strdrop_inplace(&tmp, i + len - 1, i + len);
+			ft_strdrop_inplace(&str, i + len - 1, i + len);
 			len -= 2;
 		}
-		ft_strdrop_inplace(&tmp, i, i + 1);
+		ft_strdrop_inplace(&str, i, i + 1);
 		i += len;
-		len = ft_stralen_unquoted(tmp + i, "\"'\\");
+		len = ft_stralen_unquoted(str + i, "\"'\\");
 	}
-	node->content = tmp;
-	return (0);
+	return (str);
 }
