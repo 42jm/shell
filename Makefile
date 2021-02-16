@@ -40,6 +40,7 @@ SRC_NAME = main.c \
 	bltn_echo.c \
 	bltn_envs.c \
 	bltn_exit.c \
+	bltn_setenvs.c \
 	cursor_info.c \
 	cursor_mov.c \
 	cursor_pos_fromstr.c \

@@ -30,6 +30,12 @@ int	execute_builtin(char **args)
 		ret = builtin_unset(argc, args);
 	else if (!ft_strcmp(*args, "export"))
 		ret = builtin_export(argc, args);
+	else if (!ft_strcmp(*args, "setenv"))
+		ret = builtin_setenv(argc, args);
+	else if (!ft_strcmp(*args, "unsetenv"))
+		ret = builtin_unsetenv(argc, args);
+	else if (!ft_strcmp(*args, "env"))
+		ret = builtin_env(argc, args);
 	else
 		ret = put_error_ret("BUILTIN NOT YET IMPLEMENTED", *args, 1);
 	return (ret);
@@ -87,8 +93,9 @@ int	execute_command(char **args)
 
 int	execute(char **args)
 {
-	static char	*builtins[] = {"echo", "cd", "exit", "set", \
-								"unset", "export", NULL };
+	static char	*builtins[] = {"echo", "cd", "exit", \
+								"set", "unset", "export", \
+								"setenv", "unsetenv", "env", NULL };
 
 	if (args == NULL)
 		return (put_error("no arguments", "execute"));
