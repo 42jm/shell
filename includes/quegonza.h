@@ -6,12 +6,13 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 03:16:03 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/14 15:50:08 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/16 18:45:19 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef QUEGONZA_H
 # define QUEGONZA_H
+# include "shell21.h"
 # include "libft.h"
 # include <termcap.h>
 # include <termios.h>
@@ -51,6 +52,7 @@ typedef struct s_curs
 	char			*temp;
 	char			*copy;
 	char			exit;
+	struct termios	s_termios;
 	struct termios	s_termios_backup;
 	t_cap			cap;
 }					t_curs;

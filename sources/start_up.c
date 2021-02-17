@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 06:31:50 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/14 15:36:07 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/15 21:22:06 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,19 +70,15 @@ int 	ft_get_cap(t_cap *cap)
 
 int 	ft_start_up(void)
 {
-	struct termios	s_termios;
-
 	if (ft_termcap_init() < 1)
 		return (0);
-	if (tcgetattr(0, &s_termios) == -1)
+	if (tcgetattr(0, &(g_info.s_termios)) == -1)
 		return (0);
-	g_info.s_termios_backup = s_termios;
+	g_info.s_termios_backup = g_info.s_termios;
 	g_info.copy = ft_memalloc(1);
 	g_info.temp = ft_memalloc(1);
-	s_termios.c_lflag &= ~ (ICANON);
-	s_termios.c_lflag &= ~ (ECHO);
-	if (tcsetattr(0, 0, &s_termios) == -1)
-		return (0);
+	g_info.s_termios.c_lflag &= ~ (ICANON);
+	g_info.s_termios.c_lflag &= ~ (ECHO);
 	if (!ft_get_cap(&(g_info.cap)))
 		return (ft_error("ft_get_cap(): terminal capability missing\n", 0));
 	if (!ft_history_init())

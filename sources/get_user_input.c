@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 02:00:55 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/09 21:06:07 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/15 21:21:58 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int 	ft_key_interaction(void)
 
 char	*ft_get_user_input(void)
 {
+	if (tcsetattr(0, 0, &(g_info.s_termios)) == -1)
+		return (0);
 	ft_get_cursor_info();
 	g_info.cursor = 0;
 	g_info.hist_pos = -1;
@@ -63,6 +65,8 @@ char	*ft_get_user_input(void)
 		}
 	}
 	g_info.hist = ft_history_new();
+	if (tcsetattr(0, 0, &(g_info.s_termios_backup)) == -1)
+		ft_putstr("error: Can't recover terminal configuration\n");
 	if (!(g_info.hist))
 		return (NULL);
 	return (g_info.line);
