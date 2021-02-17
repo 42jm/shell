@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 05:44:26 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/16 21:23:01 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/17 19:38:24 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,16 @@ int 	ft_valid_quotes(void)
 		if (g_info.line[i] == '\'')
 		{
 			len = ft_stralen_unquoted(&(g_info.line[i]), "><&(); \t\n") - 1;
-			if (!len || len == 1)
+			ft_putnbr(len);
+			ft_putstr("-");
+			if (!len || len == 1 || g_info.line[i + len - 1] != '\'')
 				return (0);
 			i += len;
 		}
 		else if (g_info.line[i] == '\"')
 		{
 			len = ft_stralen_unquoted(&(g_info.line[i]), "><&();| \t\n") - 1;
-			if (!len || len == 1)
+			if (!len || len == 1 || g_info.line[i + len - 1] != '\"')
 				return (0);
 			i += len;
 		}

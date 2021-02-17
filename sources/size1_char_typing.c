@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 00:50:07 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/14 17:35:57 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/17 19:30:37 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,10 @@ char	*ft_ctrl_d(char *line)
 		g_info.exit = 1;
 		free(line);
 		line = ft_strdup("exit");
+	}
+	else if (!(g_info.cursor) && g_info.line[g_info.strlen - 1] == '\n')
+	{
+		g_info.exit = 1;
 	}
 	else if (g_info.cursor)
 		line = ft_suppr_char(line);

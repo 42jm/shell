@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 06:10:12 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/13 19:56:28 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/17 20:00:42 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,8 @@ char	*ft_del_char(char *line)
 	while (++i < lim)
 		new[i] = line[i];
 	ft_mv_left();
-	g_info.cursor -= 1;
 	ft_clean_after_cursor();
+	g_info.cursor -= 1;
 	if (g_info.cursor)
 	{
 		lim = g_info.cursor + 1;
