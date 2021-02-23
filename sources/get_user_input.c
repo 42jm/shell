@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 02:00:55 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/15 21:21:58 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/23 02:11:43 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*ft_current_char(char *buf, int *len)
 	*len = 0;
 	ft_bzero(buf, 16);
 	*len = read(g_info.fd, buf, 16);
+	while (!*len && !g_info.exit)
+		*len = read(g_info.fd, buf, 16);
 	return (buf);
 }
 
@@ -40,7 +42,7 @@ int 	ft_key_interaction(void)
 	return (1);
 }
 
-char	*ft_get_user_input(void)
+int 	ft_new_input(void)
 {
 	if (tcsetattr(0, 0, &(g_info.s_termios)) == -1)
 		return (0);
@@ -51,11 +53,18 @@ char	*ft_get_user_input(void)
 	g_info.prompt = g_info.crsr_col;
 	g_info.line = ft_memalloc(1);
 	if (!(g_info.line))
-		return (NULL);
+		return (0);
 	signal(SIGWINCH, ft_sighandler_winsize_change);
 	signal(SIGINT, ft_sighandler_ctrl_c);
 	signal(SIGCONT, ft_sighandler_ctrl_z_return);
 	g_info.exit = 0;
+	return (1);
+}
+
+char	*ft_get_user_input(void)
+{
+	if (!ft_new_input())
+		return (NULL);
 	while (!ft_line_validation())
 	{
 		if (!ft_key_interaction())
@@ -65,10 +74,13 @@ char	*ft_get_user_input(void)
 		}
 	}
 	g_info.hist = ft_history_new();
+	if (!(g_info.hist))
+	{
+		free(g_info.line);
+		return (NULL);
+	}
 	if (tcsetattr(0, 0, &(g_info.s_termios_backup)) == -1)
 		ft_putstr("error: Can't recover terminal configuration\n");
-	if (!(g_info.hist))
-		return (NULL);
 	return (g_info.line);
 }
 

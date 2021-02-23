@@ -6,11 +6,26 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 20:19:20 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/15 13:53:36 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/22 19:08:44 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "quegonza.h"
+
+int 	ft_line_len(int i)
+{
+	int		j;
+
+	if (!i)
+		j = 0;
+	else
+		j = i - 1;
+	while (j > 0 && g_info.line[j] != '\n')
+		j--;
+	if (!j)
+		return (i + g_info.prompt);
+	return (i - j - 1);
+}
 
 int 	ft_getcol_fromstr(int cursor)
 {

@@ -74,7 +74,7 @@ SRC_NAME = main.c \
 	size2_char_typing.c \
 	size3_char_typing.c \
 	start_up.c \
-	termcap_tools.c \
+	tool_fcts.c \
 	usefull_scratch.c
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_NAME))

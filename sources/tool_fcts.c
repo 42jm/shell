@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   termcap_tools.c                                    :+:      :+:    :+:   */
+/*   tool_fcts.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 00:44:05 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/13 19:59:25 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/22 19:16:32 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,23 +27,13 @@ int 	ft_putc(int c)
 	return (c);
 }
 
-void	ft_usecap(char *cap)
+int 	ft_isoneof_chr(char chr, char *chrs)
 {
-	cap = tgetstr(cap, NULL);
-	tputs(cap, 1, ft_putc);
-}
-
-int 	ft_line_len(int i)
-{
-	int		j;
-
-	if (!i)
-		j = 0;
-	else
-		j = i - 1;
-	while (j > 0 && g_info.line[j] != '\n')
-		j--;
-	if (!j)
-		return (i + g_info.prompt);
-	return (i - j - 1);
+	while (*chrs)
+	{
+		if (chr == *chrs)
+			return (1);
+		chrs++;
+	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 03:53:16 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/15 14:25:24 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/23 07:46:14 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,9 @@ int 	ft_reach_next_word(void)
 	ft_get_cursor_pos();
 	i = g_info.strlen - g_info.cursor;
 	nb = i;
-	while ((g_info.line[i] == ' ' || g_info.line[i] == '\n') && g_info.line[i])
+	while (g_info.line[i] && !ft_isalnum(g_info.line[i]))
 		i++;
-	while (g_info.line[i] != ' ' && ft_isprint(g_info.line[i])
-		&& g_info.line[i])
+	while (g_info.line[i] && ft_isalnum(g_info.line[i]))
 		i++;
 	g_info.crsr_row = ft_getrow_fromstr(i);
 	g_info.crsr_col = ft_getcol_fromstr(i);
@@ -110,12 +109,15 @@ int 	ft_reach_previous_word(void)
 	{
 		ft_get_cursor_pos();
 		nb = i;
-		while (--i && (g_info.line[i] == ' ' || g_info.line[i] == '\n'))
+		while (--i && !ft_isalnum(g_info.line[i]))
 			;
-		while (i > 0 && ft_isprint(g_info.line[i]) && g_info.line[i] != ' ')
-			i--;
 		if (i)
-			i++;
+		{
+			while (i && ft_isalnum(g_info.line[i]))
+				i--;
+			if (!ft_isalnum(g_info.line[i]))
+				i++;
+		}
 		g_info.crsr_row = ft_getrow_fromstr(i);
 		g_info.crsr_col = ft_getcol_fromstr(i);
 		tputs(tgoto(g_info.cap.cm, g_info.crsr_col, g_info.crsr_row),
