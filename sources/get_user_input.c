@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 02:00:55 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/23 02:11:43 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/23 17:21:29 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ char	*ft_current_char(char *buf, int *len)
 {
 	*len = 0;
 	ft_bzero(buf, 16);
-	*len = read(g_info.fd, buf, 16);
-	while (!*len && !g_info.exit)
-		*len = read(g_info.fd, buf, 16);
+	*len = read(g_info.fdr, buf, 16);
 	return (buf);
 }
 
@@ -93,7 +91,8 @@ void	ft_end_clean(char *end_message)
 		free(g_info.copy);
 	if (g_info.temp)
 		free(g_info.temp);
-	close(g_info.fd);
+	close(g_info.fdr);
+	close(g_info.fdw);
 	if (end_message)
 		ft_putstr(end_message);
 }

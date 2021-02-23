@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 06:43:28 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/14 15:54:30 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/23 17:02:12 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	ft_sighandler_ctrl_c(int signum)
 {
 	(void)signum;
 	ft_putstr("^C\n");
+	write(g_info.fdw, "\0", 1);
 	g_info.line[0] = '\0';
 	env_set("?", "130", 0);
 	g_info.exit = 1;

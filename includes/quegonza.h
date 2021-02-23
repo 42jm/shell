@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 03:16:03 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/23 15:45:02 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/23 17:00:31 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ typedef struct s_cap
 
 typedef struct s_curs
 {
-	int				fd;
+	int				fdw;
+	int				fdr;
 	int				row;
 	int				col;
 	int				crsr_row;
