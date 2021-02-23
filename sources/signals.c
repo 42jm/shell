@@ -6,7 +6,7 @@
 /*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 12:16:49 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2020/10/15 14:09:52 by jmbomeyo         ###   ########.fr       */
+/*   Updated: 2021/02/23 18:47:35 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,6 @@ void	sighandle_ignore(int signum)
 void	sighandle_int(int signum)
 {
 	(void)signum;
-	ft_putstr("^C\n");
+	ft_putchar('\n');
 	env_set("?", "130", 0);
 }

@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 03:16:03 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/23 17:00:31 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/23 18:25:52 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ typedef struct s_cap
 
 typedef struct s_curs
 {
-	int				fdw;
-	int				fdr;
+	int				fd[2];
 	int				row;
 	int				col;
 	int				crsr_row;
@@ -86,6 +85,7 @@ char				**ft_history_init(void);
 char				**ft_history_new(void);
 void				ft_input_init(void);
 char				*ft_insert_char(char *line, char chr);
+void				ft_ignore_allsig(void);
 int					ft_isoneof_chr(char chr, char *chrs);
 int					ft_line_validation(void);
 void				ft_move_cursor(char side, int nb);

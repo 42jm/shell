@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 02:00:55 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/23 17:21:29 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/23 19:01:50 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,27 @@
 
 char	*ft_current_char(char *buf, int *len)
 {
+	pid_t	pid;
+
 	*len = 0;
 	ft_bzero(buf, 16);
-	*len = read(g_info.fdr, buf, 16);
+	pid = fork();
+	if (!pid)
+	{
+		ft_ignore_allsig();
+		*len = read(0, buf, 16);
+		if (*len != -1)
+			write(g_info.fd[1], buf, *len);
+		else
+			write(g_info.fd[1], "\0", 1);
+		exit(0);
+	}
+	*len = read(g_info.fd[0], buf, 16);
+	if (*len == -1)
+		return (NULL);
+	if (g_info.exit)
+		kill(pid, SIGKILL);
+	waitpid(pid, NULL, 0);
 	return (buf);
 }
 
@@ -91,8 +109,8 @@ void	ft_end_clean(char *end_message)
 		free(g_info.copy);
 	if (g_info.temp)
 		free(g_info.temp);
-	close(g_info.fdr);
-	close(g_info.fdw);
+	close(g_info.fd[0]);
+	close(g_info.fd[1]);
 	if (end_message)
 		ft_putstr(end_message);
 }
