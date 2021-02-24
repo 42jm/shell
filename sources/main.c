@@ -51,6 +51,7 @@ int	execute_all_lines(char **aline)
 		ret = execute_firstline(&aline);
 		if (aline && *aline)
 			aline++;
+		break ;
 	}
 	return (ret);
 }

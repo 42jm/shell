@@ -29,7 +29,7 @@ static int	heredoc_write(int *fildes, char *word)
 	if (*g_lines && !ft_strcmp(*g_lines, word))
 		g_lines++;
 	else
-		ret = put_error("delimitor word not found", word);
+		ret = put_error("delimitor word not found (warning)", word);
 	if (close(fildes[1]) == -1)
 		ret = put_error("child failed to close pipe (write)", "heredoc");
 	return (ret);

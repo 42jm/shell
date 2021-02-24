@@ -27,7 +27,7 @@ int	builtin_cd(int argc, char **argv)
 		path = argv[1];
 	ret = chdir(path);
 	if (ret)
-		return (put_error("Chdir failed", *argv));
+		return (put_error(path, "chdir() failed"));
 	path = getcwd(NULL, 0);
 	env_set("OLDPWD", env_getvalue("PWD"), 0);
 	env_set("PWD", path, 1);

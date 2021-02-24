@@ -66,7 +66,7 @@ char	*ft_ctrl_d(char *line)
 	}
 	else if (!(g_info.cursor) && g_info.line[g_info.strlen - 1] == '\n')
 	{
-		g_info.line[g_info.strlen - 1] == '\0';
+		g_info.line[g_info.strlen - 1] = '\0';
 		g_info.exit = 1;
 	}
 	else if (g_info.cursor)
