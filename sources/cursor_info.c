@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 06:16:23 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/14 16:58:58 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/24 18:30:19 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft_get_cursor_pos(void)
 		if (buf[i] >= 48 && buf[i] <= 57)
 		{
 			g_info.crsr_row = ft_atoi(&buf[i]) - 1;
-			while (buf[i] != ';')
+			while (buf[i] && buf[i] != ';')
 				i++;
 			g_info.crsr_col = ft_atoi(&buf[i + 1]) - 1;
 			break ;
