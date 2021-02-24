@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 05:44:26 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/23 15:40:58 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/24 16:36:41 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,16 @@
 
 int 	ft_find_eof(char *eof, int *j, int i, int len)
 {
-	while (g_info.line[++i])
+	while (g_info.line[i])
 	{
-		if (!(ft_strncmp(&(g_info.line[i]), eof, len)))
+		if (i && !ft_strncmp(&(g_info.line[i]), eof, len)
+			&& g_info.line[i - 1] == '\n' && g_info.line[i + len] == '\n')
 		{
 			free(eof);
 			*j = i;
 			return (1);
 		}
+		i++;
 	}
 	free(eof);
 	*j = i;

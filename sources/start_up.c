@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 06:31:50 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/23 18:29:39 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/02/24 17:02:03 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,12 @@ int 	ft_termcap_init(void)
 	{
 		ft_putstr("TERM variable is not set.\n");
 		return (-1);
+	}
+	if (ft_strncmp(term_type, "xterm", 5))
+	{
+		ft_putstr("Your terminal is ");
+		ft_putstr(term_type);
+		ft_putstr("\nSome functionalities may not work\n");
 	}
 	ret = tgetent(NULL, term_type);
 	if (ret == -1)
