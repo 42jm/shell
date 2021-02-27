@@ -18,7 +18,12 @@ int	put_prompt(int fd)
 
 	prompt = env_getvalue("PS1");
 	if (!prompt)
-		prompt = "\033[01;32m\\_$\033[00m> ";
+	{
+		if (!getuid())
+			prompt = "\\_#> ";
+		else
+			prompt = "\033[01;32m\\_$\033[00m> ";
+	}
 	if (pr_putstr_fd(prompt, fd) > 0)
 		return (put_error("Could not print prompt", NULL));
 	return (0);
