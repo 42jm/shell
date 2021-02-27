@@ -16,6 +16,7 @@ int	execute_builtin(char **args)
 {
 	int	argc;
 	int	ret;
+	char	*tmp;
 
 	argc = ft_strlen_arr((const char **)args);
 	if (!ft_strcmp(*args, "echo"))
@@ -38,6 +39,9 @@ int	execute_builtin(char **args)
 		ret = builtin_env(argc, args);
 	else
 		ret = put_error_ret("BUILTIN NOT YET IMPLEMENTED", *args, 1);
+	tmp = ft_itoa(ret);
+	env_set("?", tmp, 0);
+	free(tmp);
 	return (ret);
 }
 
