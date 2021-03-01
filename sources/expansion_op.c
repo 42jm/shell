@@ -69,7 +69,10 @@ int	expand_op(t_astnode **at, t_astnode *node)
 	if (!pid)
 		process_substitute(node->content, fildes, fd_child);
 	if (!pid)
+	{
+		ft_putstr("exit: expand_op");
 		exit(0);
+	}
 	close(fildes[fd_child]);
 	if (replace_node_by_fdstr(node, fildes[fd_paren]))
 		return (1);

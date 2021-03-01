@@ -67,6 +67,7 @@ int	exec_str_in_subshell(char *in, char **aout)
 	if (!pid)
 	{
 		exec_subshell(sub_out, in);
+		ft_putendl("exit: exec_str_in_subshell");
 		exit(0);
 	}
 	ret = read_subshell(sub_out, aout);

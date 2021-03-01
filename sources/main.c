@@ -62,7 +62,7 @@ int	prompt_loop(void)
 	int		ret;
 
 	input = NULL;
-	ret = put_prompt(1);
+	ret = put_prompt(2);
 	if (!ret)
 		ret = read_userinput(&input);
 	if (!ret)
