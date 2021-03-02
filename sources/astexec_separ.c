@@ -47,7 +47,6 @@ int	astexec_amper(t_astnode **at)
 	if (!pid)
 	{
 		ast_execute((t_astnode **)&node->content);
-		ft_putendl("exit: astexec_amper");
 		exit(0);
 	}
 	ret = env_set("?", "0", 0);

@@ -49,7 +49,6 @@ int	astredir_heredoc(t_astnode **at, int fd, char *redir_op, char *word)
 	if (!pid)
 	{
 		heredoc_write(fildes, word);
-		ft_putendl("exit: astredir_heredoc");
 		exit(0);
 	}
 	if (close(fildes[1]) == -1)

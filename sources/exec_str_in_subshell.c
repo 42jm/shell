@@ -43,7 +43,10 @@ static int	read_subshell(int *sub_out, char **aout)
 
 	if (close(sub_out[1]) == -1)
 		return (put_error("failed to closed unused pipe", "read_subshell"));
+	if (*aout)
+		free(*aout);
 	*aout = read_all(sub_out[0]);
+	ret = 0;
 	if (!*aout)
 		ret = 1;
 	if (close(sub_out[0]) == -1)
@@ -58,16 +61,12 @@ int	exec_str_in_subshell(char *in, char **aout)
 	int		ret;
 
 	if (*in == '\0')
-	{
-		*aout = ft_strdup("");
 		return (0);
-	}
 	pipe(sub_out);
 	pid = fork();
 	if (!pid)
 	{
 		exec_subshell(sub_out, in);
-		ft_putendl("exit: exec_str_in_subshell");
 		exit(0);
 	}
 	ret = read_subshell(sub_out, aout);

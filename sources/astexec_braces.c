@@ -44,10 +44,7 @@ int	astexec_paren(t_astnode **at)
 	if (!pid)
 		ast_execute(&node);
 	if (!pid)
-	{
-		ft_putendl("exit: astexec_paren");
 		exit(0);
-	}
 	waitpid(pid, &wstatus, 0);
 	if (WIFEXITED(wstatus))
 	{
