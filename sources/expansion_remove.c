@@ -32,7 +32,7 @@ int	remove_empty_field(t_astnode *prev, t_astnode **anode, t_astnode **ahead)
 	return (1);
 }
 
-char	*remove_quotes(char *ptr)
+static char	*remove_quotes_non_recursive(char *ptr, char *quotes)
 {
 	size_t	i;
 	size_t	len;
@@ -41,14 +41,14 @@ char	*remove_quotes(char *ptr)
 	i = 0;
 	str = ft_strdup(ptr);
 	if (str)
-		len = ft_stralen_unquoted(str + i, "\"'\\");
+		len = ft_stralen_unquoted(str, quotes);
 	while (str && len)
 	{
 		i += len - 1;
 		len = 1;
 		if (str[i] != '\\')
 		{
-			len = quotationlen(str + i, "\"'\\");
+			len = quotationlen(str + i, quotes);
 			if (!len && ++i)
 				continue ;
 			ft_strdrop_inplace(&str, i + len - 1, i + len);
@@ -56,7 +56,24 @@ char	*remove_quotes(char *ptr)
 		}
 		ft_strdrop_inplace(&str, i, i + 1);
 		i += len;
-		len = ft_stralen_unquoted(str + i, "\"'\\");
+		len = ft_stralen_unquoted(str + i, quotes);
+	}
+	return (str);
+}
+
+char	*remove_quotes(char *ptr)
+{
+	char	*str;
+	char	*tmp;
+
+	str = remove_quotes_non_recursive(ptr, "\"'\\");
+	if (!str)
+		return (NULL);
+	if (*ptr == '"')
+	{
+		tmp = str;
+		str = remove_quotes_non_recursive(str, "\\");
+		free(tmp);
 	}
 	return (str);
 }
