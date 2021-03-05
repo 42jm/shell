@@ -142,6 +142,7 @@ void			ft_putjoin(size_t len, ...);
 char			*ft_lutoa(uint64_t n);
 char			*ft_arrstr(char **arr, char *s);
 char			*ft_arrnstr(char **arr, char *s, size_t n);
+int				ft_arrstr_id(char **arr, char *s);
 char			**ft_strdup_arr(char **src);
 
 void			free_strarr(char **arr, size_t len);

@@ -123,6 +123,7 @@ SRC = ft_atoi.c \
 	   free_strarr_all.c \
 	   ft_arrstr.c \
 	   ft_arrnstr.c \
+	   ft_arrstr_id.c \
 	   ft_strdup_arr.c \
 	   pr_putstr_fd.c \
 	   pr_putendl_fd.c \

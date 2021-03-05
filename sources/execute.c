@@ -12,32 +12,20 @@
 
 #include "shell21.h"
 
-int	execute_builtin(char **args)
+int	execute_builtin(char **bltn_names, char **args)
 {
 	int	argc;
 	int	ret;
+	int	id;
 
+	static int (*bltn_funcs[9])(int, char **) = {
+builtin_echo, builtin_exit, builtin_cd, builtin_set, builtin_unset, \
+builtin_export, builtin_setenv, builtin_unsetenv, builtin_env};
 	argc = ft_strlen_arr((const char **)args);
-	if (!ft_strcmp(*args, "echo"))
-		ret = builtin_echo(argc, args);
-	else if (!ft_strcmp(*args, "exit"))
-		ret = builtin_exit(argc, args);
-	else if (!ft_strcmp(*args, "cd"))
-		ret = builtin_cd(argc, args);
-	else if (!ft_strcmp(*args, "set"))
-		ret = builtin_set(argc, args);
-	else if (!ft_strcmp(*args, "unset"))
-		ret = builtin_unset(argc, args);
-	else if (!ft_strcmp(*args, "export"))
-		ret = builtin_export(argc, args);
-	else if (!ft_strcmp(*args, "setenv"))
-		ret = builtin_setenv(argc, args);
-	else if (!ft_strcmp(*args, "unsetenv"))
-		ret = builtin_unsetenv(argc, args);
-	else if (!ft_strcmp(*args, "env"))
-		ret = builtin_env(argc, args);
-	else
-		ret = put_error_ret("BUILTIN NOT YET IMPLEMENTED", *args, 1);
+	id = ft_arrstr_id(bltn_names, *args);
+	if (id < 0)
+		return (put_error_ret("BUILTIN NOT YET IMPLEMENTED", *args, 1));
+	ret = (*bltn_funcs[id])(argc, args);
 	env_lastret_set(ret);
 	return (ret);
 }
@@ -94,14 +82,14 @@ int	execute_command(char **args)
 
 int	execute(char **args)
 {
-	static char	*builtins[] = {"echo", "cd", "exit", \
-								"set", "unset", "export", \
-								"setenv", "unsetenv", "env", NULL };
+	static char	*bltn_names[] = {
+		"echo", "exit", "cd", "set", "unset", \
+		"export", "setenv", "unsetenv", "env", NULL};
 
 	if (args == NULL)
 		return (put_error("no arguments", "execute"));
-	if (ft_arrstr(builtins, *args))
-		return (execute_builtin(args));
+	if (ft_arrstr(bltn_names, *args))
+		return (execute_builtin(bltn_names, args));
 	if (*args == NULL || (**args == '\0' && args[1] == NULL))
 		return (0);
 	if (**args == '\0')
