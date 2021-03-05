@@ -16,13 +16,16 @@ int	astexec_curly(t_astnode **at)
 {
 	t_astnode	*head;
 	t_astnode	*node;
+	static char	*authorized_ops[4] = {";", "()", "{}", NULL };
 
 	head = *at;
 	node = head->content;
 	if (head->next)
 		return (put_error("a token is following the braces", "{}"));
-	if (!node || !node->op)
-		return (put_error("no op inside braces", "{}"));
+	if (!node)
+		return (put_error("nothing inside braces", "{}"));
+	if (node->op && !ft_arrstr(authorized_ops, node->op))
+		return (put_error("unauthorized op inside braces", node->op));
 	return (ast_execute(&node));
 }
 

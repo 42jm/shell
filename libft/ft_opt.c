@@ -27,26 +27,43 @@ static char	*opt_is_invalid(char *opt_str)
 {
 	if (!opt_str)
 		return (NULL);
-	while (*opt_str && ft_isalpha(*opt_str))
+	while (*opt_str && ft_isalnum(*opt_str))
 		opt_str++;
 	if (*opt_str)
 		return (opt_str);
 	return (NULL);
 }
 
-char		*ft_optset(int *aargc, char ***aargv, char *opt_all)
+static char	*is_arg_opt(int *aargc, char ***argv)
+{
+	char	*arg;
+
+	(*aargc)--;
+	if (!(*aargc))
+		return (NULL);
+	arg = *(++(*aargv));
+	if (!arg || arg[0] != '-' || arg[1] == '\0')
+		return (NULL);
+	if (!ft_strcmp(arg, "--") && ++(*aargv) && (--(*aargc) || *aargc))
+		return (NULL);
+	return (arg);
+}
+
+char	*ft_optset(int *aargc, char ***aargv, char *opt_all)
 {
 	char	*opt_set;
 	char	*ptr;
 	char	*arg;
 
-	if (opt_is_invalid(opt_all) || !(opt_set = ft_strnew(ft_strlen(opt_all))))
+	if (opt_is_invalid(opt_all))
+		return (NULL);
+	opt_set = ft_strnew(ft_strlen(opt_all));
+	if (!opt_set)
 		return (NULL);
 	ptr = opt_set;
-	while (--(*aargc) && (arg = *(++(*aargv))) && arg[0] == '-' && arg[1])
+	arg = is_arg_opt(aargc, aargv);
+	while (arg)
 	{
-		if (!ft_strcmp(arg, "--") && ++(*aargv) && (--(*aargc) || *aargc))
-			break ;
 		while (*(++arg))
 		{
 			if (!ft_strchr(opt_all, *arg))
@@ -56,6 +73,7 @@ char		*ft_optset(int *aargc, char ***aargv, char *opt_all)
 			}
 			opt_append(opt_set, *arg);
 		}
+		arg = is_arg_opt(aargc, aargv);
 	}
 	return (opt_set);
 }
