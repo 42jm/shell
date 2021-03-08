@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell21.h                                          :+:      :+:    :+:   */
+/*   header_42sh.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHELL21_H
-# define SHELL21_H
+#ifndef HEADER_42SH_H
+# define HEADER_42SH_H
 
 # include "libft.h"
 # include <unistd.h>
@@ -37,7 +37,6 @@ typedef struct s_envvar
 	char				*value;
 }						t_envvar;
 
-void			sighandle_ignore(int signum);
 void			sighandle_int(int signum);
 
 int				put_error(char *message, char *arg);

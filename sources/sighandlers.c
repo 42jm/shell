@@ -11,17 +11,12 @@
 /* ************************************************************************** */
 
 #include "quegonza.h"
-#include "shell21.h"
+#include "header_42sh.h"
 
 void	ft_sighandler_winsize_change(int signum)
 {
 	(void)signum;
 	ft_get_cursor_info();
-}
-
-void	ft_sighandler_ignore(int signum)
-{
-	(void)signum;
 }
 
 void	ft_sighandler_ctrl_c(int signum)
@@ -45,7 +40,7 @@ void	ft_sighandler_ctrl_z_return(int signum)
 
 void	ft_ignore_allsig(void)
 {
-	signal(SIGWINCH, ft_sighandler_ignore);
-	signal(SIGINT, ft_sighandler_ignore);
-	signal(SIGCONT, ft_sighandler_ignore);
+	signal(SIGWINCH, SIG_IGN);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGCONT, SIG_IGN);
 }

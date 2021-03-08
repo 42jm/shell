@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell21.h"
+#include "header_42sh.h"
 
 static int	pipe_dupexe(t_astnode **at, int *fildes, int io)
 {
@@ -44,7 +44,7 @@ int	astexec_pipe(t_astnode **at)
 		return (put_error("failed fork", node->op));
 	if (!pid)
 	{
-		signal(SIGINT, sighandle_ignore);
+		signal(SIGINT, SIG_IGN);
 		pipe_dupexe((t_astnode **)&node->content, fildes, 1);
 		exit(0);
 	}

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell21.h"
+#include "header_42sh.h"
 
 char	*astget_redirop(char *op)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell21.h"
+#include "header_42sh.h"
 
 static int	replace_node_by_fdstr(t_astnode *node, int fd)
 {

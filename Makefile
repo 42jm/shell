@@ -5,7 +5,7 @@ OK_COLOR = \033[1;32m
 CLEAN_COLOR = \033[1;36m
 
 # Compilation
-NAME = 21sh
+NAME = 42sh
 INC = -I includes -I libft/includes
 LIB = -L libft/ -lft -lncurses
 FLAGS = -Wall -Wextra -Werror

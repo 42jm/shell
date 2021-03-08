@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell21.h"
+#include "header_42sh.h"
 
 static int	handle_separ(t_astnode *token, t_astnode *prev, t_astnode *head)
 {

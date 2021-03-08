@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell21.h"
+#include "header_42sh.h"
 
 static int	lexer_opnew(t_astnode **at, char *input, size_t len)
 {

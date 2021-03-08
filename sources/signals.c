@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell21.h"
+#include "header_42sh.h"
 
-void	sighandle_ignore(int signum)
+void	sighandle_stp(int signum)
 {
 	(void)signum;
 }

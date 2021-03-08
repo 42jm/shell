@@ -12,7 +12,7 @@
 
 #ifndef QUEGONZA_H
 # define QUEGONZA_H
-# include "shell21.h"
+# include "header_42sh.h"
 # include "libft.h"
 # include <termcap.h>
 # include <termios.h>

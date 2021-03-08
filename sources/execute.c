@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell21.h"
+#include "header_42sh.h"
 
 int	execute_builtin(char **bltn_names, char **args)
 {
@@ -53,6 +53,8 @@ static int	execmd_wait(pid_t pid)
 	}
 	if (WIFEXITED(i))
 		return (WEXITSTATUS(i));
+	if (WIFSIGNALED(i))
+		return (WTERMSIG(i));
 	return (0);
 }
 

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell21.h"
+#include "header_42sh.h"
 #include "quegonza.h"
 
 char		**g_lines;
@@ -78,6 +78,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	int	ret;
 
+	signal(SIGTSTP, SIG_IGN);
 	g_lines = NULL;
 	if (!ft_start_up())
 		return (ft_error("Initialization error\n", 1));
