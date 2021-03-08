@@ -16,6 +16,8 @@ int	put_prompt(int fd)
 {
 	char	*prompt;
 
+	if (!isatty(0))
+		return (0);
 	prompt = env_getvalue("PS1");
 	if (!prompt)
 	{
