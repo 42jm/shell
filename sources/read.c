@@ -54,7 +54,17 @@ int	read_userinput(char ***ainput)
 	size_t	ret;
 	char	*buf;
 
-	buf = ft_get_user_input();
+	if (isatty(0))
+		buf = ft_get_user_input();
+	else
+	{
+		buf = read_all(0);
+		if (!ft_strlen(buf))
+		{
+			free(buf);
+			return (-1);
+		}
+	}
 	signal(SIGINT, sighandle_int);
 	if (!buf)
 		return (put_error_ret("failed read", "read_userinput", -1));

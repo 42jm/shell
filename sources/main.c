@@ -80,13 +80,14 @@ int	main(int argc, char **argv, char **envp)
 
 	signal(SIGTSTP, SIG_IGN);
 	g_lines = NULL;
-	if (!ft_start_up())
+	if (isatty(0) && !ft_start_up())
 		return (ft_error("Initialization error\n", 1));
 	ret = env_init(argc, argv, envp);
 	while (ret >= 0)
 		ret = prompt_loop();
 	env_free(g_envlst);
-	ft_end_clean(NULL);
+	if (isatty(0))
+		ft_end_clean(NULL);
 	if (ret < 0)
 		return (-ret - 1);
 	return (ret);
