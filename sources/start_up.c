@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 06:31:50 by quegonza          #+#    #+#             */
-/*   Updated: 2021/03/12 01:39:36 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/03/12 10:59:47 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,6 @@ int 	ft_start_up(void)
 		return (ft_error("ft_get_cap(): terminal capability missing\n", 0));
 	if (!ft_history_init())
 		return (0);
-	if (!ft_stdin_init())
-		return (0);
 	return (1);
 }
 
@@ -109,7 +107,9 @@ int 	ft_stdin_init(void)
 	pathname = ttyname(STDIN_FILENO);
 	if (!pathname)
 		return (ft_error("ttyname(): STDIN_FILENO error\n", 0));
-	ft_putstr(pathname);
+	g_info.fd[0] = open(pathname, O_RDWR);
+	if (g_info.fd[0] == -1)
+		return (ft_error("open failed", 0));
 	return (1);
 }
 

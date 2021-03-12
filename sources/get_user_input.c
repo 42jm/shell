@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 02:00:55 by quegonza          #+#    #+#             */
-/*   Updated: 2021/03/12 01:39:32 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/03/12 10:59:47 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,8 @@ int 	ft_new_input(void)
 	signal(SIGINT, ft_sighandler_ctrl_c);
 	signal(SIGCONT, ft_sighandler_ctrl_z_return);
 	g_info.exit = 0;
-	g_info.fd[0] = open("/dev/tty2", O_RDWR);
-	if (g_info.fd[0] == -1)
-		return (ft_error("open failed", 0));
+	if (!ft_stdin_init())
+		return (0);
 	return (1);
 }
 
