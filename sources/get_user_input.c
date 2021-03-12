@@ -95,14 +95,14 @@ char	*ft_get_user_input(void)
 	if (!pid)
 	{
 		ft_ignore_allsig();*/
-		while (!ft_line_validation())
+	while (!ft_line_validation())
+	{
+		if (!ft_key_interaction())
 		{
-			if (!ft_key_interaction())
-			{
-				free(g_info.line);
-				return (NULL);
-			}
+			free(g_info.line);
+			return (NULL);
 		}
+	}
 //		exit(0);
 //	}
 //	if (g_info.exit)
