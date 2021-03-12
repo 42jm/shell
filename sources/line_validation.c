@@ -6,38 +6,37 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 05:44:26 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/24 16:36:41 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/03/12 17:32:17 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "quegonza.h"
 
-int 	ft_find_eof(char *eof, int *j, int i, int len)
+int 	ft_find_eof(char *eof, int i, int len)
 {
+	if (g_info.eof)
+		i = g_info.eof;
 	while (g_info.line[i])
 	{
 		if (i && !ft_strncmp(&(g_info.line[i]), eof, len)
 			&& g_info.line[i - 1] == '\n' && g_info.line[i + len] == '\n')
 		{
+			g_info.eof = i;
 			free(eof);
-			*j = i;
 			return (1);
 		}
 		i++;
 	}
 	free(eof);
-	*j = i;
 	return (0);
 }
 
-int 	ft_valid_hdoc(int *j)
+int 	ft_valid_hdoc(int i)
 {
 	char	*eof;
 	char	*tmp;
 	int		len;
-	int		i;
 
-	i = *j;
 	while (g_info.line[i] == ' ' || g_info.line[i] == '\t')
 		i++;
 	len = ft_stralen_unquoted(&(g_info.line[i]), "><&();| \t\n") - 1;
@@ -51,7 +50,7 @@ int 	ft_valid_hdoc(int *j)
 	free(tmp);
 	len = ft_strlen(eof);
 	i += len - 1;
-	if (ft_find_eof(eof, j, i, len))
+	if (ft_find_eof(eof, i, len))
 		return (1);
 	return (0);
 }
@@ -66,7 +65,7 @@ int 	ft_valid_quotes(void)
 	while (g_info.line[i])
 	{
 		chr = g_info.line[i];
-		if (chr == '\'' || chr == '\"')
+		if ((chr == '\'' || chr == '\"') && !g_info.eof)
 		{
 			len = quotationlen(&(g_info.line[i]), "\\'\"");
 			if (!len || len == 1 || g_info.line[i + len - 1] != chr)
@@ -76,7 +75,7 @@ int 	ft_valid_quotes(void)
 		else if (g_info.line[i] == '<' && g_info.line[i + 1] == '<')
 		{
 			i += 2;
-			if (!ft_valid_hdoc(&i))
+			if (!ft_valid_hdoc(i))
 				return (0);
 		}
 		else

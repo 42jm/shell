@@ -85,7 +85,7 @@ OBJ = $(addprefix $(OBJ_DIR), $(SRC_NAME:.c=.o))
 
 all: $(NAME)
 
-$(NAME): Makefile libft/libft.a $(OBJ)
+$(NAME): Makefile libft/libft.a $(OBJ) includes/quegonza.h includes/header_42sh.h
 	@printf "\n$(WAIT_COLOR)$(NAME): linking\$(NO_COLOR)\n"
 	@clang $(FLAGS) -o $(NAME) $(OBJ) $(INC) $(LIB)
 	@echo "$(OK_COLOR)	+++ " $@ "   created +++	$(NO_COLOR)"
