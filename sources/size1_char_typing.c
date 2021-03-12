@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 00:50:07 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/23 21:37:19 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/03/02 00:01:05 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,22 +72,4 @@ char	*ft_ctrl_d(char *line)
 	else if (g_info.cursor)
 		line = ft_suppr_char(line);
 	return (line);
-}
-
-void	ft_scroll(int nb, char opt)
-{
-	if (opt == 'R')
-	{
-		while (--nb >= 0)
-		{
-			tputs(tgetstr("sr", NULL), g_info.row, ft_putc);
-		}
-	}
-	if (opt == 'F')
-	{
-		while (--nb >= 0)
-		{
-			tputs(tgetstr("sf", NULL), g_info.row, ft_putc);
-		}
-	}
 }

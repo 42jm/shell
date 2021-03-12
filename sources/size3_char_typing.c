@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 00:55:41 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/24 16:54:45 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/03/02 00:01:40 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,7 @@ void	ft_size6_char(char *chr)
 	ft_get_cursor_info();
 	if (chr[0] == ESC && chr[1] == '[')
 	{
-		if (!ft_strcmp("1;5A", &chr[2]))
-			ft_scroll(1, 'R');
-		else if (!ft_strcmp("1;5B", &chr[2]))
-			ft_scroll(1, 'F');
-		else if ((!ft_strcmp("1;2C", &chr[2]) || !ft_strcmp("1;5C", &chr[2]))
+		if ((!ft_strcmp("1;2C", &chr[2]) || !ft_strcmp("1;5C", &chr[2]))
 			&& g_info.cursor)
 			ft_reach_next_word();
 		else if ((!ft_strcmp("1;2D", &chr[2]) || !ft_strcmp("1;5D", &chr[2]))

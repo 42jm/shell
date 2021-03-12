@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 03:53:16 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/23 07:46:14 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/03/02 00:00:55 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_mv_left(void)
 				1, ft_putc);
 		else
 		{
-			ft_scroll(1, 'R');
+			tputs(tgetstr("sr", NULL), g_info.row, ft_putc);
 			tputs(tgoto(g_info.cap.cm, g_info.col - 1, g_info.crsr_row),
 				1, ft_putc);
 		}
@@ -50,7 +50,7 @@ void	ft_mv_right(void)
 				1, ft_putc);
 		else
 		{
-			ft_scroll(1, 'F');
+			tputs(tgetstr("sf", NULL), g_info.row, ft_putc);
 			tputs(tgoto(g_info.cap.cm, 0, g_info.crsr_row),
 				1, ft_putc);
 		}

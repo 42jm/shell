@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 06:31:50 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/24 17:02:03 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/03/12 01:39:36 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,7 @@ int 	ft_stdin_init(void)
 	pathname = ttyname(STDIN_FILENO);
 	if (!pathname)
 		return (ft_error("ttyname(): STDIN_FILENO error\n", 0));
-	if (pipe(g_info.fd) == -1)
-		return (ft_error("pipe failed", 0));
+	ft_putstr(pathname);
 	return (1);
 }
 

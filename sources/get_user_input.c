@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 02:00:55 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/23 19:01:50 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/03/12 01:39:32 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 char	*ft_current_char(char *buf, int *len)
 {
-	pid_t	pid;
+//	pid_t	pid;
 
 	*len = 0;
 	ft_bzero(buf, 16);
-	pid = fork();
+/*	pid = fork();
 	if (!pid)
 	{
 		ft_ignore_allsig();
@@ -28,13 +28,19 @@ char	*ft_current_char(char *buf, int *len)
 		else
 			write(g_info.fd[1], "\0", 1);
 		exit(0);
+	}*/
+//	*len = read(0, buf, 16);
+	while (!(buf[0]))
+	{
+		*len = read(g_info.fd[0], buf, 16);
+		if (g_info.exit)
+			break ;
 	}
-	*len = read(g_info.fd[0], buf, 16);
-	if (*len == -1)
+	if (*len == -1 && !g_info.exit)
 		return (NULL);
-	if (g_info.exit)
+/*	if (g_info.exit)
 		kill(pid, SIGKILL);
-	waitpid(pid, NULL, 0);
+	waitpid(pid, NULL, 0);*/
 	return (buf);
 }
 
@@ -74,21 +80,35 @@ int 	ft_new_input(void)
 	signal(SIGINT, ft_sighandler_ctrl_c);
 	signal(SIGCONT, ft_sighandler_ctrl_z_return);
 	g_info.exit = 0;
+	g_info.fd[0] = open("/dev/tty2", O_RDWR);
+	if (g_info.fd[0] == -1)
+		return (ft_error("open failed", 0));
 	return (1);
 }
 
 char	*ft_get_user_input(void)
 {
+//	pid_t	pid;
+
 	if (!ft_new_input())
 		return (NULL);
-	while (!ft_line_validation())
+/*	pid = fork();
+	if (!pid)
 	{
-		if (!ft_key_interaction())
+		ft_ignore_allsig();*/
+		while (!ft_line_validation())
 		{
-			free(g_info.line);
-			return (NULL);
+			if (!ft_key_interaction())
+			{
+				free(g_info.line);
+				return (NULL);
+			}
 		}
-	}
+//		exit(0);
+//	}
+//	if (g_info.exit)
+//		kill(pid, SIGKILL);
+//	waitpid(pid, NULL, 0);
 	g_info.hist = ft_history_new();
 	if (!(g_info.hist))
 	{
