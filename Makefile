@@ -75,7 +75,10 @@ SRC_NAME = main.c \
 	size3_char_typing.c \
 	start_up.c \
 	tool_fcts.c \
-	usefull_scratch.c
+	usefull_scratch.c \
+	job_ast2str.c \
+	job_ast2str_op.c \
+	job_ast2str_get.c
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_NAME))
 OBJ = $(addprefix $(OBJ_DIR), $(SRC_NAME:.c=.o))

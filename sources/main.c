@@ -12,6 +12,7 @@
 
 #include "header_42sh.h"
 #include "quegonza.h"
+#include "jobs_42sh.h"
 
 char		**g_lines;
 t_list		*g_envlst;
@@ -32,6 +33,24 @@ int	execute_firstline(char ***alines)
 		g_lines++;
 		ret = ast_parser(&astroot);
 	}
+
+	char	*debug;
+	ft_putendl("[AST]");
+	put_astparsed(astroot, 0);
+	ft_putendl("[STR]");
+	if (!ret)
+	{
+		debug = job_ast2str(astroot);
+		if (debug)
+		{
+			ft_putendl(debug);
+			free(debug);
+		}
+		else
+			ft_putendl("%(NULL)");
+	}
+	ft_putendl("[EXE]");
+
 	if (!ret)
 		ret = ast_execute(&astroot);
 	if (astroot)
