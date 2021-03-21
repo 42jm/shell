@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "header_42sh.h"
+#include "jobs_42sh.h"
 
 int	execute_builtin(char **bltn_names, char **args)
 {
@@ -18,9 +19,11 @@ int	execute_builtin(char **bltn_names, char **args)
 	int	ret;
 	int	id;
 
-	static int (*bltn_funcs[9])(int, char **) = {
-builtin_echo, builtin_exit, builtin_cd, builtin_set, builtin_unset, \
-builtin_export, builtin_setenv, builtin_unsetenv, builtin_env};
+	static int (*bltn_funcs[])(int, char **) = {
+builtin_echo, builtin_exit, builtin_cd, \
+builtin_set, builtin_unset, builtin_export, \
+builtin_setenv, builtin_unsetenv, builtin_env, \
+builtin_jobs, builtin_fg, builtin_bg};
 	argc = ft_strlen_arr((const char **)args);
 	id = ft_arrstr_id(bltn_names, *args);
 	if (id < 0)
@@ -32,6 +35,8 @@ builtin_export, builtin_setenv, builtin_unsetenv, builtin_env};
 
 static int	pr_execve(char *command_path, char **args, char **envp)
 {
+	if (g_shell->inside_job && job_init_process(g_shell->joblst->content))
+		return (-2);
 	execve(command_path, args, envp);
 	put_error("Execve error", command_path);
 	free_strarr_all(envp);
@@ -41,8 +46,8 @@ static int	pr_execve(char *command_path, char **args, char **envp)
 
 static int	execmd_wait(pid_t pid)
 {
-	int	i;
-	int	ret;
+	int		i;
+	int		ret;
 
 	waitpid(pid, &i, 0);
 	if (WIFEXITED(i))
@@ -77,7 +82,9 @@ int	execute_command(char **args)
 		return (pr_execve(command_path, args, envp));
 	free_strarr_all(envp);
 	free(command_path);
-	if (pid > 0)
+	if (pid > 0 && g_shell->inside_job)
+		return (exejob_wait(pid));
+	else if (pid > 0)
 		return (execmd_wait(pid));
 	return (put_error("the shell failed to fork", *args));
 }
@@ -85,8 +92,10 @@ int	execute_command(char **args)
 int	execute(char **args)
 {
 	static char	*bltn_names[] = {
-		"echo", "exit", "cd", "set", "unset", \
-		"export", "setenv", "unsetenv", "env", NULL};
+		"echo", "exit", "cd", \
+		"set", "unset", "export", \
+		"setenv", "unsetenv", "env", \
+		"jobs", "fg", "bg", NULL};
 
 	if (args == NULL)
 		return (put_error("no arguments", "execute"));

@@ -1,0 +1,26 @@
+fix	echo '\''
+a'
+
+REDEFINE CURRENT JOB AS THE LAST JOB THAT SURVIVED ITS SPAWNING POINT
+	- create g_shell->job_blueprint
+	- create g_shell->job_current
+	- create g_shell->job_previous
+	> jobs builtin should stop listing itself
+	> builtins' status should be set to Done then cleaned up. (delete jobs that did not create children)
+
+builtin_jobs
+	crescent job->nbr
+
+job statuses
+	test "Done($VAL)"
+	test "Terminated ($SIG)"
+	test "Stopped ($SIG)"
+	test len of status (space filled)
+
+create jobs
+	subshell ()
+	pipes |
+	background &
+
+joblst cleanup
+	support for multiple process per job

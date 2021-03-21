@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <sys/wait.h>
 # include <stdbool.h>
+# include <signal.h>
 
 # define MAX_INPUT_LENGTH 1025
 
@@ -130,4 +131,5 @@ int				builtin_setenv(int argc, char **argv);
 int				builtin_unsetenv(int argc, char **argv);
 
 int				sh_neg(int nb);
+char			*sig_int2str(int sig);
 #endif

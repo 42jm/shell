@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   ft_strlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/20 12:16:49 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2021/02/23 18:47:35 by quegonza         ###   ########.fr       */
+/*   Created: 2019/02/20 12:18:53 by jmbomeyo          #+#    #+#             */
+/*   Updated: 2019/10/05 19:10:17 by jmbomeyo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header_42sh.h"
-#include "jobs_42sh.h"
+#include <libft.h>
 
-void	sighandle_int(int signum)
+char	ft_strlast(char *s)
 {
-	(void)signum;
-	ft_putchar('\n');
-	env_set("?", "130", 0);
+	if (!s || !*s)
+		return ('\0');
+	return (s[ft_strlen(s) - 1]);
 }

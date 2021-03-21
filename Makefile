@@ -40,6 +40,7 @@ SRC_NAME = main.c \
 	bltn_echo.c \
 	bltn_envs.c \
 	bltn_exit.c \
+	bltn_jobs.c \
 	bltn_setenvs.c \
 	cursor_info.c \
 	cursor_mov.c \
@@ -70,6 +71,7 @@ SRC_NAME = main.c \
 	sh_neg.c \
 	sighandlers.c \
 	signals.c \
+	sig_int2str.c \
 	size1_char_typing.c \
 	size2_char_typing.c \
 	size3_char_typing.c \
@@ -78,7 +80,15 @@ SRC_NAME = main.c \
 	usefull_scratch.c \
 	job_ast2str.c \
 	job_ast2str_op.c \
-	job_ast2str_get.c
+	job_ast2str_get.c \
+	job_init_shell.c \
+	job_start_new.c \
+	job_notifs.c \
+	job_wait.c \
+	job_launch.c \
+	job_gets.c \
+	job_cleanup.c \
+	job_update.c
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_NAME))
 OBJ = $(addprefix $(OBJ_DIR), $(SRC_NAME:.c=.o))

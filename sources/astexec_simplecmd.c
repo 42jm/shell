@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "header_42sh.h"
+#include "jobs_42sh.h"
 
 int	astexec_args(t_astnode *head)
 {
@@ -37,21 +38,41 @@ int	astexec_args(t_astnode *head)
 	return (ret);
 }
 
+static int	expand_words_then_redir(t_astnode **at)
+{
+	int	ret;
+
+	ret = expand_words(at);
+	if (!ret)
+		ret = astexec_redir(at);
+	return (ret);
+}
+
 int	astexec_simplecmd(t_astnode **at)
 {
 	int			ret;
 	t_astnode	*node;
+	int			job_spawned;
+	static char	*expandable_ops[] = {">()", "<()", NULL};
 
 	node = *at;
-	while (node)
+	job_spawned = 0;
+	if (g_shell->is_interactive && !g_shell->inside_job)
 	{
-		if (node->op)
-			if (!ft_strcmp(node->op, "<()") || !ft_strcmp(node->op, ">()"))
-				return (expand_op(at, node));
-		node = node->next;
+		ret = job_start_new(*at);
+		if (ret)
+			return (ret);
+		g_shell->inside_job = 1;
+		job_spawned = 1;
 	}
-	ret = expand_words(at);
-	if (ret)
-		return (ret);
-	return (astexec_redir(at));
+	node = *at;
+	while (node && (!node->op || !ft_arrstr(expandable_ops, node->op)))
+		node = node->next;
+	if (node)
+		ret = expand_op(at, node);
+	else
+		ret = expand_words_then_redir(at);
+	if (job_spawned)
+		g_shell->inside_job = 0;
+	return (ret);
 }

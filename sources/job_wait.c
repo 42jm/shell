@@ -1,35 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt.c                                           :+:      :+:    :+:   */
+/*   job_wait.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 12:16:49 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2021/02/14 20:00:29 by quegonza         ###   ########.fr       */
+/*   Updated: 2019/10/05 19:06:07 by jmbomeyo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header_42sh.h"
 #include "jobs_42sh.h"
 
-int	put_prompt(int fd)
+int	job_wait(t_job *job)
 {
-	char	*prompt;
+	int		status;
+	pid_t	pid;
 
-	if (!g_shell->is_interactive)
-		return (0);
-	prompt = env_getvalue("PS1");
-	if (!prompt)
-	{
-		if (!getuid())
-			prompt = "\\_#> ";
-		else
-			prompt = "\033[01;32m\\_$\033[00m> ";
-	}
-	job_notify(NULL, 1, 0, 2);
-	job_cleanup(0);
-	if (pr_putstr_fd(prompt, fd) > 0)
-		return (put_error("Could not print prompt", NULL));
-	return (0);
+	status = 0;
+	pid = waitpid(-1, &status, WUNTRACED);
+	if (pid < 0)
+		return (put_error("waitpid failed", "job_wait"));
+	return (job_update_status(job->pgid, status));
+}
+
+int	exejob_wait(pid_t pid)
+{
+	t_job	*job;
+	int		ret;
+
+	job = g_shell->joblst->content;
+	if (!job->pgid)
+		job->pgid = pid;
+	if (setpgid(pid, job->pgid) < 0)
+		return (put_error("setpgid failed", "exejob_wait"));
+	if (job->foreground)
+		ret = put_job_in_foreground(job, 0);
+	else
+		ret = put_job_in_background(job, 0);
+	return (ret);
 }

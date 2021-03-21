@@ -24,7 +24,7 @@ void	ft_sighandler_ctrl_c(int signum)
 	(void)signum;
 	ft_putstr("^C\n");
 	g_info.line[0] = '\0';
-	env_set("?", "130", 0);
+	env_set("?", ft_strdup("130"), 0);
 	g_info.exit = 1;
 	close(g_info.fd[0]);
 }

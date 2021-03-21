@@ -14,9 +14,10 @@
 #include "quegonza.h"
 #include "jobs_42sh.h"
 
-char		**g_lines;
+char		**g_lines = NULL;
 t_list		*g_envlst;
 t_curs		g_info;
+t_shell		*g_shell = NULL;
 
 int	execute_firstline(char ***alines)
 {
@@ -33,24 +34,6 @@ int	execute_firstline(char ***alines)
 		g_lines++;
 		ret = ast_parser(&astroot);
 	}
-
-	char	*debug;
-	ft_putendl("[AST]");
-	put_astparsed(astroot, 0);
-	ft_putendl("[STR]");
-	if (!ret)
-	{
-		debug = job_ast2str(astroot);
-		if (debug)
-		{
-			ft_putendl(debug);
-			free(debug);
-		}
-		else
-			ft_putendl("%(NULL)");
-	}
-	ft_putendl("[EXE]");
-
 	if (!ret)
 		ret = ast_execute(&astroot);
 	if (astroot)
@@ -87,7 +70,10 @@ int	prompt_loop(void)
 	if (!ret)
 		ret = execute_all_lines(input);
 	if (input)
-		free_strarr_all(input);
+	{
+		free_strarr(input, ft_strlen_arr((const char **)input));
+		free(input);
+	}
 	if (ret > 0)
 		env_lastret_set(ret);
 	return (ret);
@@ -97,15 +83,16 @@ int	main(int argc, char **argv, char **envp)
 {
 	int	ret;
 
-	signal(SIGTSTP, SIG_IGN);
-	g_lines = NULL;
-	if (isatty(0) && !ft_start_up())
+	ret = job_init_shell();
+	if (ret)
+		return (ret);
+	if (g_shell->is_interactive && !ft_start_up())
 		return (ft_error("Initialization error\n", 1));
 	ret = env_init(argc, argv, envp);
 	while (ret >= 0)
 		ret = prompt_loop();
 	env_free(g_envlst);
-	if (isatty(0))
+	if (g_shell->is_interactive)
 		ft_end_clean(NULL);
 	if (ret < 0)
 		return (-ret - 1);

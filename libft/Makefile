@@ -18,6 +18,7 @@ CLEAN_COLOR = \033[1;36m
 
 NAME = libft.a
 SRC = ft_atoi.c \
+	   ft_atoi_strict.c \
 	   ft_atollu.c \
 	   ft_bzero.c \
 	   ft_isalnum.c \
@@ -69,6 +70,7 @@ SRC = ft_atoi.c \
 	   ft_striteri.c \
 	   ft_strjoin.c \
 	   ft_strcjoin.c \
+	   ft_strlast.c \
 	   ft_strlcat.c \
 	   ft_strlen.c \
 	   ft_strlen_arr.c \
@@ -121,6 +123,7 @@ SRC = ft_atoi.c \
 	   endian_toggle.c \
 	   free_strarr.c \
 	   free_strarr_all.c \
+	   ft_arrint.c \
 	   ft_arrstr.c \
 	   ft_arrnstr.c \
 	   ft_arrstr_id.c \
@@ -130,7 +133,8 @@ SRC = ft_atoi.c \
 	   pr_strlen.c \
 	   ft_strarr_to_lst.c \
 	   ft_lst_to_strarr.c \
-	   ft_lstfind_head.c
+	   ft_lstfind_head.c \
+	   ft_opt.c
 INC_DIR = includes/
 OBJ_DIR = objects/
 OBJ = $(addprefix $(OBJ_DIR), $(SRC:%.c=%.o))

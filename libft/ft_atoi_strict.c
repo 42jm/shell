@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/20 12:16:49 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2021/02/23 18:47:35 by quegonza         ###   ########.fr       */
+/*   Created: 2019/02/20 09:42:23 by jmbomeyo          #+#    #+#             */
+/*   Updated: 2019/02/20 10:59:46 by jmbomeyo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header_42sh.h"
-#include "jobs_42sh.h"
+#include <libft.h>
 
-void	sighandle_int(int signum)
+int	ft_atoi_strict(char *str)
 {
-	(void)signum;
-	ft_putchar('\n');
-	env_set("?", "130", 0);
+	char	*ptr;
+
+	ptr = str;
+	while (*ptr && ft_isdigit(*ptr))
+		ptr++;
+	if (*ptr)
+		return (-1);
+	return (ft_atoi(str));
 }

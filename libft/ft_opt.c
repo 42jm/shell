@@ -34,13 +34,16 @@ static char	*opt_is_invalid(char *opt_str)
 	return (NULL);
 }
 
-static char	*is_arg_opt(int *aargc, char ***argv)
+static char	*is_arg_opt(int *aargc, char ***aargv)
 {
 	char	*arg;
 
 	(*aargc)--;
 	if (!(*aargc))
+	{
+		(*aargv)++;
 		return (NULL);
+	}
 	arg = *(++(*aargv));
 	if (!arg || arg[0] != '-' || arg[1] == '\0')
 		return (NULL);

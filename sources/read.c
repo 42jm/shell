@@ -12,6 +12,7 @@
 
 #include "header_42sh.h"
 #include "quegonza.h"
+#include "jobs_42sh.h"
 
 char	*read_all(int fd)
 {
@@ -54,7 +55,7 @@ int	read_userinput(char ***ainput)
 	size_t	ret;
 	char	*buf;
 
-	if (isatty(0))
+	if (g_shell->is_interactive)
 		buf = ft_get_user_input();
 	else
 	{
