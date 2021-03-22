@@ -20,11 +20,7 @@ static void	joblst_del(void *content, size_t content_size)
 	job = content;
 	if (!job)
 		return ;
-	if (job->command)
-		free(job->command);
-	if (job->status)
-		free(job->status);
-	free(job);
+	job_free(job);
 }
 
 static int	job_should_be_cleaned(t_job *job, int nbr)

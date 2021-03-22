@@ -42,12 +42,12 @@ typedef struct s_job
 /*
 **		s_shell	
 **	pgid			shell process group id
-**	joblst			list of all jobs
+**	joblst			jobs that survived their scope, ordered by last running
 **	tmodes			backup of shell initial terminal modes
 **	terminal		terminal fd, equivalent of initial STDIN_FILENO
 **	is_subshell		starts at 0. subshells should increment it
 **	is_interactive	isatty(STDIN_FILENO) at startup, set to 0 if subshell
-**	inside_job		true if the shell is currently executing a job
+**	job_blueprint	created jobs live here during first execution
 */
 typedef struct s_shell
 {
@@ -57,7 +57,7 @@ typedef struct s_shell
 	int				terminal;
 	int				is_subshell;
 	int				is_interactive;
-	int				inside_job;
+	t_job			*job_blueprint;
 }	t_shell;
 
 /*
@@ -73,10 +73,16 @@ extern t_shell	*g_shell;
 ** INITIALISATION
 **
 **	job_init_shell()	mallocs g_shell, ignore stop signals, sets pgid to pid
-**	job_start_new()		create a new job and set it as current
+**	job_start_new()		create a new job and set it as blueprint
 */
 int		job_init_shell(void);
 int		job_start_new(t_astnode *node);
+
+/*
+**		job_blueprint.c
+*/
+int		job_set_current(t_job *job);
+int		job_complete_blueprint(void);
 
 /*
 **		job_launch.c
@@ -88,12 +94,13 @@ int		put_job_in_background(t_job *job, int cont);
 /*
 **		job_notifs.c
 */
+void	job_put_nbr(t_job *job, int fd);
 int		job_notify(t_job *job, int unnotified_only, char option, int fd);
 
 /*
 **		job_update.c
 */
-int		job_update_status(pid_t pgid, int status);
+int		job_update_status(t_job *job, int status);
 
 /*
 **		job_wait.c
@@ -106,29 +113,39 @@ int		exejob_wait(pid_t pid);
 ** FREE
 **
 **		job_cleanup.c
-**	job_cleanup()		free nth job or finished jobs if nbr == 0
+**	job_cleanup()		free nbr job or finished jobs if nbr == 0
 */
 int		job_cleanup(int nbr);
+
+/*
+**		job_free.c
+**	job_free()			free job struct
+*/
+void	job_free(t_job *job);
 
 /*
 ** _______
 ** HELPERS
 **
 **		job_gets.c			contains job finding functions
-**	jobget_pgid()		find job from pgid
+**	jobget_next_nbr()	returns highest allocated job nbr + 1
+**	jobget_number()		returns job with nbr == n
 **	jobget_jobid()		find job from posix job_id
+**	.._nth_current()	n=0 returns current, n=1 returns previous, etc...
 */
-t_job	*jobget_pgid(pid_t pgid);
+int		jobget_next_nbr(void);
+t_job	*jobget_number(int n);
 t_job	*jobget_jobid(char *job_id);
+t_job	*jobget_nth_current(size_t n);
 
 /*
 ** ________
 ** BUILTINS
 **
 **		bltn_jobs.c
-**	builtin_jobs()	lists jobs
+**	builtin_jobs()	lists job(s)
 **	builtin_fg()	puts a job in foreground
-**	builtin_bg()	puts a job in background
+**	builtin_bg()	puts job(s) in background
 */
 int		builtin_jobs(int argc, char **argv);
 int		builtin_fg(int argc, char **argv);

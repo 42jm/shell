@@ -57,12 +57,11 @@ int	astexec_simplecmd(t_astnode **at)
 
 	node = *at;
 	job_spawned = 0;
-	if (g_shell->is_interactive && !g_shell->inside_job)
+	if (g_shell->is_interactive && !g_shell->job_blueprint)
 	{
 		ret = job_start_new(*at);
 		if (ret)
 			return (ret);
-		g_shell->inside_job = 1;
 		job_spawned = 1;
 	}
 	node = *at;
@@ -73,6 +72,6 @@ int	astexec_simplecmd(t_astnode **at)
 	else
 		ret = expand_words_then_redir(at);
 	if (job_spawned)
-		g_shell->inside_job = 0;
+		job_complete_blueprint();
 	return (ret);
 }

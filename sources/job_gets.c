@@ -12,23 +12,48 @@
 
 #include "jobs_42sh.h"
 
-t_job	*jobget_pgid(pid_t pgid)
+int	jobget_next_nbr(void)
 {
 	t_list	*joblst;
 	t_job	*job;
+	int		nbr;
 
 	joblst = g_shell->joblst;
+	if (!joblst)
+		return (1);
+	nbr = 0;
 	while (joblst)
 	{
 		job = joblst->content;
-		if (job && job->pgid == pgid)
+		if (job->nbr > nbr)
+			nbr = job->nbr;
+		joblst = joblst->next;
+	}
+	return (nbr + 1);
+}
+
+t_job	*jobget_nth_current(size_t n)
+{
+	t_list	*joblst;
+	t_job	*job;
+	size_t	i;
+
+	i = 0;
+	joblst = g_shell->joblst;
+	while (joblst && i <= n)
+	{
+		job = joblst->content;
+		if (!job)
+			return (NULL);
+		if (i == n)
 			return (job);
+		i++;
 		joblst = joblst->next;
 	}
 	return (NULL);
 }
 
-static t_job	*jobget_nth(int n)
+t_job	*jobget_number(int n)
 {
 	t_list	*joblst;
 	t_job	*job;
@@ -52,45 +77,29 @@ static t_job	*jobget_command(char *str, int anchored)
 {
 	t_list	*joblst;
 	t_job	*job;
+	t_job	*ret_job;
+	int		i;
 
 	joblst = g_shell->joblst;
 	if (!joblst)
 		return (NULL);
-	job = joblst->content;
-	while (joblst && job)
-	{
-		if (anchored)
-			if (!ft_strncmp(job->command, str, ft_strlen(str)))
-				break ;
-		if (!anchored)
-			if (!ft_strstr(job->command, str))
-				break ;
-		joblst = joblst->next;
-		if (joblst)
-			job = joblst->content;
-		else
-			job = NULL;
-	}
-	return (job);
-}
-
-static t_job	*jobget_nth_previous(int n)
-{
-	int		i;
-	t_list	*joblmnt;
-
 	i = 0;
-	if (n < 0)
-		return (NULL);
-	joblmnt = g_shell->joblst;
-	while (joblmnt && i != n)
+	ret_job = NULL;
+	while (joblst)
 	{
-		i++;
-		joblmnt = joblmnt->next;
+		job = joblst->content;
+		if (!job)
+			return (NULL);
+		if (anchored && !ft_strncmp(job->command, str, ft_strlen(str)) && ++i)
+			ret_job = job;
+		if (!anchored && !ft_strstr(job->command, str) && ++i)
+			ret_job = job;
+		joblst = joblst->next;
 	}
-	if (!joblmnt)
-		return (NULL);
-	return (joblmnt->content);
+	if (i < 2)
+		return (ret_job);
+	put_error(str, "jobget_command: ambiguous job id");
+	return (NULL);
 }
 
 t_job	*jobget_jobid(char *job_id)
@@ -102,12 +111,12 @@ t_job	*jobget_jobid(char *job_id)
 	if (ft_strlen(job_id) != 1 && *job_id == '%')
 		job_id++;
 	if (ft_strlen(job_id) == 1 && ft_strchr("%+", *job_id))
-		return (jobget_nth_previous(0));
+		return (jobget_nth_current(0));
 	if (!ft_strcmp(job_id, "-"))
-		return (jobget_nth_previous(1));
+		return (jobget_nth_current(1));
 	nbr = ft_atoi_strict(job_id);
 	if (nbr != -1)
-		return (jobget_nth(nbr));
+		return (jobget_number(nbr));
 	if (*job_id != '?')
 		return (jobget_command(job_id, 1));
 	return (jobget_command(job_id, 0));

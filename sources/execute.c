@@ -35,7 +35,7 @@ builtin_jobs, builtin_fg, builtin_bg};
 
 static int	pr_execve(char *command_path, char **args, char **envp)
 {
-	if (g_shell->inside_job && job_init_process(g_shell->joblst->content))
+	if (g_shell->job_blueprint && job_init_process(g_shell->job_blueprint))
 		return (-2);
 	execve(command_path, args, envp);
 	put_error("Execve error", command_path);
@@ -82,7 +82,7 @@ int	execute_command(char **args)
 		return (pr_execve(command_path, args, envp));
 	free_strarr_all(envp);
 	free(command_path);
-	if (pid > 0 && g_shell->inside_job)
+	if (pid > 0 && g_shell->job_blueprint)
 		return (exejob_wait(pid));
 	else if (pid > 0)
 		return (execmd_wait(pid));

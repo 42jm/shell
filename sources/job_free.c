@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   job_wait.c                                         :+:      :+:    :+:   */
+/*   job_free.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,33 +12,11 @@
 
 #include "jobs_42sh.h"
 
-int	job_wait(t_job *job)
+void	job_free(t_job *job)
 {
-	int		status;
-	pid_t	pid;
-
-	status = 0;
-	pid = waitpid(-1, &status, WUNTRACED);
-	if (pid < 0)
-		return (put_error("waitpid failed", "job_wait"));
-	return (job_update_status(job, status));
-}
-
-int	exejob_wait(pid_t pid)
-{
-	t_job	*job;
-	int		ret;
-
-	job = g_shell->job_blueprint;
-	if (!job)
-		return (put_error("blueprint disappeared", "exejob_wait"));
-	if (!job->pgid)
-		job->pgid = pid;
-	if (setpgid(pid, job->pgid) < 0)
-		return (put_error("setpgid failed", "exejob_wait"));
-	if (job->foreground)
-		ret = put_job_in_foreground(job, 0);
-	else
-		ret = put_job_in_background(job, 0);
-	return (ret);
+	if (job->command)
+		free(job->command);
+	if (job->status)
+		free(job->status);
+	free(job);
 }

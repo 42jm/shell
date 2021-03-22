@@ -12,48 +12,26 @@
 
 #include "jobs_42sh.h"
 
-static int	job_get_next_nbr(void)
-{
-	t_list	*joblst;
-	t_job	*job;
-	int		nbr;
-
-	joblst = g_shell->joblst;
-	if (!joblst)
-		return (1);
-	nbr = 0;
-	while (joblst)
-	{
-		job = joblst->content;
-		if (job->nbr > nbr)
-			nbr = job->nbr;
-		joblst = joblst->next;
-	}
-	return (nbr + 1);
-}
-
 int	job_start_new(t_astnode *node)
 {
 	t_job	*job;
-	t_list	*lmnt;
 
+	if (g_shell->job_blueprint)
+		return (put_error("job blueprint already exists", "job_start_new"));
 	job = (t_job *)malloc(sizeof(t_job));
 	if (!job)
 		return (put_error("failed to malloc t_job", "job_start_new"));
 	job->command = job_ast2str(node);
 	if (!job->command)
+	{
+		free(job);
 		return (1);
+	}
 	job->pgid = 0;
 	job->foreground = 1;
 	job->status = ft_strdup("Running");
 	job->notified = 1;
-	job->nbr = job_get_next_nbr();
-	lmnt = (t_list *)malloc(sizeof(t_list));
-	if (!lmnt)
-		return (put_error("failed to malloc t_list", "job_start_new"));
-	lmnt->content = job;
-	lmnt->content_size = sizeof(t_job);
-	lmnt->next = g_shell->joblst;
-	g_shell->joblst = lmnt;
+	job->nbr = jobget_next_nbr();
+	g_shell->job_blueprint = job;
 	return (0);
 }

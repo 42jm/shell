@@ -54,7 +54,7 @@ static void	jobupdate_terminated(t_job *job, int status)
 static void	jobupdate_exited(t_job *job, int status)
 {
 	char	*sigstr;
-	char	*tmp;
+	char	*ret;
 
 	job->notified = job->foreground;
 	if (!WIFEXITED(status))
@@ -62,27 +62,26 @@ static void	jobupdate_exited(t_job *job, int status)
 		job->status = ft_strdup("Done");
 		return ;
 	}
-	tmp = ft_itoa(WEXITSTATUS(status));
-	if (tmp)
-		env_set("?", tmp, 0);
-	if (!ft_strcmp(tmp, "0"))
+	ret = ft_itoa(WEXITSTATUS(status));
+	if (!ret)
+		return ;
+	env_set("?", ret, 0);
+	if (!ft_strcmp(ret, "0"))
 	{
 		job->status = ft_strdup("Done");
+		free(ret);
 		return ;
 	}
-	sigstr = ft_strjoin("Done(", tmp);
-	free(tmp);
+	sigstr = ft_strjoin("Done(", ret);
+	free(ret);
 	if (!sigstr)
 		return ;
 	job->status = ft_strjoin(sigstr, ")");
 	free(sigstr);
 }
 
-int	job_update_status(pid_t pgid, int status)
+int	job_update_status(t_job *job, int status)
 {
-	t_job	*job;
-
-	job = jobget_pgid(pgid);
 	if (!job)
 		return (0);
 	if (job->status)

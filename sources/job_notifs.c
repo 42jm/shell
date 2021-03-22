@@ -45,7 +45,20 @@ static void	job_put_pgid(t_job *job, int fd)
 		ft_putstr_fd(pgid_str, fd);
 }
 
-void	job_put_notif(t_job *job, char option, int fd)
+void	job_put_nbr(t_job *job, int fd)
+{
+	ft_putchar_fd('[', fd);
+	ft_putnbr_fd(job->nbr, fd);
+	ft_putchar_fd(']', fd);
+	if (job == jobget_nth_current(0))
+		ft_putchar_fd('+', fd);
+	else if (job == jobget_nth_current(1))
+		ft_putchar_fd('-', fd);
+	else
+		ft_putchar_fd(' ', fd);
+}
+
+static void	job_put_notif(t_job *job, char option, int fd)
 {
 	if (!job)
 		return ;
@@ -55,27 +68,24 @@ void	job_put_notif(t_job *job, char option, int fd)
 		ft_putchar_fd('\n', fd);
 		return ;
 	}
-	ft_putchar_fd('[', fd);
-	ft_putnbr_fd(job->nbr, fd);
-	ft_putchar_fd(']', fd);
-	if (job == g_shell->joblst->content)
-		ft_putstr_fd("+ ", fd);
-	else if (g_shell->joblst->next && job == g_shell->joblst->next->content)
-		ft_putstr_fd("- ", fd);
-	else
-		ft_putstr_fd("  ", fd);
+	job_put_nbr(job, fd);
+	ft_putchar_fd(' ', fd);
 	if (option == 'l')
 		job_put_pgid(job, fd);
 	ft_putchar_fd(' ', fd);
 	job_put_status(job, fd);
 	ft_putchar_fd(' ', fd);
-	ft_putendl_fd(job->command, fd);
+	ft_putstr_fd(job->command, fd);
+	if (!ft_strcmp(job->status, "Running") && !job->foreground)
+		ft_putstr_fd(" &", fd);
+	ft_putchar_fd('\n', fd);
 }
 
 int	job_notify(t_job *job_arg, int unnotified_only, char option, int fd)
 {
-	t_list	*joblst;
 	t_job	*job;
+	int		n;
+	int		next_nbr;
 
 	if (job_arg)
 	{
@@ -85,16 +95,16 @@ int	job_notify(t_job *job_arg, int unnotified_only, char option, int fd)
 		job_arg->notified = 1;
 		return (0);
 	}
-	joblst = g_shell->joblst;
-	while (joblst)
+	next_nbr = jobget_next_nbr();
+	n = 0;
+	while (++n < next_nbr)
 	{
-		job = joblst->content;
-		if (!job->notified || !unnotified_only)
+		job = jobget_number(n);
+		if (job && (!job->notified || !unnotified_only))
 		{
 			job_put_notif(job, option, fd);
 			job->notified = 1;
 		}
-		joblst = joblst->next;
 	}
 	return (0);
 }

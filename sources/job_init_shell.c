@@ -50,7 +50,7 @@ int	job_init_shell(void)
 	g_shell->terminal = STDIN_FILENO;
 	g_shell->is_subshell = 0;
 	g_shell->is_interactive = isatty(g_shell->terminal);
-	g_shell->inside_job = 0;
+	g_shell->job_blueprint = NULL;
 	if (g_shell->is_interactive)
 		return (jobinit_interactive());
 	return (0);

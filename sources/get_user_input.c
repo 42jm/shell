@@ -14,22 +14,8 @@
 
 char	*ft_current_char(char *buf, int *len)
 {
-//	pid_t	pid;
-
 	*len = 0;
 	ft_bzero(buf, 16);
-/*	pid = fork();
-	if (!pid)
-	{
-		ft_ignore_allsig();
-		*len = read(0, buf, 16);
-		if (*len != -1)
-			write(g_info.fd[1], buf, *len);
-		else
-			write(g_info.fd[1], "\0", 1);
-		exit(0);
-	}*/
-//	*len = read(0, buf, 16);
 	while (!(buf[0]))
 	{
 		*len = read(g_info.fd[0], buf, 16);
@@ -38,9 +24,6 @@ char	*ft_current_char(char *buf, int *len)
 	}
 	if (*len == -1 && !g_info.exit)
 		return (NULL);
-/*	if (g_info.exit)
-		kill(pid, SIGKILL);
-	waitpid(pid, NULL, 0);*/
 	return (buf);
 }
 
@@ -87,14 +70,8 @@ int 	ft_new_input(void)
 
 char	*ft_get_user_input(void)
 {
-//	pid_t	pid;
-
 	if (!ft_new_input())
 		return (NULL);
-/*	pid = fork();
-	if (!pid)
-	{
-		ft_ignore_allsig();*/
 	while (!ft_line_validation())
 	{
 		if (!ft_key_interaction())
@@ -103,11 +80,6 @@ char	*ft_get_user_input(void)
 			return (NULL);
 		}
 	}
-//		exit(0);
-//	}
-//	if (g_info.exit)
-//		kill(pid, SIGKILL);
-//	waitpid(pid, NULL, 0);
 	g_info.hist = ft_history_new();
 	if (!(g_info.hist))
 	{
