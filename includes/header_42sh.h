@@ -39,6 +39,8 @@ typedef struct s_envvar
 }						t_envvar;
 
 void			sighandle_int(int signum);
+void			sighandle_tstp(int signum);
+void			sighandle_chld(int signum);
 
 int				put_error(char *message, char *arg);
 int				put_error_ret(char *message, char *arg, int ret);

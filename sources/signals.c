@@ -13,6 +13,19 @@
 #include "header_42sh.h"
 #include "jobs_42sh.h"
 
+void	sighandle_chld(int signum)
+{
+	(void)signum;
+	job_update_status(NULL);
+}
+
+void	sighandle_tstp(int signum)
+{
+	(void)signum;
+	ft_putchar('\n');
+	env_set("?", "148", 0);
+}
+
 void	sighandle_int(int signum)
 {
 	(void)signum;

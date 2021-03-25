@@ -29,7 +29,7 @@ static int	jobinit_interactive(void)
 	signal(SIGTSTP, SIG_IGN);
 	signal(SIGTTIN, SIG_IGN);
 	signal(SIGTTOU, SIG_IGN);
-	signal(SIGCHLD, SIG_DFL);
+	signal(SIGCHLD, sighandle_chld);
 	g_shell->pgid = getpid();
 	if (setpgid(g_shell->pgid, g_shell->pgid) < 0)
 		return (put_error("giving 42sh its own pgid", "jobinit_interactive"));
@@ -51,6 +51,7 @@ int	job_init_shell(void)
 	g_shell->is_subshell = 0;
 	g_shell->is_interactive = isatty(g_shell->terminal);
 	g_shell->job_blueprint = NULL;
+	g_shell->exit_warning = 0;
 	if (g_shell->is_interactive)
 		return (jobinit_interactive());
 	return (0);

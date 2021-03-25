@@ -12,24 +12,20 @@
 
 #include "jobs_42sh.h"
 
-int	jobget_next_nbr(void)
+t_job	*jobget_pgid(pid_t pgid)
 {
 	t_list	*joblst;
 	t_job	*job;
-	int		nbr;
 
 	joblst = g_shell->joblst;
-	if (!joblst)
-		return (1);
-	nbr = 0;
 	while (joblst)
 	{
 		job = joblst->content;
-		if (job->nbr > nbr)
-			nbr = job->nbr;
+		if (job && job->pgid == pgid)
+			return (job);
 		joblst = joblst->next;
 	}
-	return (nbr + 1);
+	return (NULL);
 }
 
 t_job	*jobget_nth_current(size_t n)

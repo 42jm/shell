@@ -58,6 +58,7 @@ typedef struct s_shell
 	int				is_subshell;
 	int				is_interactive;
 	t_job			*job_blueprint;
+	int				exit_warning;
 }	t_shell;
 
 /*
@@ -79,10 +80,21 @@ int		job_init_shell(void);
 int		job_start_new(t_astnode *node);
 
 /*
+** _______
+** ZA ZONE
+**
 **		job_blueprint.c
+**	jobget_next_nbr()	returns highest allocated job nbr + 1
 */
+int		jobget_next_nbr(void);
 int		job_set_current(t_job *job);
 int		job_complete_blueprint(void);
+
+/*
+**		job_wait.c
+*/
+int		job_wait(t_job *job, int nohang);
+int		exejob_wait(pid_t pid);
 
 /*
 **		job_launch.c
@@ -92,21 +104,23 @@ int		put_job_in_foreground(t_job *job, int cont);
 int		put_job_in_background(t_job *job, int cont);
 
 /*
-**		job_notifs.c
+** ______
+** STATUS
+**
+**		job_notifs.c		write notif str
+**	job_put_nbr			writes "[job->nbr]X" to fd. X can be one of +, -, space
+**	job_notify			put notif str of job or all approriate jobs if NULL
 */
 void	job_put_nbr(t_job *job, int fd);
 int		job_notify(t_job *job, int unnotified_only, char option, int fd);
 
 /*
-**		job_update.c
+**		job_update.c		modify job status string
+**	job_set_status		replace job->status str according to the status arg
+**	job_update_status	wait on job without hanging. wait on all jobs if NULL
 */
-int		job_update_status(t_job *job, int status);
-
-/*
-**		job_wait.c
-*/
-int		job_wait(t_job *job);
-int		exejob_wait(pid_t pid);
+int		job_set_status(t_job *job, int status);
+int		job_update_status(t_job *job);
 
 /*
 ** ____
@@ -125,15 +139,14 @@ void	job_free(t_job *job);
 
 /*
 ** _______
-** HELPERS
+** FINDERS
 **
 **		job_gets.c			contains job finding functions
-**	jobget_next_nbr()	returns highest allocated job nbr + 1
 **	jobget_number()		returns job with nbr == n
 **	jobget_jobid()		find job from posix job_id
 **	.._nth_current()	n=0 returns current, n=1 returns previous, etc...
 */
-int		jobget_next_nbr(void);
+t_job	*jobget_pgid(pid_t pgid);
 t_job	*jobget_number(int n);
 t_job	*jobget_jobid(char *job_id);
 t_job	*jobget_nth_current(size_t n);

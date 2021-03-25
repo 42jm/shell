@@ -49,7 +49,8 @@ int	put_job_in_foreground(t_job *job, int cont)
 		if (kill(-job->pgid, SIGCONT) < 0)
 			return (put_error("sending SIGCONT", "put_job_in_foreground"));
 	}
-	ret = job_wait(job);
+	put_error("job_wait call", "put_job_in_foreground");
+	ret = job_wait(job, 0);
 	if (tcsetpgrp(g_shell->terminal, g_shell->pgid) < 0)
 		return (put_error("setting shell as fg", "put_job_in_foreground"));
 	if (tcgetattr(g_shell->terminal, &job->tmodes) < 0)

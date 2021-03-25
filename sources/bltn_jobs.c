@@ -54,6 +54,8 @@ static int	bltn_bg_update_notif_run(char *jobid)
 	if (job->status && (!ft_strncmp(job->status, "Done", 4) || \
 !ft_strncmp(job->status, "Terminated", 10)))
 		return (put_error(job->command, "bg: job has terminated"));
+	if (job->status && !ft_strcmp(job->status, "Running"))
+		return (put_error(job->command, "bg: job already in background"));
 	if (job->status)
 		free(job->status);
 	job->status = ft_strdup("Running");

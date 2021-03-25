@@ -22,6 +22,8 @@ static void	jobupdate_stopped(t_job *job, int status)
 		job->status = ft_strdup("Stopped (SIGTTOU)");
 	else
 		job->status = ft_strdup("Stopped");
+	if (WSTOPSIG(status) == SIGTSTP)
+		sighandle_tstp(SIGTSTP);
 	job->notified = 0;
 }
 
@@ -30,18 +32,20 @@ static void	jobupdate_terminated(t_job *job, int status)
 	char	*sigstr;
 	char	*tmp;
 
+	job->notified = 0;
 	if (WTERMSIG(status) == SIGINT)
 	{
 		sighandle_int(SIGINT);
 		job->notified = 1;
 	}
-	else
-		job->notified = 0;
 	sigstr = sig_int2str(WTERMSIG(status));
 	if (!sigstr)
 		sigstr = ft_itoa(WTERMSIG(status));
 	if (!sigstr)
+	{
+		put_error("malloc failed", "jobupdate_terminated");
 		return ;
+	}
 	tmp = sigstr;
 	sigstr = ft_strjoin(sigstr, ")");
 	free(tmp);
@@ -57,17 +61,16 @@ static void	jobupdate_exited(t_job *job, int status)
 	char	*ret;
 
 	job->notified = job->foreground;
-	if (!WIFEXITED(status))
-	{
-		job->status = ft_strdup("Done");
-		return ;
-	}
 	ret = ft_itoa(WEXITSTATUS(status));
 	if (!ret)
+	{
+		put_error("itoa failed", "jobupdate_exited");
 		return ;
+	}
 	env_set("?", ret, 0);
 	if (!ft_strcmp(ret, "0"))
 	{
+		put_error(job->command, "jobupdate_exited: set as Done");
 		job->status = ft_strdup("Done");
 		free(ret);
 		return ;
@@ -80,19 +83,39 @@ static void	jobupdate_exited(t_job *job, int status)
 	free(sigstr);
 }
 
-int	job_update_status(t_job *job, int status)
+int	job_set_status(t_job *job, int status)
 {
+	char	*old_status;
+
 	if (!job)
 		return (0);
-	if (job->status)
-		free(job->status);
+	old_status = job->status;
 	if (WIFSTOPPED(status))
 		jobupdate_stopped(job, status);
 	else if (WIFSIGNALED(status))
 		jobupdate_terminated(job, status);
-	else
+	else if (WIFCONTINUED(status))
+		job->status = ft_strdup("Running");
+	else if (WIFEXITED(status))
 		jobupdate_exited(job, status);
+	else
+		return (0);
+	if (old_status)
+		free(old_status);
 	if (!job->status)
-		return (put_error("malloc failed", "job_update_status"));
+		return (put_error("malloc failed", "job_set_status"));
 	return (0);
+}
+
+int	job_update_status(t_job *job)
+{
+	if (job && ft_strncmp(job->status, "Done", 4) && \
+ft_strncmp(job->status, "Terminated", 10))
+	{
+		put_error("job_wait call 1", "job_update_status");
+		return (job_wait(job, 1));
+	}
+	else if (job)
+		return (0);
+	return (job_wait(NULL, 1));
 }

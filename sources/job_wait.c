@@ -12,16 +12,40 @@
 
 #include "jobs_42sh.h"
 
-int	job_wait(t_job *job)
+int	job_wait_any(int options)
 {
-	int		status;
 	pid_t	pid;
+	t_job	*job;
+	int		status;
 
 	status = 0;
-	pid = waitpid(-1, &status, WUNTRACED);
-	if (pid < 0)
+	pid = waitpid(WAIT_ANY, &status, options);
+	while (pid > 0)
+	{
+		job = jobget_pgid(pid);
+		job_set_status(job, status);
+		status = 0;
+		pid = waitpid(WAIT_ANY, &status, options);
+	}
+	return (0);
+}
+
+int	job_wait(t_job *job, int nohang)
+{
+	int		status;
+	int		options;
+
+	status = 0;
+	options = WUNTRACED;
+	if (nohang)
+		options = WUNTRACED | WNOHANG | WCONTINUED;
+	if (!job)
+		return (job_wait_any(options));
+	if (waitpid(job->pgid, &status, options) < 0)
 		return (put_error("waitpid failed", "job_wait"));
-	return (job_update_status(job, status));
+	if (job)
+		return (job_set_status(job, status));
+	return (0);
 }
 
 int	exejob_wait(pid_t pid)
