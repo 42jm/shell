@@ -46,7 +46,7 @@ typedef struct s_job
 **	joblst			jobs that survived their scope, ordered by last running
 **	tmodes			backup of shell initial terminal modes
 **	terminal		terminal fd, equivalent of initial STDIN_FILENO
-**	is_subshell		starts at 0. subshells should increment it
+**	job_launched	is 1 if job already launched
 **	is_interactive	isatty(STDIN_FILENO) at startup, set to 0 if subshell
 **	job_blueprint	created jobs live here during first execution
 */
@@ -56,7 +56,7 @@ typedef struct s_shell
 	t_list			*joblst;
 	struct termios	tmodes;
 	int				terminal;
-	int				is_subshell;
+	int				job_launched;
 	int				is_interactive;
 	t_job			*job_blueprint;
 	int				exit_warning;
@@ -146,7 +146,7 @@ int		job_cleanup(int nbr);
 **		job_free.c
 **	job_free()			free job struct
 */
-void	job_free(t_job *job);
+void	job_free(t_job **ajob);
 
 /*
 ** _______

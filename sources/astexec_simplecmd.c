@@ -52,8 +52,7 @@ static int	simplecmd_complete_job(int ret)
 {
 	if (!ret)
 		return (job_complete_blueprint());
-	job_free(g_shell->job_blueprint);
-	g_shell->job_blueprint = NULL;
+	job_free(&g_shell->job_blueprint);
 	return (ret);
 }
 

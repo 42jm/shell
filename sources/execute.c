@@ -83,7 +83,7 @@ int	execute_command(char **args)
 		return (pr_execve(command_path, args, envp));
 	free_strarr_all(envp);
 	free(command_path);
-	if (pid > 0 && g_shell->is_interactive && g_shell->job_blueprint)
+	if (pid > 0 && g_shell->is_interactive && !g_shell->job_launched)
 		return (exejob_wait(pid));
 	else if (pid > 0)
 		return (execmd_wait(pid));

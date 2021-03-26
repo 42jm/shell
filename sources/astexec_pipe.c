@@ -27,6 +27,60 @@ static int	pipe_dupexe(t_astnode **at, int *fildes, int io)
 	return (ret);
 }
 
+static int	pipejob_child(t_astnode **at)
+{
+	char	*ret;
+
+	g_shell->is_interactive = 0;
+	if (job_init_process(g_shell->job_blueprint))
+		exit(1);
+	if (astexec_pipe(at))
+		exit(1);
+	ret = env_getvalue("?");
+	if (ret)
+		exit(ft_atoi(ret));
+	exit(1);
+	return (-2);
+}
+
+static int	pipejob_parent(pid_t pid)
+{
+	int	ret;
+
+	g_shell->job_blueprint->pgid = pid;
+	if (setpgid(pid, pid) < 0)
+		put_error("setpgid failed", "pipejob_parent");
+	ret = put_job_in_foreground(g_shell->job_blueprint, 0);
+	if (!ret)
+		return (job_complete_blueprint());
+	job_free(&g_shell->job_blueprint);
+	g_shell->job_launched = 0;
+	return (ret);
+}
+
+static int	pipexec_job(t_astnode **at)
+{
+	int		ret;
+	pid_t	pid;
+
+	ret = job_start_new(*at);
+	if (ret)
+		return (ret);
+	g_shell->job_launched = 1;
+	pid = fork();
+	if (pid == -1)
+	{
+		job_free(&g_shell->job_blueprint);
+		return (put_error("failed fork", "pipexec_job"));
+	}
+	if (!pid)
+		ret = pipejob_child(at);
+	else
+		ret = pipejob_parent(pid);
+	g_shell->job_launched = 0;
+	return (ret);
+}
+
 int	astexec_pipe(t_astnode **at)
 {
 	int			fildes[2];
@@ -35,6 +89,8 @@ int	astexec_pipe(t_astnode **at)
 
 	if (!at || !*at)
 		return (put_error("no arguments", "astexec_pipe"));
+	if (g_shell->is_interactive && !g_shell->job_blueprint)
+		return (pipexec_job(at));
 	node = *at;
 	if (!node->content || !node->next)
 		return (put_error("a pipe needs two commands", node->op));
@@ -47,6 +103,7 @@ int	astexec_pipe(t_astnode **at)
 	{
 		pipe_dupexe((t_astnode **)&node->content, fildes, 1);
 		exit(0);
+		return (-2);
 	}
 	return (pipe_dupexe((t_astnode **)&node->next, fildes, 0));
 }

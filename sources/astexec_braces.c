@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "header_42sh.h"
+#include "jobs_42sh.h"
 
 int	astexec_curly(t_astnode **at)
 {
@@ -29,25 +30,29 @@ int	astexec_curly(t_astnode **at)
 	return (ast_execute(&node));
 }
 
-int	astexec_paren(t_astnode **at)
+static int	parenexec_child(t_astnode *node, int job_spawned)
 {
-	t_astnode	*head;
-	t_astnode	*node;
-	pid_t		pid;
-	int			wstatus;
-	int			ret;
+	g_shell->is_interactive = 0;
+	if (job_spawned && job_init_process(g_shell->job_blueprint))
+		exit(1);
+	ast_execute(&node);
+	exit(0);
+	return (-2);
+}
 
-	head = *at;
-	node = head->content;
-	if (head->next)
-		return (put_error("a token is following the parentheses", head->op));
-	pid = fork();
-	if (pid == -1)
-		return (put_error("failed fork", head->op));
-	if (!pid)
-		ast_execute(&node);
-	if (!pid)
-		exit(0);
+static int	parenexec_parent(t_astnode *head, int job_spawned, pid_t pid)
+{
+	int		ret;
+	int		wstatus;
+
+	if (job_spawned)
+	{
+		g_shell->job_blueprint->pgid = pid;
+		if (setpgid(pid, pid) < 0)
+			put_error("setpgid failed", "parenexec_parent");
+		ret = put_job_in_foreground(g_shell->job_blueprint, 0);
+		return (ast_execute(&head->next));
+	}
 	waitpid(pid, &wstatus, 0);
 	if (WIFEXITED(wstatus))
 	{
@@ -56,4 +61,27 @@ int	astexec_paren(t_astnode **at)
 			return (ret);
 	}
 	return (ast_execute(&head->next));
+}
+
+int	astexec_paren(t_astnode **at)
+{
+	t_astnode	*head;
+	pid_t		pid;
+	int			job_spawned;
+
+	head = *at;
+	if (head->next)
+		return (put_error("a token is following the parentheses", head->op));
+	job_spawned = 0;
+	if (g_shell->is_interactive && !g_shell->job_launched)
+	{
+		g_shell->job_launched = 1;
+		job_spawned = 1;
+	}
+	pid = fork();
+	if (pid == -1)
+		return (put_error("failed fork", head->op));
+	if (!pid)
+		return (parenexec_child((*at)->content, job_spawned));
+	return (parenexec_parent(head, job_spawned, pid));
 }

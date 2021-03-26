@@ -48,7 +48,7 @@ int	job_init_shell(void)
 	g_shell->pgid = getpgrp();
 	g_shell->joblst = NULL;
 	g_shell->terminal = STDIN_FILENO;
-	g_shell->is_subshell = 0;
+	g_shell->job_launched = 0;
 	g_shell->is_interactive = isatty(g_shell->terminal);
 	g_shell->job_blueprint = NULL;
 	g_shell->exit_warning = 0;

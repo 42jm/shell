@@ -40,6 +40,7 @@ static int	amperexec_child(t_astnode *node, int job_spawned)
 	g_shell->is_interactive = 0;
 	if (job_spawned && job_init_process(g_shell->job_blueprint))
 		exit(1);
+	g_shell->job_launched = 1;
 	ast_execute((t_astnode **)&node->content);
 	exit(0);
 	return (-2);
@@ -55,9 +56,9 @@ static int	amperexec_parent(t_astnode *node, int job_spawned, pid_t pid)
 		ft_putnbr_fd(pid, 2);
 		ft_putchar_fd('\n', 2);
 		if (setpgid(pid, pid) < 0)
-			put_error("setpgid failed", "astexec_amper");
+			put_error("setpgid failed", "amperexec_parent");
 		if (job_complete_blueprint())
-			put_error("failed to complete blueprint", "astexec_amper");
+			put_error("failed to complete blueprint", "amperexec_parent");
 	}
 	env_set("?", "0", 0);
 	return (ast_execute((t_astnode **)&node->next));
@@ -81,6 +82,8 @@ int	astexec_amper(t_astnode **at)
 		g_shell->job_blueprint->foreground = 0;
 	}
 	pid = fork();
+	if (pid == -1 && job_spawned)
+		job_free(&g_shell->job_blueprint);
 	if (pid == -1)
 		return (put_error("failed fork", node->op));
 	if (!pid)

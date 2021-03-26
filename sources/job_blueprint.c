@@ -52,9 +52,10 @@ int	job_complete_blueprint(void)
 		lmnt->content = g_shell->job_blueprint;
 		lmnt->content_size = sizeof(t_job);
 		ft_lstadd(&g_shell->joblst, lmnt);
+		g_shell->job_blueprint = NULL;
+		g_shell->job_launched = 0;
 	}
 	else
-		job_free(g_shell->job_blueprint);
-	g_shell->job_blueprint = NULL;
+		job_free(&g_shell->job_blueprint);
 	return (0);
 }

@@ -12,11 +12,17 @@
 
 #include "jobs_42sh.h"
 
-void	job_free(t_job *job)
+void	job_free(t_job **ajob)
 {
+	t_job	*job;
+
+	if (!ajob || !*ajob)
+		return ;
+	job = *ajob;
 	if (job->command)
 		free(job->command);
 	if (job->status)
 		free(job->status);
 	free(job);
+	*ajob = NULL;
 }

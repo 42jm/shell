@@ -53,6 +53,7 @@ int	exejob_wait(pid_t pid)
 	t_job	*job;
 	int		ret;
 
+	g_shell->job_launched = 1;
 	job = g_shell->job_blueprint;
 	if (!job)
 		return (put_error("blueprint disappeared", "exejob_wait"));
