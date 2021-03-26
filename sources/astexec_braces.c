@@ -32,11 +32,15 @@ int	astexec_curly(t_astnode **at)
 
 static int	parenexec_child(t_astnode *node, int job_spawned)
 {
+	char	*ret;
+
 	g_shell->is_interactive = 0;
 	if (job_spawned && job_init_process(g_shell->job_blueprint))
 		exit(1);
 	ast_execute(&node);
-	exit(0);
+	ret = env_getvalue("?");
+	if (ret)
+		exit(ft_atoi(ret));
 	return (-2);
 }
 
