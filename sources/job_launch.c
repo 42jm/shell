@@ -30,6 +30,7 @@ int	job_init_process(t_job *job)
 	signal(SIGTTIN, SIG_DFL);
 	signal(SIGTTOU, SIG_DFL);
 	signal(SIGCHLD, SIG_DFL);
+	signal(SIGCONT, SIG_DFL);
 	return (0);
 }
 

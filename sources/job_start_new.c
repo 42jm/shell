@@ -52,8 +52,8 @@ int	job_start_new(t_astnode *node)
 		put_error("setting current terminal modes as default", "job_start_new");
 	job->foreground = 1;
 	job->status = ft_strdup("Running");
-	job->notified = 1;
 	job->nbr = jobget_next_nbr();
+	job->notified = 1;
 	g_shell->job_blueprint = job;
 	return (0);
 }

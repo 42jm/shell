@@ -27,6 +27,7 @@
 **	command		the command string describing the job
 **	status		string describing the job's state
 **	nbr			indentifier used by builtins
+**	notified	variable checked to see if the job is in need of a notification
 */
 typedef struct s_job
 {
