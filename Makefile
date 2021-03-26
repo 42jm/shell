@@ -90,7 +90,8 @@ SRC_NAME = main.c \
 	job_cleanup.c \
 	job_update.c \
 	job_blueprint.c \
-	job_free.c
+	job_free.c \
+	job_puts.c
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_NAME))
 OBJ = $(addprefix $(OBJ_DIR), $(SRC_NAME:.c=.o))

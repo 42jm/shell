@@ -70,7 +70,6 @@ static void	jobupdate_exited(t_job *job, int status)
 	env_set("?", ret, 0);
 	if (!ft_strcmp(ret, "0"))
 	{
-		put_error(job->command, "jobupdate_exited: set as Done");
 		job->status = ft_strdup("Done");
 		free(ret);
 		return ;
@@ -111,10 +110,7 @@ int	job_update_status(t_job *job)
 {
 	if (job && ft_strncmp(job->status, "Done", 4) && \
 ft_strncmp(job->status, "Terminated", 10))
-	{
-		put_error("job_wait call 1", "job_update_status");
 		return (job_wait(job, 1));
-	}
 	else if (job)
 		return (0);
 	return (job_wait(NULL, 1));

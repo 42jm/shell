@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "header_42sh.h"
+#include "jobs_42sh.h"
 
 int	astexec_andor(t_astnode **at)
 {
@@ -34,25 +35,57 @@ int	astexec_andor(t_astnode **at)
 	return (ast_execute((t_astnode **)&node->next));
 }
 
+static int	amperexec_child(t_astnode *node, int job_spawned)
+{
+	g_shell->is_interactive = 0;
+	if (job_spawned && job_init_process(g_shell->job_blueprint))
+		exit(1);
+	ast_execute((t_astnode **)&node->content);
+	exit(0);
+	return (-2);
+}
+
+static int	amperexec_parent(t_astnode *node, int job_spawned, pid_t pid)
+{
+	if (job_spawned)
+	{
+		g_shell->job_blueprint->pgid = pid;
+		job_put_nbr(g_shell->job_blueprint, 2);
+		ft_putchar_fd(' ', 2);
+		ft_putnbr_fd(pid, 2);
+		ft_putchar_fd('\n', 2);
+		if (setpgid(pid, pid) < 0)
+			put_error("setpgid failed", "astexec_amper");
+		if (job_complete_blueprint())
+			put_error("failed to complete blueprint", "astexec_amper");
+	}
+	env_set("?", "0", 0);
+	return (ast_execute((t_astnode **)&node->next));
+}
+
 int	astexec_amper(t_astnode **at)
 {
 	pid_t		pid;
 	t_astnode	*node;
 	int			ret;
+	int			job_spawned;
 
 	node = *at;
+	job_spawned = 0;
+	if (g_shell->is_interactive && !g_shell->job_blueprint)
+	{
+		ret = job_start_new(node->content);
+		if (ret)
+			return (ret);
+		job_spawned = 1;
+		g_shell->job_blueprint->foreground = 0;
+	}
 	pid = fork();
 	if (pid == -1)
 		return (put_error("failed fork", node->op));
 	if (!pid)
-	{
-		ast_execute((t_astnode **)&node->content);
-		exit(0);
-	}
-	ret = env_set("?", "0", 0);
-	if (ret)
-		return (ret);
-	return (ast_execute((t_astnode **)&node->next));
+		return (amperexec_child(node, job_spawned));
+	return (amperexec_parent(node, job_spawned, pid));
 }
 
 int	astexec_semicol(t_astnode **at)

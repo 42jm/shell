@@ -63,6 +63,7 @@ static int	bltn_bg_update_notif_run(char *jobid)
 	job->notified = 1;
 	job_set_current(job);
 	job_put_nbr(job, 1);
+	job_put_currents(job, 1);
 	ft_putchar(' ');
 	ft_putstr(job->command);
 	ft_putendl(" &");

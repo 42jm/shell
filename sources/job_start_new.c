@@ -12,6 +12,26 @@
 
 #include "jobs_42sh.h"
 
+int	jobget_next_nbr(void)
+{
+	t_list	*joblst;
+	t_job	*job;
+	int		nbr;
+
+	joblst = g_shell->joblst;
+	if (!joblst)
+		return (1);
+	nbr = 0;
+	while (joblst)
+	{
+		job = joblst->content;
+		if (job->nbr > nbr)
+			nbr = job->nbr;
+		joblst = joblst->next;
+	}
+	return (nbr + 1);
+}
+
 int	job_start_new(t_astnode *node)
 {
 	t_job	*job;
@@ -28,6 +48,8 @@ int	job_start_new(t_astnode *node)
 		return (1);
 	}
 	job->pgid = 0;
+	if (tcgetattr(g_shell->terminal, &job->tmodes) < 0)
+		put_error("setting current terminal modes as default", "job_start_new");
 	job->foreground = 1;
 	job->status = ft_strdup("Running");
 	job->notified = 1;

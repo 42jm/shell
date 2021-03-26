@@ -48,6 +48,15 @@ static int	expand_words_then_redir(t_astnode **at)
 	return (ret);
 }
 
+static int	simplecmd_complete_job(int ret)
+{
+	if (!ret)
+		return (job_complete_blueprint());
+	job_free(g_shell->job_blueprint);
+	g_shell->job_blueprint = NULL;
+	return (ret);
+}
+
 int	astexec_simplecmd(t_astnode **at)
 {
 	int			ret;
@@ -71,7 +80,7 @@ int	astexec_simplecmd(t_astnode **at)
 		ret = expand_op(at, node);
 	else
 		ret = expand_words_then_redir(at);
-	if (job_spawned)
-		job_complete_blueprint();
-	return (ret);
+	if (!job_spawned)
+		return (ret);
+	return (simplecmd_complete_job(ret));
 }

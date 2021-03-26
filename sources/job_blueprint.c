@@ -12,26 +12,6 @@
 
 #include "jobs_42sh.h"
 
-int	jobget_next_nbr(void)
-{
-	t_list	*joblst;
-	t_job	*job;
-	int		nbr;
-
-	joblst = g_shell->joblst;
-	if (!joblst)
-		return (1);
-	nbr = 0;
-	while (joblst)
-	{
-		job = joblst->content;
-		if (job->nbr > nbr)
-			nbr = job->nbr;
-		joblst = joblst->next;
-	}
-	return (nbr + 1);
-}
-
 int	job_set_current(t_job *job)
 {
 	t_list	*lmnt;

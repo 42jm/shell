@@ -74,9 +74,11 @@ extern t_shell	*g_shell;
 ** INITIALISATION
 **
 **	job_init_shell()	mallocs g_shell, ignore stop signals, sets pgid to pid
+**	jobget_next_nbr()	returns highest allocated job nbr + 1
 **	job_start_new()		create a new job and set it as blueprint
 */
 int		job_init_shell(void);
+int		jobget_next_nbr(void);
 int		job_start_new(t_astnode *node);
 
 /*
@@ -84,9 +86,7 @@ int		job_start_new(t_astnode *node);
 ** ZA ZONE
 **
 **		job_blueprint.c
-**	jobget_next_nbr()	returns highest allocated job nbr + 1
 */
-int		jobget_next_nbr(void);
 int		job_set_current(t_job *job);
 int		job_complete_blueprint(void);
 
@@ -108,11 +108,21 @@ int		put_job_in_background(t_job *job, int cont);
 ** STATUS
 **
 **		job_notifs.c		write notif str
+**	job_notify			write notif str of job or all approriate jobs if NULL
+*/
+int		job_notify(t_job *job, int unnotified_only, char option, int fd);
+
+/*
+**		job_puts.c			writes elements of job
 **	job_put_nbr			writes "[job->nbr]X" to fd. X can be one of +, -, space
-**	job_notify			put notif str of job or all approriate jobs if NULL
+**	job_put_currents	either writes '+', '-', or ' '
+**	job_put_pgid		writes "job->pgid", space filled to len 5
+**	job_put_status		writes "job->status", space filled to len 23
 */
 void	job_put_nbr(t_job *job, int fd);
-int		job_notify(t_job *job, int unnotified_only, char option, int fd);
+void	job_put_currents(t_job *job, int fd);
+void	job_put_pgid(t_job *job, int fd);
+void	job_put_status(t_job *job, int fd);
 
 /*
 **		job_update.c		modify job status string
