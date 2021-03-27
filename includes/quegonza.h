@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 03:16:03 by quegonza          #+#    #+#             */
-/*   Updated: 2021/02/23 18:25:52 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/03/12 16:07:32 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_curs
 	int				cursor;
 	int				strlen;
 	int				prompt;
+	int				eof;
 	int				hist_pos;
 	char			**hist;
 	char			*line;

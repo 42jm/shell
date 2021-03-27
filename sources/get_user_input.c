@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 02:00:55 by quegonza          #+#    #+#             */
-/*   Updated: 2021/03/12 10:59:47 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/03/12 16:11:52 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,7 @@ char	*ft_current_char(char *buf, int *len)
 {
 	*len = 0;
 	ft_bzero(buf, 16);
-	while (!(buf[0]))
-	{
-		*len = read(g_info.fd[0], buf, 16);
-		if (g_info.exit)
-			break ;
-	}
+	*len = read(g_info.fd[0], buf, 16);
 	if (*len == -1 && !g_info.exit)
 		return (NULL);
 	return (buf);
@@ -74,6 +69,7 @@ char	*ft_get_user_input(void)
 		return (NULL);
 	while (!ft_line_validation())
 	{
+		g_info.eof = 0;
 		if (!ft_key_interaction())
 		{
 			free(g_info.line);
