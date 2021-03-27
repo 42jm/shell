@@ -56,6 +56,19 @@ static int	simplecmd_complete_job(int ret)
 	return (ret);
 }
 
+static t_astnode	*simplecmd_get_op(t_astnode *node, char *op)
+{
+	while (node)
+	{
+		if (!op && !node->op)
+			return (node);
+		if (op && node->op && !ft_strcmp(op, node->op))
+			return (node);
+		node = node->next;
+	}
+	return (NULL);
+}
+
 int	astexec_simplecmd(t_astnode **at)
 {
 	int			ret;
@@ -65,7 +78,8 @@ int	astexec_simplecmd(t_astnode **at)
 
 	node = *at;
 	job_spawned = 0;
-	if (g_shell->is_interactive && !g_shell->job_blueprint)
+	if (g_shell->is_interactive && !g_shell->job_blueprint && \
+!simplecmd_get_op(node, "{}"))
 	{
 		ret = job_start_new(*at);
 		if (ret)
