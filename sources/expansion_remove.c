@@ -32,6 +32,17 @@ int	remove_empty_field(t_astnode *prev, t_astnode **anode, t_astnode **ahead)
 	return (1);
 }
 
+static int	exprm_should_drop_first_quote(char *str)
+{
+	if (!str || !*str)
+		return (0);
+	if (*str != '\\')
+		return (1);
+	if (str[1] && ft_strchr("$`\\\"\n", str[1]))
+		return (1);
+	return (0);
+}
+
 static char	*remove_quotes_non_recursive(char *ptr, char *quotes)
 {
 	size_t	i;
@@ -40,8 +51,7 @@ static char	*remove_quotes_non_recursive(char *ptr, char *quotes)
 
 	i = 0;
 	str = ft_strdup(ptr);
-	if (str)
-		len = ft_stralen_unquoted(str, quotes);
+	len = ft_stralen_unquoted(str, quotes);
 	while (str && len)
 	{
 		i += len - 1;
@@ -54,7 +64,8 @@ static char	*remove_quotes_non_recursive(char *ptr, char *quotes)
 			ft_strdrop_inplace(&str, i + len - 1, i + len);
 			len -= 2;
 		}
-		ft_strdrop_inplace(&str, i, i + 1);
+		if (exprm_should_drop_first_quote(str + i))
+			ft_strdrop_inplace(&str, i, i + 1);
 		i += len;
 		len = ft_stralen_unquoted(str + i, quotes);
 	}
