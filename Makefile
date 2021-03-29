@@ -36,6 +36,7 @@ SRC_NAME = main.c \
 	astredir_local.c \
 	astredir_simple.c \
 	ast_to_strarr.c \
+	bashvar.c \
 	bltn_cd.c \
 	bltn_echo.c \
 	bltn_envs.c \

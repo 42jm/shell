@@ -55,6 +55,7 @@ int				read_userinput(char ***input);
 int				format_input(char *in, char ***input);
 char			*read_all(int fd);
 size_t			bashvar_len(char *str);
+size_t			bashvar_len_until_next_var(char *str);
 int				expand_tilde(t_astnode *node);
 int				expand_param(t_astnode *node);
 int				expand_words(t_astnode **ahead);
