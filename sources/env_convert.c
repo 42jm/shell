@@ -86,6 +86,8 @@ int	env_init(int argc, char **argv, char **envp)
 		else
 			ret = builtin_set(argc, argv);
 	}
+	if (!ret && !env_getentry("PATH"))
+		ret = env_set("PATH", "/bin:/usr/bin", 1);
 	if (ret > 0)
 		return (-ret - 1);
 	return (ret);

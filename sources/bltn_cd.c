@@ -29,7 +29,7 @@ int	builtin_cd(int argc, char **argv)
 	if (ret)
 		return (put_error(path, "chdir() failed"));
 	path = getcwd(NULL, 0);
-	env_set("OLDPWD", env_getvalue("PWD"), 0);
+	env_set("OLDPWD", env_getvalue("PWD"), 1);
 	env_set("PWD", path, 1);
 	if (argc > 1 && !ft_strcmp(argv[1], "-"))
 		ft_putendl(path);

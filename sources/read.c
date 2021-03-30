@@ -19,16 +19,28 @@ char	*read_all(int fd)
 	static ssize_t	buf_size = 1024;
 	char			*buf;
 	ssize_t			len;
+	char			*ret;
+	char			*tmp;
 
 	buf = ft_strnew(buf_size + 1);
-	len = read(fd, buf, buf_size);
-	if (len == buf_size || len == -1)
-	{
-		if (buf)
-			free(buf);
+	if (!buf)
 		return (NULL);
+	len = read(fd, buf, buf_size);
+	ret = NULL;
+	while (len && len != -1)
+	{
+		if (ret)
+		{
+			tmp = ret;
+			ret = ft_strjoin(ret, buf);
+			free(tmp);
+		}
+		else
+			ret = ft_strdup(buf);
+		len = read(fd, buf, buf_size);
 	}
-	return (buf);
+	free(buf);
+	return (ret);
 }
 
 int	format_input(char *in, char ***ainput)

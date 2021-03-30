@@ -35,6 +35,8 @@ int	astexec_args(t_astnode *head)
 		return (put_error("malloc failed", "astexec_args"));
 	ret = execute(args);
 	free_strarr_all(args);
+	if (ret)
+		env_lastret_set(ret);
 	return (ret);
 }
 

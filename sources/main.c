@@ -29,11 +29,9 @@ int	execute_firstline(char ***alines)
 	g_lines = *alines;
 	astroot = NULL;
 	ret = ast_lexer(*g_lines, &astroot);
+	g_lines++;
 	if (!ret)
-	{
-		g_lines++;
 		ret = ast_parser(&astroot);
-	}
 	if (!ret)
 		ret = ast_execute(&astroot);
 	if (astroot)
@@ -48,13 +46,8 @@ int	execute_all_lines(char **aline)
 	int	ret;
 
 	ret = 0;
-	while (!ret && aline && *aline)
-	{
+	while (aline && *aline)
 		ret = execute_firstline(&aline);
-		if (aline && *aline)
-			aline++;
-		break ;
-	}
 	return (ret);
 }
 
@@ -81,7 +74,8 @@ int	prompt_loop(void)
 
 int	main(int argc, char **argv, char **envp)
 {
-	int	ret;
+	int		ret;
+	char	*lastret;
 
 	ret = job_init_shell();
 	if (ret)
@@ -91,8 +85,9 @@ int	main(int argc, char **argv, char **envp)
 	ret = env_init(argc, argv, envp);
 	while (ret >= 0)
 		ret = prompt_loop();
-	if (!ret)
-		ret = ft_atoi(env_getvalue("?"));
+	lastret = env_getvalue("?");
+	if (ft_strcmp(lastret, "0"))
+		ret = ft_atoi(lastret);
 	env_free(g_envlst);
 	if (g_shell->is_interactive)
 		ft_end_clean(NULL);
