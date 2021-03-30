@@ -91,6 +91,8 @@ int	main(int argc, char **argv, char **envp)
 	ret = env_init(argc, argv, envp);
 	while (ret >= 0)
 		ret = prompt_loop();
+	if (!ret)
+		ret = ft_atoi(env_getvalue("?"));
 	env_free(g_envlst);
 	if (g_shell->is_interactive)
 		ft_end_clean(NULL);
