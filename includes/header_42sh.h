@@ -6,7 +6,7 @@
 /*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/30 15:39:13 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2021/01/28 22:17:50 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/03/30 20:31:55 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,8 @@ t_list			*env_strarr_to_struct(char **envp);
 char			**env_struct_to_strarr(t_list *entry);
 int				env_lastret_set(int val);
 
+int				builtin_alias(int argc, char **argv);
+int				builtin_unalias(int argc, char **argv);
 int				builtin_cd(int argc, char **argv);
 int				builtin_echo(int argc, char **argv);
 int				builtin_exit(int argc, char **argv);
@@ -130,6 +132,7 @@ int				builtin_set(int argc, char **argv);
 int				builtin_unset(int argc, char **argv);
 int				builtin_export(int argc, char **argv);
 int				builtin_env(int argc, char **argv);
+int				builtin_pwd(int argc, char **argv);
 int				builtin_setenv(int argc, char **argv);
 int				builtin_unsetenv(int argc, char **argv);
 

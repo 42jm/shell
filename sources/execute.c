@@ -6,7 +6,7 @@
 /*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 12:16:49 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2020/10/15 13:32:30 by jmbomeyo         ###   ########.fr       */
+/*   Updated: 2021/03/30 19:06:38 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	execute_builtin(char **bltn_names, char **args)
 	int	id;
 
 	static int (*bltn_funcs[])(int, char **) = {
+builtin_alias, builtin_unalias, builtin_pwd, \
 builtin_echo, builtin_exit, builtin_cd, \
 builtin_set, builtin_unset, builtin_export, \
 builtin_setenv, builtin_unsetenv, builtin_env, \
@@ -93,6 +94,7 @@ int	execute_command(char **args)
 int	execute(char **args)
 {
 	static char	*bltn_names[] = {
+		"alias", "unalias", "pwd", \
 		"echo", "exit", "cd", \
 		"set", "unset", "export", \
 		"setenv", "unsetenv", "env", \

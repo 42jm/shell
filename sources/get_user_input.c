@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 02:00:55 by quegonza          #+#    #+#             */
-/*   Updated: 2021/03/12 16:11:52 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/03/30 19:24:18 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void	ft_end_clean(char *end_message)
 		free(g_info.copy);
 	if (g_info.temp)
 		free(g_info.temp);
+	ft_free_alias();
 	close(g_info.fd[0]);
 	close(g_info.fd[1]);
 	if (end_message)

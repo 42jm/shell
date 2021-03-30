@@ -37,12 +37,16 @@ SRC_NAME = main.c \
 	astredir_simple.c \
 	ast_to_strarr.c \
 	bashvar.c \
+	bltn_alias.c \
+	bltn_unalias.c \
 	bltn_cd.c \
 	bltn_echo.c \
 	bltn_envs.c \
 	bltn_exit.c \
 	bltn_jobs.c \
+	bltn_pwd.c \
 	bltn_setenvs.c \
+	clear_dots.c \
 	cursor_info.c \
 	cursor_mov.c \
 	cursor_pos_fromstr.c \
@@ -60,15 +64,19 @@ SRC_NAME = main.c \
 	expansion_param.c \
 	expansion_remove.c \
 	expansion_tilde.c \
+	file_check.c \
 	file_tests.c \
 	ft_strcsplit_all.c \
 	ft_strlen_unquoted.c \
+	get_path.c \
 	get_user_input.c \
 	history.c \
 	line_edition.c \
 	line_validation.c \
+	options.c \
 	prompt.c \
 	read.c \
+	resolve_path.c \
 	sh_neg.c \
 	sighandlers.c \
 	signals.c \
