@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 19:42:12 by quegonza          #+#    #+#             */
-/*   Updated: 2021/03/30 19:38:17 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/03/31 17:47:28 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ char	*ft_resolve_path(char *str)
 	char	*path;
 	char	*path2;
 	char	*tmp;
+	int		len;
 
 	if (str[0] != '/')
 	{
@@ -84,5 +85,8 @@ char	*ft_resolve_path(char *str)
 	path = ft_replace_ddots(path);
 	path2 = ft_clear_dot(path);
 	free(path);
+	len = ft_strlen(path2);
+	if (len > 1 && path2[len - 1] == '/')
+		path2[len - 1] = '\0';
 	return (path2);
 }

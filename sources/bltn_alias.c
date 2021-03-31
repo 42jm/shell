@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 16:48:15 by quegonza          #+#    #+#             */
-/*   Updated: 2021/03/30 19:22:10 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/03/31 18:04:21 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ void	ft_print_alias(char *alias)
 	}
 	if (alias)
 	{
-		ft_putstr("42sh: alias: ");
-		ft_putstr(alias);
-		ft_putstr(": not found\n");
+		pr_putstr_fd("42sh: alias: ", 2);
+		pr_putstr_fd(alias, 2);
+		pr_putstr_fd(": not found\n", 2);
 	}
 }
 

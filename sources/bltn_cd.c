@@ -6,7 +6,7 @@
 /*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 12:16:49 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2021/03/31 15:47:31 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/03/31 17:54:34 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ int 	builtin_cd_rest(int argc, char **argv, char *path, int opt)
 		if (ret)
 			return (put_error(path, "chdir() failed"));
 	}
+	else
+		return (1);
 	if (opt == 1)
 		path = getcwd(NULL, 0);
 	else
