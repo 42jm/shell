@@ -48,7 +48,11 @@ int	execute_all_lines(char **aline)
 
 	ret = 0;
 	while (aline && *aline)
+	{
 		ret = execute_firstline(&aline);
+		if (ret)
+			env_lastret_set(ret);
+	}
 	return (ret);
 }
 
