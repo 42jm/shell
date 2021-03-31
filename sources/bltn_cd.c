@@ -6,7 +6,7 @@
 /*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 12:16:49 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2021/03/30 19:36:07 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/03/31 15:47:31 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int 	builtin_cd_rest(int argc, char **argv, char *path, int opt)
 		path = getcwd(NULL, 0);
 	else
 		path = ft_resolve_path(path);
-	env_set("OLDPWD", env_getvalue("PWD"), 0);
+	env_set("OLDPWD", env_getvalue("PWD"), 1);
 	env_set("PWD", path, 1);
 	if (argc > 1 && !ft_strcmp(argv[argc - 1], "-"))
 		ft_putendl(path);
