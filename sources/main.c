@@ -18,6 +18,7 @@ char		**g_lines = NULL;
 t_list		*g_envlst;
 t_curs		g_info;
 t_shell		*g_shell = NULL;
+t_alias		*g_alias = NULL;
 
 int	execute_firstline(char ***alines)
 {

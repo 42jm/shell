@@ -38,7 +38,7 @@ typedef struct s_alias
 	struct s_alias	*next;
 }					t_alias;
 
-t_alias				*g_alias;
+extern t_alias		*g_alias;
 
 typedef struct s_cap
 {
