@@ -32,20 +32,18 @@ int	job_wait_any(int options)
 
 int	job_wait(t_job *job, int nohang)
 {
-	int		status;
 	int		options;
+	int		status;
 
-	status = 0;
 	options = WUNTRACED;
 	if (nohang)
 		options = WUNTRACED | WNOHANG | WCONTINUED;
 	if (!job)
 		return (job_wait_any(options));
+	status = 0;
 	if (waitpid(job->pgid, &status, options) < 0)
 		return (put_error("waitpid failed", "job_wait"));
-	if (job)
-		return (job_set_status(job, status));
-	return (0);
+	return (job_set_status(job, status));
 }
 
 int	exejob_wait(pid_t pid)
