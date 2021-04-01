@@ -25,26 +25,32 @@ int	env_lastret_set(int lastret)
 	return (ret);
 }
 
-int	env_set(char *varname, char *valnew, bool exportable)
+static int	env_update(t_envvar *var, char *val, int exportable)
+{
+	if (exportable >= 0)
+		var->exportable = exportable;
+	if (var->value)
+		free(var->value);
+	var->value = ft_strdup(val);
+	return (0);
+}
+
+int	env_set(char *varname, char *valnew, int exportable)
 {
 	t_list		*entry;
 	t_envvar	*var;
 
 	entry = env_getentry(varname);
 	if (entry)
-	{
-		var = entry->content;
-		var->exportable = exportable;
-		if (var->value)
-			free(var->value);
-		var->value = ft_strdup(valnew);
-		return (0);
-	}
+		return (env_update(entry->content, valnew, exportable));
 	entry = (t_list *)malloc(sizeof(*entry));
 	var = (t_envvar *)malloc(sizeof(*var));
 	if (!entry || !var)
 		return (put_error("malloc failed", "env_set"));
-	var->exportable = exportable;
+	if (exportable < -1 || 0 < exportable)
+		var->exportable = 1;
+	else
+		var->exportable = 0;
 	var->name = ft_strdup(varname);
 	var->value = ft_strdup(valnew);
 	entry->content = var;

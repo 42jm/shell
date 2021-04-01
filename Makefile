@@ -63,6 +63,7 @@ SRC_NAME = main.c \
 	expansion_op.c \
 	expansion_param.c \
 	expansion_remove.c \
+	expansion_str.c \
 	expansion_tilde.c \
 	file_check.c \
 	file_tests.c \

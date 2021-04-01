@@ -85,19 +85,18 @@ static int	env_export(char *str)
 	else
 		entry = env_new(str, NULL, 1);
 	var_new = entry->content;
+	var_new->local = 0;
 	var_old = env_getvar(var_new->name);
 	if (var_old)
 	{
 		if (!ft_strchr(str, '=') && var_old->value)
-		{
 			var_new->value = ft_strdup(var_old->value);
-			if (!var_new->value)
-				return (put_error("malloc failed", "env_export"));
-		}
 		ret = env_unset(var_old->name);
 		if (ret)
 			return (ret);
 	}
+	if (!var_new->value)
+		var_new->envir = 0;
 	ft_lstappend(&g_envlst, entry);
 	return (0);
 }

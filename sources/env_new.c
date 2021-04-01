@@ -19,6 +19,8 @@ t_envvar	*envvar_new(char *name, char *value, bool exportable)
 	var = (t_envvar *)malloc(sizeof(*var));
 	if (!var)
 		return (NULL);
+	var->local = 0;
+	var->envir = 1;
 	var->exportable = exportable;
 	var->name = ft_strdup(name);
 	if (!var->name)
@@ -28,14 +30,12 @@ t_envvar	*envvar_new(char *name, char *value, bool exportable)
 	}
 	var->value = NULL;
 	if (value)
-	{
 		var->value = ft_strdup(value);
-		if (!var->value)
-		{
-			free(var->name);
-			free(var);
-			return (NULL);
-		}
+	if (value && !var->value)
+	{
+		free(var->name);
+		free(var);
+		return (NULL);
 	}
 	return (var);
 }

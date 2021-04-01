@@ -60,7 +60,7 @@ char	**env_struct_to_strarr(t_list *entry)
 	while (i < len && entry)
 	{
 		var = entry->content;
-		if (var->exportable)
+		if (var->envir && var->exportable)
 			envp[i++] = ft_strcjoin('=', var->name, var->value);
 		entry = entry->next;
 	}

@@ -33,6 +33,8 @@ typedef struct s_astnode
 
 typedef struct s_envvar
 {
+	bool				local;
+	bool				envir;
 	bool				exportable;
 	char				*name;
 	char				*value;
@@ -56,6 +58,7 @@ int				format_input(char *in, char ***input);
 char			*read_all(int fd);
 size_t			bashvar_len(char *str);
 size_t			bashvar_len_until_next_var(char *str);
+char			*expand_str(char *str);
 int				expand_tilde(t_astnode *node);
 int				expand_param(t_astnode *node);
 int				expand_words(t_astnode **ahead);
@@ -113,7 +116,7 @@ t_envvar		*env_getvar(char *varname);
 char			*env_getvalue(char *varname);
 int				env_init(int argc, char **argv, char **envp);
 t_list			*env_new(char *name, char *value, bool exportable);
-int				env_set(char *varname, char *valnew, bool exportable);
+int				env_set(char *varname, char *valnew, int exportable);
 int				env_unset(char *varname);
 int				env_put(bool exportonly);
 int				envput_export(void);

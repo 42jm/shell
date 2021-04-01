@@ -51,6 +51,8 @@ void	free_node(t_astnode *node)
 
 void	free_ast(t_astnode *node)
 {
+	if (!node)
+		return ;
 	if (node->next)
 		free_ast(node->next);
 	free_node(node);
