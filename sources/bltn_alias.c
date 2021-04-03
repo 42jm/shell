@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 16:48:15 by quegonza          #+#    #+#             */
-/*   Updated: 2021/03/31 18:04:21 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/04/03 03:57:47 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	ft_putalias(t_alias *alias)
 {
 	ft_putstr("alias ");
 	ft_putstr(alias->name);
-	ft_putchar('=');
+	ft_putstr("='");
 	ft_putstr(alias->link);
-	ft_putchar('\n');
+	ft_putstr("'\n");
 }
 
 void	ft_print_alias(char *alias)
@@ -30,9 +30,7 @@ void	ft_print_alias(char *alias)
 	while (i)
 	{
 		if (!alias)
-		{
 			ft_putalias(i);
-		}
 		else if (!ft_strcmp(alias, i->name))
 		{
 			ft_putalias(i);
