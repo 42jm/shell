@@ -6,7 +6,7 @@
 /*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/30 15:39:13 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2021/03/30 20:31:55 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/04/03 03:40:11 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ int				builtin_env(int argc, char **argv);
 int				builtin_pwd(int argc, char **argv);
 int				builtin_setenv(int argc, char **argv);
 int				builtin_unsetenv(int argc, char **argv);
+int 			builtin_type(int argc, char **argv);
 
 int				sh_neg(int nb);
 char			*sig_int2str(int sig);

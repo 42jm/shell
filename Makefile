@@ -46,6 +46,7 @@ SRC_NAME = main.c \
 	bltn_jobs.c \
 	bltn_pwd.c \
 	bltn_setenvs.c \
+	bltn_type.c \
 	clear_dots.c \
 	cursor_info.c \
 	cursor_mov.c \
