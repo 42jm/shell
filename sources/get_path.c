@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 19:41:55 by quegonza          #+#    #+#             */
-/*   Updated: 2021/03/30 19:40:06 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/04/03 02:44:07 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,31 +63,28 @@ char	*ft_find_filename(char *dir_name, char *bin_name)
 	return (NULL);
 }
 
-int 	ft_get_path(char *name)
+char	*ft_get_path(char *name)
 {
-	char	*str;
+	char	*res;
 	char	**path_dirs;
 	int		i;
 
-	str = env_getvalue("PATH");
-	if (!str)
-		return (1);
-	path_dirs = ft_strsplit(str, ':');
+	res = env_getvalue("PATH");
+	if (!res)
+		return (NULL);
+	path_dirs = ft_strsplit(res, ':');
 	if (!path_dirs)
-		return (ft_error("malloc error\n", -1));
+		return (NULL);
 	i = -1;
-	str = NULL;
 	while (path_dirs[++i])
 	{
-		str = ft_find_filename(path_dirs[i], name);
-		if (str)
+		res = ft_find_filename(path_dirs[i], name);
+		if (res)
 		{
 			ft_free_tabzero(path_dirs);
-			free(name);
-			name = str;
-			return (0);
+			return (res);
 		}
 	}
 	ft_free_tabzero(path_dirs);
-	return (1);
+	return (NULL);
 }

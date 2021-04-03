@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 03:16:03 by quegonza          #+#    #+#             */
-/*   Updated: 2021/03/30 19:17:52 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/04/03 02:36:21 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int					ft_get_cap(t_cap *cap);
 void				ft_get_cursor_info(void);
 void				ft_get_cursor_pos(void);
 char				*ft_get_options(char **argv, char *allowed);
-int					ft_get_path(char *name);
+char				*ft_get_path(char *name);
 void				ft_get_term_size(void);
 char				*ft_get_user_input(void);
 int					ft_getrow_fromstr(int cursor);
