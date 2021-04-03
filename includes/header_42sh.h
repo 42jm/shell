@@ -138,7 +138,7 @@ int				builtin_env(int argc, char **argv);
 int				builtin_pwd(int argc, char **argv);
 int				builtin_setenv(int argc, char **argv);
 int				builtin_unsetenv(int argc, char **argv);
-int 			builtin_type(int argc, char **argv);
+int				builtin_type(int argc, char **argv);
 
 int				sh_neg(int nb);
 char			*sig_int2str(int sig);

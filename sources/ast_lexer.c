@@ -27,6 +27,7 @@ static int	lexer_opnew(t_astnode **at, char *input, size_t len)
 static int	lexer_ignore(t_astnode **at, char *input, size_t *alen)
 {
 	size_t	len;
+	size_t	tmp;
 
 	len = *alen;
 	if (!*at)
@@ -36,7 +37,12 @@ static int	lexer_ignore(t_astnode **at, char *input, size_t *alen)
 			return (1);
 	}
 	if (ft_strchr("\\'\"", input[len]))
-		len += quotationlen(input + len, "\\'\"") - 1;
+	{
+		tmp = quotationlen(input + len, "\\'\"");
+		if (tmp > 1)
+			tmp--;
+		len += tmp;
+	}
 	else if (ft_strchr("$`", input[len]))
 		len += expansionlen(input + len);
 	if (*alen != len)

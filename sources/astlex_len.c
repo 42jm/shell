@@ -45,7 +45,7 @@ size_t	quotationlen(char *s, char *quotes)
 {
 	size_t	len;
 	char	quote;
-	bool	backslashed;
+	int		backslashed;
 
 	if (!s)
 		return (0);
@@ -55,14 +55,15 @@ size_t	quotationlen(char *s, char *quotes)
 	if (quote == '\\')
 		return (2);
 	len = 1;
-	backslashed = false;
+	backslashed = 0;
 	while (s[len])
 	{
 		if (s[len] == quote && !backslashed)
 			return (len + 1);
-		backslashed = false;
 		if (s[len] == '\\' && quote == '"' && !backslashed)
-			backslashed = true;
+			backslashed = 2;
+		if (backslashed)
+			backslashed--;
 		len++;
 	}
 	return (0);

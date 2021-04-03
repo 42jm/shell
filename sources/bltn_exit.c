@@ -55,7 +55,8 @@ int	builtin_exit(int argc, char **argv)
 {
 	int		ret;
 
-	pr_putstr_fd("exit\n", 2);
+	if (g_shell->is_interactive)
+		pr_putstr_fd("exit\n", 2);
 	if (argc > 2)
 		return (put_error("Too many arguments", *argv));
 	ret = ft_atoi(env_getvalue("?"));
