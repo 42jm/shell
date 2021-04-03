@@ -6,12 +6,42 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 19:21:23 by quegonza          #+#    #+#             */
-/*   Updated: 2021/03/30 19:24:43 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/04/03 19:25:36 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "quegonza.h"
 #include "header_42sh.h"
+
+char	*ft_replace_alias(char *str)
+{
+	char *word;
+	char *res;
+
+	word = ft_first_word(str);
+	if (!word)
+		return (str);
+	res = ft_get_alias(word);
+	free(word);
+	if (!res)
+		return (str);
+	str = ft_replace_first_word(res, str);
+	return (str);
+}
+
+char	*ft_get_alias(char *name)
+{
+	t_alias	*i;
+
+	i = g_alias;
+	while (i)
+	{
+		if (!ft_strcmp(name, i->name))
+			return (i->link);
+		i = i->next;
+	}
+	return (NULL);
+}
 
 void	ft_free_alias(void)
 {

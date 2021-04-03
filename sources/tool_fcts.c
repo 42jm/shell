@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 00:44:05 by quegonza          #+#    #+#             */
-/*   Updated: 2021/03/28 18:45:57 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/04/03 19:25:36 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,53 @@ int 	ft_isoneof_chr(char chr, char *chrs)
 		chrs++;
 	}
 	return (0);
+}
+
+char	*ft_first_word(char *str)
+{
+	int		i;
+	int		j;
+	char	*res;
+
+	i = 0;
+	while (str[i] && str[i] == ' ')
+		i++;
+	j = 0;
+	while (str[i] && str[i] != ' ' && str[i] != '\n')
+	{
+		i++;
+		j++;
+	}
+	if (j)
+	{
+		res = ft_memalloc(j + 1);
+		if (!res)
+			return (NULL);
+		ft_strncpy(res, &str[i - j], j);
+	}
+	else
+		return (NULL);
+	return (res);
+}
+
+char	*ft_replace_first_word(char *res, char *str)
+{
+	int		i;
+	int		reslen;
+	char	*new;
+
+	i = 0;
+	reslen = ft_strlen(res);
+	while (str[i] && str[i] == ' ')
+		i++;
+	while (str[i] && str[i] != ' ' && str[i] != '\n')
+		i++;
+	new = ft_memalloc(ft_strlen(&str[i]) + reslen + 1);
+	ft_strcpy(new, res);
+	if (reslen)
+		ft_strcpy(&new[reslen], &str[i]);
+	g_info.strlen = g_info.strlen - i + reslen;
+	free(res);
+	free(str);
+	return (new);
 }

@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 05:44:26 by quegonza          #+#    #+#             */
-/*   Updated: 2021/04/03 04:11:17 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/04/03 18:26:43 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ int 	ft_line_validation(void)
 	if (g_info.strlen && g_info.line[g_info.strlen - 1] == '\n')
 	{
 		i = 0;
+		g_info.line = ft_replace_alias(g_info.line);
 		while (g_info.line[i])
 		{
 			if (g_info.line[i] == '\\' && g_info.line[i + 1])

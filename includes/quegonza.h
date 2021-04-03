@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 03:16:03 by quegonza          #+#    #+#             */
-/*   Updated: 2021/04/03 02:36:21 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/04/03 19:12:36 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,10 @@ char				*ft_del_char(char *line);
 void				ft_end_clean(char *end_message);
 int					ft_error(char *cause, int code);
 char				*ft_find_filename(char *dir_name, char *bin_name);
+char				*ft_first_word(char *str);
 void				ft_free_alias(void);
 void				ft_free_tabzero(char **tab);
+char				*ft_get_alias(char *name);
 int					ft_get_cap(t_cap *cap);
 void				ft_get_cursor_info(void);
 void				ft_get_cursor_pos(void);
@@ -117,7 +119,9 @@ char				*ft_path(char *path, char *name);
 int					ft_putc(int c);
 int					ft_reach_next_word(void);
 int					ft_reach_previous_word(void);
+char				*ft_replace_alias(char *str);
 char				*ft_replace_ddots(char *str);
+char				*ft_replace_first_word(char *res, char *str);
 char				*ft_resolve_path(char *str);
 void				ft_scroll(int nb, char opt);
 void				ft_sighandler_winsize_change(int signum);

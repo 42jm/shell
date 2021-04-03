@@ -6,26 +6,12 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 15:59:06 by quegonza          #+#    #+#             */
-/*   Updated: 2021/04/03 03:45:58 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/04/03 17:56:02 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "quegonza.h"
 #include "header_42sh.h"
-
-char	*ft_get_alias(char *name)
-{
-	t_alias	*i;
-
-	i = g_alias;
-	while (i)
-	{
-		if (!ft_strcmp(name, i->name))
-			return (i->link);
-		i = i->next;
-	}
-	return (NULL);
-}
 
 int 	ft_alias_type(char *name)
 {
