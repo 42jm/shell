@@ -18,6 +18,8 @@ size_t	ft_strclen_unquoted(char *s, char chr, char *quotes)
 	size_t	i;
 	size_t	quote_len;
 
+	if (!s)
+		return (0);
 	len = ft_strlen(s);
 	i = 0;
 	while (i < len)

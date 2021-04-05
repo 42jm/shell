@@ -44,13 +44,18 @@ static int	node_isassign_all(t_astnode *node)
 static int	assign_local_reset(char *name, char *value, bool exportable)
 {
 	t_envvar	*var;
+	int			ret;
 
 	var = env_getvar(name);
 	if (var && !var->local)
 		return (0);
 	if (!value)
 		return (env_unset(name));
-	return (env_set(name, value, exportable));
+	ret = env_set(name, value, exportable);
+	var = env_getvar(name);
+	if (var)
+		var->local = 0;
+	return (ret);
 }
 
 static int	assign_local(t_astnode *node, char *name, char *value)
@@ -70,8 +75,7 @@ static int	assign_local(t_astnode *node, char *name, char *value)
 		og_exportable = og_var->exportable;
 	ret = env_set(name, value, 1);
 	new_var = env_getvar(name);
-	if (!og_var && new_var)
-		new_var->local = 1;
+	new_var->local = 1;
 	if (!ret)
 		ret = astexec_assign(node->next);
 	assign_local_reset(name, og_value, og_exportable);

@@ -14,6 +14,7 @@ FLAGS = -Wall -Wextra -Werror
 OBJ_DIR = objects/
 SRC_DIR = sources/
 SRC_NAME = main.c \
+	astexec_args.c \
 	astexec_assign.c \
 	astexec_braces.c \
 	astexec_pipe.c \
@@ -61,6 +62,7 @@ SRC_NAME = main.c \
 	exec_str_in_subshell.c \
 	execute.c \
 	expansion.c \
+	expansion_alias.c \
 	expansion_op.c \
 	expansion_param.c \
 	expansion_remove.c \
