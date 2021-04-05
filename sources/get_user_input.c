@@ -6,11 +6,12 @@
 /*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 02:00:55 by quegonza          #+#    #+#             */
-/*   Updated: 2021/04/05 17:03:25 by lgaveria         ###   ########.fr       */
+/*   Updated: 2021/04/05 18:06:46 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "quegonza.h"
+#include "signals_42sh.h"
 
 char	*ft_current_char(char *buf, int *len)
 {

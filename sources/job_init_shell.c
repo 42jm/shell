@@ -6,7 +6,7 @@
 /*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 10:06:09 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2021/04/05 16:58:31 by lgaveria         ###   ########.fr       */
+/*   Updated: 2021/04/05 18:06:54 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static int	jobinit_interactive(void)
 		kill(-g_shell->pgid, SIGTTIN);
 		term_pgid = tcgetpgrp(g_shell->terminal);
 	}
-	set_up_shell_signals();
 	g_shell->pgid = getpid();
 	if (setpgid(g_shell->pgid, g_shell->pgid) < 0)
 		return (put_error("giving 42sh its own pgid", "jobinit_interactive"));
@@ -47,6 +46,7 @@ int	job_init_shell(void)
 	g_shell->is_interactive = isatty(g_shell->terminal);
 	g_shell->job_blueprint = NULL;
 	g_shell->exit_warning = 0;
+	set_up_shell_signals();
 	if (g_shell->is_interactive)
 		return (jobinit_interactive());
 	return (0);
