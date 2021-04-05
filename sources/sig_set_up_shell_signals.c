@@ -6,7 +6,7 @@
 /*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 17:53:38 by lgaveria          #+#    #+#             */
-/*   Updated: 2021/04/05 23:07:16 by lgaveria         ###   ########.fr       */
+/*   Updated: 2021/04/05 23:35:16 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	set_up_ign_signals(struct sigaction action)
 	set_up_action_for_given_signals(ignored_signals, action);
 }
 
-void	set_up_shell_signals(void)
+void		set_up_shell_signals(void)
 {
 	struct sigaction	action;
 

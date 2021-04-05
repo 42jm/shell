@@ -6,7 +6,7 @@
 #    By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/12 09:27:03 by jmbomeyo          #+#    #+#              #
-#    Updated: 2021/02/02 13:37:28 by quegonza         ###   ########.fr        #
+#    Updated: 2021/03/29 20:18:51 by quegonza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,6 +86,7 @@ SRC = ft_atoi.c \
 	   ft_strrchr.c \
 	   ft_strcsplit.c \
 	   ft_strnsplit.c \
+	   ft_strsplit.c \
 	   ft_strstrsplit.c \
 	   ft_strstr.c \
 	   ft_strsub.c \

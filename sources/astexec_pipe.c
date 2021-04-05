@@ -86,6 +86,7 @@ int	astexec_pipe(t_astnode **at)
 	int			fildes[2];
 	pid_t		pid;
 	t_astnode	*node;
+	int			ret;
 
 	if (!at || !*at)
 		return (put_error("no arguments", "astexec_pipe"));
@@ -103,7 +104,8 @@ int	astexec_pipe(t_astnode **at)
 	{
 		pipe_dupexe((t_astnode **)&node->content, fildes, 1);
 		exit(0);
-		return (-2);
 	}
-	return (pipe_dupexe((t_astnode **)&node->next, fildes, 0));
+	ret = pipe_dupexe((t_astnode **)&node->next, fildes, 0);
+	waitpid(pid, NULL, WUNTRACED);
+	return (ret);
 }

@@ -43,9 +43,19 @@ static int	node_isassign_all(t_astnode *node)
 
 static int	assign_local_reset(char *name, char *value, bool exportable)
 {
+	t_envvar	*var;
+	int			ret;
+
+	var = env_getvar(name);
+	if (var && !var->local)
+		return (0);
 	if (!value)
 		return (env_unset(name));
-	return (env_set(name, value, exportable));
+	ret = env_set(name, value, exportable);
+	var = env_getvar(name);
+	if (var)
+		var->local = 0;
+	return (ret);
 }
 
 static int	assign_local(t_astnode *node, char *name, char *value)
@@ -54,24 +64,21 @@ static int	assign_local(t_astnode *node, char *name, char *value)
 	t_envvar	*og_var;
 	char		*og_value;
 	bool		og_exportable;
+	t_envvar	*new_var;
 
 	og_value = NULL;
 	og_exportable = 1;
 	og_var = env_getvar(name);
-	if (og_var)
-	{
+	if (og_var && og_var->value)
 		og_value = ft_strdup(og_var->value);
-		if (!og_value)
-			return (put_error("malloc failed", "assign_local"));
+	if (og_var)
 		og_exportable = og_var->exportable;
-	}
 	ret = env_set(name, value, 1);
+	new_var = env_getvar(name);
+	new_var->local = 1;
 	if (!ret)
 		ret = astexec_assign(node->next);
-	if (ret)
-		assign_local_reset(name, og_value, og_exportable);
-	else
-		ret = assign_local_reset(name, og_value, og_exportable);
+	assign_local_reset(name, og_value, og_exportable);
 	if (og_value)
 		free(og_value);
 	return (ret);
@@ -82,24 +89,26 @@ int	astexec_assign(t_astnode *node)
 	int		ret;
 	char	*name;
 	char	*value;
+	int		all_assign;
 
 	if (!node)
 		return (0);
 	if (!node_isassign(node))
 		return (astexec_args(node));
 	name = ft_strcdup(node->content, '=');
-	if (!name)
-		return (put_error("malloc failed", "astexec_assign"));
-	value = ft_strchr(node->content, '=') + 1;
-	if (node_isassign_all(node))
-	{
-		ret = env_set(name, value, 0);
+	value = ft_strchr(node->content, '=');
+	if (value)
+		value = expand_str(value + 1);
+	all_assign = node_isassign_all(node);
+	if (all_assign)
+		ret = env_set(name, value, -1);
+	else
+		ret = assign_local(node, name, value);
+	if (name)
 		free(name);
-		if (ret)
-			return (ret);
-		return (astexec_assign(node->next));
-	}
-	ret = assign_local(node, name, value);
-	free(name);
-	return (ret);
+	if (value)
+		free(value);
+	if (ret || !all_assign)
+		return (ret);
+	return (astexec_assign(node->next));
 }

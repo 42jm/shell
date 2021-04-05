@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ast_execute.c                                      :+:      :+:    :+:   */
+/*   expansion_str.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,22 +12,40 @@
 
 #include "header_42sh.h"
 
-int	ast_execute(t_astnode **at)
+static char	*ast_fields_to_str(char sep, t_astnode *node)
+{
+	char	*ret;
+	char	*tmp;
+
+	if (!node)
+		return (NULL);
+	ret = ft_strdup(node->content);
+	while (node->next)
+	{
+		node = node->next;
+		tmp = ret;
+		ret = ft_strcjoin(sep, ret, node->content);
+		if (tmp)
+			free(tmp);
+	}
+	return (ret);
+}
+
+char	*expand_str(char *str)
 {
 	t_astnode	*node;
+	char		*ret;
 
-	if (!at || !*at)
-		return (0);
-	node = *at;
-	if (!node->op)
-		return (expand_alias(at));
-	else if (!ft_strcmp(node->op, ";"))
-		return (astexec_semicol(at));
-	else if (!ft_strcmp(node->op, "&"))
-		return (astexec_amper(at));
-	else if (!ft_strcmp(node->op, "|"))
-		return (astexec_pipe(at));
-	else if (!ft_strcmp(node->op, "&&") || !ft_strcmp(node->op, "||"))
-		return (astexec_andor(at));
-	return (expand_alias(at));
+	if (!str)
+		return (NULL);
+	node = token_new(NULL);
+	node->content = ft_strdup(str);
+	if (expand_words(&node))
+	{
+		free_ast(node);
+		return (NULL);
+	}
+	ret = ast_fields_to_str(' ', node);
+	free_ast(node);
+	return (ret);
 }

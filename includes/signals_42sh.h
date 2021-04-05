@@ -6,7 +6,7 @@
 /*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 15:30:38 by lgaveria          #+#    #+#             */
-/*   Updated: 2021/04/05 23:26:16 by lgaveria         ###   ########.fr       */
+/*   Updated: 2021/04/05 23:39:13 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 # define SIGNALS_42SH_H
 
 # include "header_42sh.h"
-
-int submain(int argc, char **argv, char **envp);
 
 void	ft_sighandler_ctrl_c(int signum);
 void	ft_sighandler_ctrl_z_return(int signum);

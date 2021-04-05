@@ -1,54 +1,59 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen_unquoted.c                               :+:      :+:    :+:   */
+/*   bashvar.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/13 17:09:06 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2019/02/23 11:34:08 by jmbomeyo         ###   ########.fr       */
+/*   Created: 2019/02/20 12:16:49 by jmbomeyo          #+#    #+#             */
+/*   Updated: 2020/10/01 18:16:10 by jmbomeyo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header_42sh.h"
 
-size_t	ft_strclen_unquoted(char *s, char chr, char *quotes)
+size_t	bashvar_len(char *str)
+{
+	size_t	len;
+
+	if (!str)
+		return (0);
+	if (ft_strchr("#?", *str))
+		return (1);
+	if (*str == '{')
+		return (ft_strclen(str, '}'));
+	len = 0;
+	while (ft_isdigit(str[len]))
+		len++;
+	while (!ft_isdigit(*str) && (str[len] == '_' || ft_isalnum(str[len])))
+		len++;
+	return (len);
+}
+
+size_t	bashvar_len_until_next_var(char *s)
 {
 	size_t	len;
 	size_t	i;
 	size_t	quote_len;
+	int		inside_doubles;
 
-	if (!s)
-		return (0);
 	len = ft_strlen(s);
 	i = 0;
+	inside_doubles = 0;
 	while (i < len)
 	{
-		if (s[i] == chr)
+		if (s[i] == '"')
+			inside_doubles = 1 - inside_doubles;
+		if (s[i] == '$')
 			return (i + 1);
-		quote_len = quotationlen(s + i, quotes);
+		if (inside_doubles)
+			quote_len = quotationlen(s + i, "\\");
+		else
+			quote_len = quotationlen(s + i, "\\'");
 		if (quote_len)
 			i += quote_len;
 		else
 			i++;
 	}
 	return (0);
-}
-
-size_t	ft_stralen_unquoted(char *s, char *chars)
-{
-	size_t	len;
-	size_t	tmp;
-
-	if (!chars)
-		return (0);
-	len = 0;
-	while (*chars)
-	{
-		tmp = ft_strclen_unquoted(s, *chars, "\\'\"");
-		if (tmp && (tmp < len || !len))
-			len = tmp;
-		chars++;
-	}
-	return (len);
 }

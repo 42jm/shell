@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 06:31:50 by quegonza          #+#    #+#             */
-/*   Updated: 2021/03/12 10:59:47 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/03/26 18:44:37 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ int 	ft_start_up(void)
 	g_info.s_termios.c_lflag &= ~ (ECHO);
 	if (!ft_get_cap(&(g_info.cap)))
 		return (ft_error("ft_get_cap(): terminal capability missing\n", 0));
+	g_alias = NULL;
 	if (!ft_history_init())
 		return (0);
 	return (1);

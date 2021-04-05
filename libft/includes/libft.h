@@ -6,7 +6,7 @@
 /*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 16:12:25 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2019/11/01 17:53:27 by jmbomeyo         ###   ########.fr       */
+/*   Updated: 2021/03/29 20:22:48 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ char			*ft_strjoin_arr(char **arr, size_t n, char sep);
 char			*ft_strtrim(char const *s);
 char			**ft_strcsplit(char const *s, char c);
 char			**ft_strnsplit(char const *s, size_t n);
+char			**ft_strsplit(char const *s, char c);
 char			**ft_strstrsplit(char *s, char *delim);
 char			*ft_itoa(int n);
 char			*ft_itoa_base(int n, int base);

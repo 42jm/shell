@@ -15,11 +15,12 @@
 int	builtin_setenv(int argc, char **argv)
 {
 	if (argc > 3)
-		return (put_error("Too many arguments", *argv));
-	if (argc > 1)
-		return (env_set(argv[1], argv[2], 1));
-	env_put(1);
-	return (0);
+		return (ft_putusage(*argv, "name value"));
+	if (argc == 1)
+		return (env_put(1));
+	if (ft_strchr(argv[1], '='))
+		return (ft_putusage(*argv, "name value"));
+	return (env_set(argv[1], argv[2], 1));
 }
 
 int	builtin_unsetenv(int argc, char **argv)

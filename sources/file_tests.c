@@ -17,27 +17,36 @@ int	test_file_validity(char *path)
 	struct stat	statbuf;
 
 	if (access(path, X_OK))
-		return (put_error_ret("File is not executable", path, 1));
+		return (put_error_ret("File is not executable", path, 2));
 	if (stat(path, &statbuf))
-		return (put_error_ret("Could not get file status", path, 2));
+		return (put_error_ret("Could not get file status", path, 3));
 	if ((statbuf.st_mode & S_IFMT) != S_IFREG)
-		return (put_error_ret("File is not regular", path, 3));
+		return (put_error_ret("File is not regular", path, 4));
+	return (0);
+}
+
+int	test_empty_path(char *command, char **apath)
+{
+	if (access(command, F_OK))
+		return (put_error_ret("File does not exist", command, 1));
+	if (test_file_validity(command))
+		return (2);
+	*apath = ft_strdup(command);
 	return (0);
 }
 
 int	test_file_existance(char *command, char **envp, char **apath)
 {
 	char	**paths;
-	char	*tmp;
 	int		i;
 
+	if (!ft_strcmp(*envp, "PATH="))
+		return (test_empty_path(command, apath));
 	paths = ft_strcsplit(*envp + 5, ':');
-	i = 0;
-	while (paths[i])
+	i = -1;
+	while (paths[++i])
 	{
-		tmp = ft_strjoin(paths[i], "/");
-		*apath = ft_strjoin(tmp, command);
-		free(tmp);
+		*apath = ft_strcjoin('/', paths[i], command);
 		if (!access(*apath, F_OK))
 		{
 			free_strarr_all(paths);
@@ -47,7 +56,6 @@ int	test_file_existance(char *command, char **envp, char **apath)
 			return (3);
 		}
 		free(*apath);
-		i++;
 	}
 	free_strarr_all(paths);
 	return (put_error_ret("Command not found", command, 4));

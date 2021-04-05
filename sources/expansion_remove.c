@@ -32,7 +32,49 @@ int	remove_empty_field(t_astnode *prev, t_astnode **anode, t_astnode **ahead)
 	return (1);
 }
 
-static char	*remove_quotes_non_recursive(char *ptr, char *quotes)
+static int	exprm_should_drop_first_quote(char *str, int inside_doubles)
+{
+	if (!str || !*str)
+		return (0);
+	if (*str != '\\')
+		return (1);
+	if (!inside_doubles)
+		return (1);
+	if (str[1] && ft_strchr("$`\\\"\n", str[1]))
+		return (1);
+	return (0);
+}
+
+char	*remove_quotes_non_recursive(char *ptr, char *quotes, int indoubles);
+
+static void	remquote_replace(char **astr, size_t i, size_t *alen)
+{
+	char	*str;
+	size_t	len;
+	char	*tmp;
+	char	*tmp2;
+
+	len = *alen;
+	str = *astr;
+	if (str[i] != '"')
+	{
+		ft_strdrop_inplace(astr, i + len - 1, i + len);
+		*alen -= 2;
+		return ;
+	}
+	str[i + len - 1] = '\0';
+	tmp = remove_quotes_non_recursive(str + i, "\\", 1);
+	str[i + len - 1] = '"';
+	tmp2 = str;
+	str = ft_strreplace(str, tmp, i, i + len);
+	len = ft_strlen(tmp) - 1;
+	free(tmp);
+	free(tmp2);
+	*alen = len;
+	*astr = str;
+}
+
+char	*remove_quotes_non_recursive(char *ptr, char *quotes, int indoubles)
 {
 	size_t	i;
 	size_t	len;
@@ -40,8 +82,7 @@ static char	*remove_quotes_non_recursive(char *ptr, char *quotes)
 
 	i = 0;
 	str = ft_strdup(ptr);
-	if (str)
-		len = ft_stralen_unquoted(str, quotes);
+	len = ft_stralen_unquoted(str, quotes);
 	while (str && len)
 	{
 		i += len - 1;
@@ -51,10 +92,10 @@ static char	*remove_quotes_non_recursive(char *ptr, char *quotes)
 			len = quotationlen(str + i, quotes);
 			if (!len && ++i)
 				continue ;
-			ft_strdrop_inplace(&str, i + len - 1, i + len);
-			len -= 2;
+			remquote_replace(&str, i, &len);
 		}
-		ft_strdrop_inplace(&str, i, i + 1);
+		if (exprm_should_drop_first_quote(str + i, indoubles))
+			ft_strdrop_inplace(&str, i, i + 1);
 		i += len;
 		len = ft_stralen_unquoted(str + i, quotes);
 	}
@@ -63,17 +104,5 @@ static char	*remove_quotes_non_recursive(char *ptr, char *quotes)
 
 char	*remove_quotes(char *ptr)
 {
-	char	*str;
-	char	*tmp;
-
-	str = remove_quotes_non_recursive(ptr, "\"'\\");
-	if (!str)
-		return (NULL);
-	if (*ptr == '"')
-	{
-		tmp = str;
-		str = remove_quotes_non_recursive(str, "\\");
-		free(tmp);
-	}
-	return (str);
+	return (remove_quotes_non_recursive(ptr, "\"'\\", 0));
 }

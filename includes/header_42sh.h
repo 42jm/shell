@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   header_42sh.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/30 15:39:13 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2021/01/28 22:17:50 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/04/05 23:42:14 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,21 @@
 extern char				**g_lines;
 extern t_list			*g_envlst;
 
-typedef struct s_astnode
+typedef struct	s_astnode
 {
 	char				*op;
 	void				*content;
 	struct s_astnode	*next;
-}						t_astnode;
+}				t_astnode;
 
-typedef struct s_envvar
+typedef struct	s_envvar
 {
+	bool				local;
+	bool				envir;
 	bool				exportable;
 	char				*name;
 	char				*value;
-}						t_envvar;
+}				t_envvar;
 
 void			sighandle_int(int signum);
 void			sighandle_tstp(int signum);
@@ -55,6 +57,9 @@ int				read_userinput(char ***input);
 int				format_input(char *in, char ***input);
 char			*read_all(int fd);
 size_t			bashvar_len(char *str);
+size_t			bashvar_len_until_next_var(char *str);
+char			*expand_str(char *str);
+int				expand_alias(t_astnode **at);
 int				expand_tilde(t_astnode *node);
 int				expand_param(t_astnode *node);
 int				expand_words(t_astnode **ahead);
@@ -112,7 +117,7 @@ t_envvar		*env_getvar(char *varname);
 char			*env_getvalue(char *varname);
 int				env_init(int argc, char **argv, char **envp);
 t_list			*env_new(char *name, char *value, bool exportable);
-int				env_set(char *varname, char *valnew, bool exportable);
+int				env_set(char *varname, char *valnew, int exportable);
 int				env_unset(char *varname);
 int				env_put(bool exportonly);
 int				envput_export(void);
@@ -122,6 +127,8 @@ t_list			*env_strarr_to_struct(char **envp);
 char			**env_struct_to_strarr(t_list *entry);
 int				env_lastret_set(int val);
 
+int				builtin_alias(int argc, char **argv);
+int				builtin_unalias(int argc, char **argv);
 int				builtin_cd(int argc, char **argv);
 int				builtin_echo(int argc, char **argv);
 int				builtin_exit(int argc, char **argv);
@@ -129,8 +136,10 @@ int				builtin_set(int argc, char **argv);
 int				builtin_unset(int argc, char **argv);
 int				builtin_export(int argc, char **argv);
 int				builtin_env(int argc, char **argv);
+int				builtin_pwd(int argc, char **argv);
 int				builtin_setenv(int argc, char **argv);
 int				builtin_unsetenv(int argc, char **argv);
+int				builtin_type(int argc, char **argv);
 
 int				sh_neg(int nb);
 char			*sig_int2str(int sig);

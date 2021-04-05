@@ -6,7 +6,7 @@
 /*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 15:21:52 by lgaveria          #+#    #+#             */
-/*   Updated: 2021/04/05 23:13:12 by lgaveria         ###   ########.fr       */
+/*   Updated: 2021/04/05 23:34:38 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	dfl_signals_for_sub_process(void)
 {
-	struct sigaction action;
-	int core_signals[10];
-	int	term_signals[9];
-	int ignored_signals[7];
+	struct sigaction	action;
+	int					core_signals[10];
+	int					term_signals[9];
+	int					ignored_signals[7];
 
 	get_core_signals(core_signals);
 	get_term_signals(term_signals);

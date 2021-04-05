@@ -6,7 +6,7 @@
 /*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 02:00:55 by quegonza          #+#    #+#             */
-/*   Updated: 2021/04/05 22:37:40 by lgaveria         ###   ########.fr       */
+/*   Updated: 2021/04/05 23:45:45 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*ft_current_char(char *buf, int *len)
 	return (buf);
 }
 
-int 	ft_key_interaction(void)
+int		ft_key_interaction(void)
 {
 	char	chr[16];
 	int		len;
@@ -43,7 +43,7 @@ int 	ft_key_interaction(void)
 	return (1);
 }
 
-int 	ft_new_input(void)
+int		ft_new_input(void)
 {
 	if (tcsetattr(0, 0, &(g_info.s_termios)) == -1)
 		return (0);
@@ -95,6 +95,7 @@ void	ft_end_clean(char *end_message)
 		free(g_info.copy);
 	if (g_info.temp)
 		free(g_info.temp);
+	ft_free_alias();
 	close(g_info.fd[0]);
 	close(g_info.fd[1]);
 	if (end_message)

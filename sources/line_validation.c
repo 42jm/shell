@@ -6,7 +6,7 @@
 /*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 05:44:26 by quegonza          #+#    #+#             */
-/*   Updated: 2021/04/05 22:46:06 by lgaveria         ###   ########.fr       */
+/*   Updated: 2021/04/05 23:32:01 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,43 +55,69 @@ int 	ft_valid_hdoc(int i)
 	return (0);
 }
 
-int 	ft_valid_quotes(void)
+size_t	ft_quotationlen(char *s, char *quotes)
 {
-	int		i;
-	int		len;
-	char	chr;
+	size_t	len;
+	char	quote;
 
-	i = 0;
-	while (g_info.line[i])
+	if (!s)
+		return (0);
+	quote = *s;
+	if (!ft_strchr(quotes, quote))
+		return (0);
+	if (quote == '\\')
+		return (2);
+	len = 1;
+	while (s[len])
 	{
-		chr = g_info.line[i];
-		if ((chr == '\'' || chr == '\"') && !g_info.eof)
-		{
-			len = quotationlen(&(g_info.line[i]), "\\'\"");
-			if (!len || len == 1 || g_info.line[i + len - 1] != chr)
-				return (0);
-			i += len;
-		}
-		else if (g_info.line[i] == '<' && g_info.line[i + 1] == '<')
-		{
-			i += 2;
-			if (!ft_valid_hdoc(i))
-				return (0);
-		}
+		if (quote == '"' && s[len] == '\\' && s[len + 1])
+			len += 2;
+		else if (s[len] == quote)
+			return (len + 1);
 		else
-			i++;
+			len++;
 	}
+	return (0);
+}
+
+int 	ft_quote_hdoc(char chr, int *i)
+{
+	int		len;
+
+	if ((chr == '\'' || chr == '\"') && !(g_info.eof))
+	{
+		len = ft_quotationlen(&(g_info.line[*i]), "\\'\"");
+		if (!len || len == 1 || g_info.line[*i + len - 1] != chr)
+			return (0);
+		*i += len;
+	}
+	else if (g_info.line[*i] == '<' && g_info.line[*i + 1] == '<')
+	{
+		*i += 2;
+		if (!ft_valid_hdoc(*i))
+			return (0);
+	}
+	else
+		*i += 1;
 	return (1);
 }
 
 int 	ft_line_validation(void)
 {
+	int		i;
+
 	if (g_info.exit)
 		return (1);
 	if (g_info.strlen && g_info.line[g_info.strlen - 1] == '\n')
 	{
-		if (!ft_valid_quotes())
-			return (0);
+		i = 0;
+		while (g_info.line[i])
+		{
+			if (g_info.line[i] == '\\' && g_info.line[i + 1])
+				i += 2;
+			else if (!ft_quote_hdoc(g_info.line[i], &i))
+				return (0);
+		}
 		g_info.line[g_info.strlen - 1] = '\0';
 		return (1);
 	}

@@ -6,7 +6,7 @@
 /*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 15:33:47 by lgaveria          #+#    #+#             */
-/*   Updated: 2021/04/05 18:53:04 by lgaveria         ###   ########.fr       */
+/*   Updated: 2021/04/05 23:34:50 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	get_ignored_signals(int *ignored_signals)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	ignored_signals[i++] = SIGQUIT;
 	ignored_signals[i++] = SIGTERM;

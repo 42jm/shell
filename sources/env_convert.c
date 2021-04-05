@@ -60,7 +60,7 @@ char	**env_struct_to_strarr(t_list *entry)
 	while (i < len && entry)
 	{
 		var = entry->content;
-		if (var->exportable)
+		if (var->envir && var->exportable)
 			envp[i++] = ft_strcjoin('=', var->name, var->value);
 		entry = entry->next;
 	}
@@ -86,6 +86,8 @@ int	env_init(int argc, char **argv, char **envp)
 		else
 			ret = builtin_set(argc, argv);
 	}
+	if (!ret && !env_getentry("PATH"))
+		ret = env_set("PATH", "/bin:/usr/bin", 1);
 	if (ret > 0)
 		return (-ret - 1);
 	return (ret);

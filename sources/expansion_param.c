@@ -12,24 +12,6 @@
 
 #include "header_42sh.h"
 
-size_t	bashvar_len(char *str)
-{
-	size_t	len;
-
-	if (!str)
-		return (0);
-	if (ft_strchr("#?", *str))
-		return (1);
-	if (*str == '{')
-		return (ft_strclen(str, '}'));
-	len = 0;
-	while (ft_isdigit(str[len]))
-		len++;
-	while (!ft_isdigit(*str) && (str[len] == '_' || ft_isalnum(str[len])))
-		len++;
-	return (len);
-}
-
 static char	*param_getvalue(char *str, size_t len)
 {
 	char	*name;
@@ -115,7 +97,7 @@ int	expand_param(t_astnode *node)
 	if (!node->content)
 		return (0);
 	arg = node->content;
-	var_i = ft_strclen_unquoted(arg, '$', "\\'");
+	var_i = bashvar_len_until_next_var(arg);
 	while (var_i)
 	{
 		var_i--;
@@ -125,7 +107,7 @@ int	expand_param(t_astnode *node)
 			ret = expand_variable(&arg, &var_i);
 		if (ret)
 			return (ret);
-		tmp = ft_strclen_unquoted(arg + var_i, '$', "\\'");
+		tmp = bashvar_len_until_next_var(arg + var_i);
 		if (!tmp)
 			break ;
 		var_i += tmp;

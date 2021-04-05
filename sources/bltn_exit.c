@@ -29,31 +29,43 @@ static t_job	*bltn_exit_get_first_stopped_job(void)
 	return (NULL);
 }
 
-int	builtin_exit(int argc, char **argv)
+static int	bltn_exit_kill_stopped_jobs(void)
 {
-	int		ret;
 	t_job	*stopped_job;
 
-	pr_putstr_fd("exit\n", 2);
-	if (argc > 2)
-		put_error("Too many arguments", *argv);
-	ret = -1;
-	if (argc == 2 && ft_isdigit((int)argv[1][0]))
-		ret = -1 * (ft_atoi(argv[1]) + 1);
-	else if (argc == 2)
-		return (put_error_ret("Numeric argument required", argv[1], 2));
 	stopped_job = bltn_exit_get_first_stopped_job();
-	if (stopped_job && !g_shell->exit_warning)
+	if (!stopped_job)
+		return (0);
+	if (!g_shell->exit_warning)
 	{
 		g_shell->exit_warning = 2;
-		return (put_error_ret("There are stopped jobs", argv[1], 3));
+		return (put_error_ret("There are stopped jobs", "exit", 3));
 	}
 	while (stopped_job)
 	{
-		ret = -149;
 		kill(-stopped_job->pgid, SIGKILL);
 		job_cleanup(stopped_job->nbr);
 		stopped_job = bltn_exit_get_first_stopped_job();
 	}
-	return (ret);
+	exit(148);
+	return (-149);
+}
+
+int	builtin_exit(int argc, char **argv)
+{
+	int		ret;
+
+	if (g_shell->is_interactive)
+		pr_putstr_fd("exit\n", 2);
+	if (argc > 2)
+		return (put_error("Too many arguments", *argv));
+	ret = ft_atoi(env_getvalue("?"));
+	if (argc == 2 && ft_isdigit((int)argv[1][0]))
+		ret = ft_atoi(argv[1]);
+	else if (argc == 2)
+		ret = put_error_ret("Numeric argument required", argv[1], 2);
+	if (bltn_exit_kill_stopped_jobs())
+		return (3);
+	exit(ret);
+	return (-1 - ret);
 }

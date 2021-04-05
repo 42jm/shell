@@ -6,7 +6,7 @@
 /*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 12:16:49 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2020/10/15 13:32:30 by jmbomeyo         ###   ########.fr       */
+/*   Updated: 2021/04/03 03:39:01 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,11 @@ int	execute_builtin(char **bltn_names, char **args)
 	int	id;
 
 	static int (*bltn_funcs[])(int, char **) = {
+builtin_alias, builtin_unalias, builtin_pwd, \
 builtin_echo, builtin_exit, builtin_cd, \
 builtin_set, builtin_unset, builtin_export, \
 builtin_setenv, builtin_unsetenv, builtin_env, \
-builtin_jobs, builtin_fg, builtin_bg};
+builtin_jobs, builtin_fg, builtin_bg, builtin_type};
 	argc = ft_strlen_arr((const char **)args);
 	id = ft_arrstr_id(bltn_names, *args);
 	if (id < 0)
@@ -93,10 +94,11 @@ int	execute_command(char **args)
 int	execute(char **args)
 {
 	static char	*bltn_names[] = {
+		"alias", "unalias", "pwd", \
 		"echo", "exit", "cd", \
 		"set", "unset", "export", \
 		"setenv", "unsetenv", "env", \
-		"jobs", "fg", "bg", NULL};
+		"jobs", "fg", "bg", "type", NULL};
 
 	if (args == NULL)
 		return (put_error("no arguments", "execute"));
