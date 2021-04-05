@@ -59,6 +59,7 @@ char			*read_all(int fd);
 size_t			bashvar_len(char *str);
 size_t			bashvar_len_until_next_var(char *str);
 char			*expand_str(char *str);
+int				expand_alias(t_astnode **at);
 int				expand_tilde(t_astnode *node);
 int				expand_param(t_astnode *node);
 int				expand_words(t_astnode **ahead);

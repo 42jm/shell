@@ -33,6 +33,8 @@ char	*ft_get_alias(char *name)
 {
 	t_alias	*i;
 
+	if (!name)
+		return (NULL);
 	i = g_alias;
 	while (i)
 	{

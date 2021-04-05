@@ -146,4 +146,6 @@ char				*ft_addchar(char *line, char *chr);
 void				ft_putchar_spe(char *c);
 void				chk21(void);
 
+char				*ft_get_alias(char *name);
+
 #endif
