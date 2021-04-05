@@ -6,7 +6,7 @@
 /*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 02:00:55 by quegonza          #+#    #+#             */
-/*   Updated: 2021/04/05 18:06:46 by lgaveria         ###   ########.fr       */
+/*   Updated: 2021/04/05 22:37:40 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ char	*ft_get_user_input(void)
 			return (NULL);
 		}
 	}
+	g_info.sigcont = 0;
 	g_info.hist = ft_history_new();
 	if (!(g_info.hist))
 	{

@@ -6,7 +6,7 @@
 /*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 17:53:38 by lgaveria          #+#    #+#             */
-/*   Updated: 2021/04/05 17:36:57 by lgaveria         ###   ########.fr       */
+/*   Updated: 2021/04/05 23:07:16 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	set_up_shell_signals(void)
 {
 	struct sigaction	action;
 
-	action.sa_flags = 0;
+	action.sa_flags = SA_RESTART;
 	sigfillset(&(action.sa_mask));
 	set_up_dfl_signals(action);
 	set_up_ign_signals(action);

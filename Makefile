@@ -95,7 +95,7 @@ SRC_NAME = main.c \
 	sig_get_core_signals.c \
 	sig_get_ignored_signals.c \
 	sig_get_term_signals.c \
-	sig_ignore_signals_during_command_execution.c \
+	sig_dfl_signals_for_sub_process.c \
 	sig_set_up_action_for_given_signals.c \
 	sig_set_up_shell_signals.c
 

@@ -6,7 +6,7 @@
 /*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 03:16:03 by quegonza          #+#    #+#             */
-/*   Updated: 2021/04/05 17:04:02 by lgaveria         ###   ########.fr       */
+/*   Updated: 2021/04/05 21:36:52 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_curs
 	int				prompt;
 	int				eof;
 	int				hist_pos;
+	int				sigcont;
 	char			**hist;
 	char			*line;
 	char			*temp;

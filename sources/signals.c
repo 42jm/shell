@@ -6,7 +6,7 @@
 /*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 12:16:49 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2021/04/02 20:21:34 by lgaveria         ###   ########.fr       */
+/*   Updated: 2021/04/05 23:15:49 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,6 @@ void	sighandle_tstp(int signum)
 void	sighandle_int(int signum)
 {
 	(void)signum;
-	ft_putstr("LA \n");
+	ft_putchar('\n');
 	env_set("?", "130", 0);
 }
