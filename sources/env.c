@@ -47,6 +47,7 @@ int	env_set(char *varname, char *valnew, int exportable)
 	var = (t_envvar *)malloc(sizeof(*var));
 	if (!entry || !var)
 		return (put_error("malloc failed", "env_set"));
+	var->envir = 1;
 	if (exportable < -1 || 0 < exportable)
 		var->exportable = 1;
 	else

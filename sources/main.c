@@ -15,7 +15,7 @@
 #include "jobs_42sh.h"
 
 char		**g_lines = NULL;
-t_list		*g_envlst;
+t_list		*g_envlst = NULL;
 t_curs		g_info;
 t_shell		*g_shell = NULL;
 t_alias		*g_alias = NULL;
@@ -29,7 +29,11 @@ int	execute_firstline(char ***alines)
 	tmp = g_lines;
 	g_lines = *alines;
 	astroot = NULL;
-	ret = ast_lexer(*g_lines, &astroot);
+	ret = 0;
+	if (!*g_lines)
+		ret = 1;
+	if (!ret)
+		ret = ast_lexer(*g_lines, &astroot);
 	g_lines++;
 	if (!ret)
 		ret = ast_parser(&astroot);
