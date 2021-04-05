@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quegonza.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 03:16:03 by quegonza          #+#    #+#             */
-/*   Updated: 2021/03/12 16:07:32 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/04/05 17:04:02 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ char				**ft_history_init(void);
 char				**ft_history_new(void);
 void				ft_input_init(void);
 char				*ft_insert_char(char *line, char chr);
-void				ft_ignore_allsig(void);
 int					ft_isoneof_chr(char chr, char *chrs);
 int					ft_line_validation(void);
 void				ft_move_cursor(char side, int nb);

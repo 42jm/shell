@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   jobs_42sh.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/30 15:39:13 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2021/01/28 22:17:50 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/04/05 17:05:46 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define JOBS_42SH_H
 
 # include "header_42sh.h"
+# include "signals_42sh.h"
 # include <termios.h>
 
 /*

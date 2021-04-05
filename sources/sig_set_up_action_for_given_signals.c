@@ -1,38 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   set_up_action_for_given_signals.c                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/20 12:16:49 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2021/04/02 20:21:34 by lgaveria         ###   ########.fr       */
+/*   Created: 2021/04/02 18:01:54 by lgaveria          #+#    #+#             */
+/*   Updated: 2021/04/02 18:02:08 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header_42sh.h"
-#include "jobs_42sh.h"
+#include "signals_42sh.h"
 
-void	sighandle_chld(int signum)
+void set_up_action_for_given_signals(int *signals, struct sigaction *action)
 {
-	(void)signum;
-	job_update_status(NULL);
-}
+	int	i;
 
-void	sighandle_tstp(int signum)
-{
-	(void)signum;
-	ft_putchar('\n');
-	env_set("?", "148", 0);
-}
-
-/*
-** NOTE: called when using ^C during a command execution
-*/
-
-void	sighandle_int(int signum)
-{
-	(void)signum;
-	ft_putstr("LA \n");
-	env_set("?", "130", 0);
+	i = 0 ;
+	while (signals[i])
+	{
+		sigaction(signals[i], action, NULL);
+		i++;
+	}
 }

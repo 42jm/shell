@@ -91,7 +91,13 @@ SRC_NAME = main.c \
 	job_update.c \
 	job_blueprint.c \
 	job_free.c \
-	job_puts.c
+	job_puts.c \
+	sig_get_core_signals.c \
+	sig_get_ignored_signals.c \
+	sig_get_term_signals.c \
+	sig_ignore_signals_during_command_execution.c \
+	sig_set_up_action_for_given_signals.c \
+	sig_set_up_shell_signals.c
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_NAME))
 OBJ = $(addprefix $(OBJ_DIR), $(SRC_NAME:.c=.o))
@@ -101,7 +107,7 @@ OBJ = $(addprefix $(OBJ_DIR), $(SRC_NAME:.c=.o))
 
 all: $(NAME)
 
-$(NAME): Makefile libft/libft.a $(OBJ) includes/quegonza.h includes/header_42sh.h
+$(NAME): Makefile libft/libft.a $(OBJ) includes/quegonza.h includes/header_42sh.h includes/signals_42sh.h
 	@printf "\n$(WAIT_COLOR)$(NAME): linking\$(NO_COLOR)\n"
 	@clang $(FLAGS) -o $(NAME) $(OBJ) $(INC) $(LIB)
 	@echo "$(OK_COLOR)	+++ " $@ "   created +++	$(NO_COLOR)"

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   job_launch.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 12:16:49 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2019/10/05 19:06:07 by jmbomeyo         ###   ########.fr       */
+/*   Updated: 2021/04/02 20:26:56 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ int	job_init_process(t_job *job)
 		return (put_error("setpgid failed", "job_init_process"));
 	if (job->foreground && tcsetpgrp(g_shell->terminal, job->pgid) < 0)
 		return (put_error("tcsetpgrp failed", "job_init_process"));
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
-	signal(SIGTSTP, SIG_DFL);
-	signal(SIGTTIN, SIG_DFL);
-	signal(SIGTTOU, SIG_DFL);
-	signal(SIGCHLD, SIG_DFL);
-	signal(SIGCONT, SIG_DFL);
+	//signal(SIGINT, SIG_DFL);
+	//signal(SIGQUIT, SIG_DFL);
+	//signal(SIGTSTP, SIG_DFL);
+	//signal(SIGTTIN, SIG_DFL);
+	//signal(SIGTTOU, SIG_DFL);
+	//signal(SIGCHLD, SIG_DFL);
+	//signal(SIGCONT, SIG_DFL);
 	return (0);
 }
 

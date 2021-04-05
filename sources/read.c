@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 12:16:49 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2021/02/14 15:52:14 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/04/05 17:00:05 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ int	read_userinput(char ***ainput)
 			return (-1);
 		}
 	}
-	signal(SIGINT, sighandle_int);
 	if (!buf)
 		return (put_error_ret("failed read", "read_userinput", -1));
 	ret = format_input(buf, ainput);

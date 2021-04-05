@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_user_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 02:00:55 by quegonza          #+#    #+#             */
-/*   Updated: 2021/03/12 16:11:52 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/04/05 17:03:25 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,6 @@ int 	ft_new_input(void)
 	g_info.line = ft_memalloc(1);
 	if (!(g_info.line))
 		return (0);
-	signal(SIGWINCH, ft_sighandler_winsize_change);
-	signal(SIGINT, ft_sighandler_ctrl_c);
-	signal(SIGCONT, ft_sighandler_ctrl_z_return);
 	g_info.exit = 0;
 	if (!ft_stdin_init())
 		return (0);

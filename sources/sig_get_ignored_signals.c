@@ -1,38 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   sig_get_ignored_signals.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/20 12:16:49 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2021/04/02 20:21:34 by lgaveria         ###   ########.fr       */
+/*   Created: 2021/04/02 15:33:47 by lgaveria          #+#    #+#             */
+/*   Updated: 2021/04/02 18:45:04 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header_42sh.h"
-#include "jobs_42sh.h"
+#include "signals_42sh.h"
 
-void	sighandle_chld(int signum)
+void	get_ignored_signals(int *ignored_signals)
 {
-	(void)signum;
-	job_update_status(NULL);
-}
-
-void	sighandle_tstp(int signum)
-{
-	(void)signum;
-	ft_putchar('\n');
-	env_set("?", "148", 0);
-}
-
-/*
-** NOTE: called when using ^C during a command execution
-*/
-
-void	sighandle_int(int signum)
-{
-	(void)signum;
-	ft_putstr("LA \n");
-	env_set("?", "130", 0);
+	int i;
+	
+	i = 0;
+	ignored_signals[i++] = SIGQUIT;
+	ignored_signals[i++] = SIGTERM;
+	ignored_signals[i++] = SIGURG;
+	ignored_signals[i++] = SIGTSTP;
+	ignored_signals[i++] = SIGTTIN;
+	ignored_signals[i++] = SIGTTOU;
+	ignored_signals[i++] = 0;
 }

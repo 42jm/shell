@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 12:16:49 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2021/01/28 22:12:41 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/03/26 17:25:39 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ t_list		*g_envlst;
 t_curs		g_info;
 t_shell		*g_shell = NULL;
 
-int	execute_firstline(char ***alines)
+int execute_firstline(char ***alines)
 {
-	char		**tmp;
-	t_astnode	*astroot;
-	int			ret;
+	char **tmp;
+	t_astnode *astroot;
+	int ret;
 
 	tmp = g_lines;
 	g_lines = *alines;
@@ -43,9 +43,9 @@ int	execute_firstline(char ***alines)
 	return (ret);
 }
 
-int	execute_all_lines(char **aline)
+int execute_all_lines(char **aline)
 {
-	int	ret;
+	int ret;
 
 	ret = 0;
 	while (!ret && aline && *aline)
@@ -53,15 +53,15 @@ int	execute_all_lines(char **aline)
 		ret = execute_firstline(&aline);
 		if (aline && *aline)
 			aline++;
-		break ;
+		break;
 	}
 	return (ret);
 }
 
-int	prompt_loop(void)
+int prompt_loop(void)
 {
-	char	**input;
-	int		ret;
+	char **input;
+	int ret;
 
 	input = NULL;
 	ret = put_prompt(2);
@@ -79,9 +79,9 @@ int	prompt_loop(void)
 	return (ret);
 }
 
-int	main(int argc, char **argv, char **envp)
+int main(int argc, char **argv, char **envp)
 {
-	int	ret;
+	int ret;
 
 	ret = job_init_shell();
 	if (ret)
