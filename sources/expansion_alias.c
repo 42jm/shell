@@ -31,6 +31,26 @@ int	alias_insert_node(t_astnode **node, char *str, t_astnode **at, t_astnode *p)
 	return (0);
 }
 
+static t_astnode	*get_command_name(t_astnode *node, t_astnode **prev)
+{
+	while (node)
+	{
+		if (!node->op && node->content && !ft_strchr(node->content, '='))
+			break ;
+		if (node->op && (ft_strchr(node->op, '<') || ft_strchr(node->op, '>')))
+		{
+			*prev = node;
+			node = node->next;
+		}
+		if (node)
+		{
+			*prev = node;
+			node = node->next;
+		}
+	}
+	return (node);
+}
+
 int	expand_alias(t_astnode **at)
 {
 	t_astnode	*node;
@@ -40,22 +60,18 @@ int	expand_alias(t_astnode **at)
 	int			ret;
 
 	prev = NULL;
-	node = *at;
-	while (node)
-	{
-		if (node->op)
-			break ;
-		alias = ft_get_alias(node->content);
-		if (!alias)
-			break ;
-		aliasnode = NULL;
-		ret = alias_insert_node(&aliasnode, alias, at, prev);
-		if (ret)
-			return (ret);
-		aliasnode->next = node->next;
-		free_node(node);
-		prev = aliasnode;
-		node = aliasnode->next;
-	}
+	node = get_command_name(*at, &prev);
+	if (!node || !node->content)
+		return (astexec_simplecmd(at));
+	alias = ft_get_alias(node->content);
+	if (!alias)
+		return (astexec_simplecmd(at));
+	aliasnode = NULL;
+	ret = alias_insert_node(&aliasnode, alias, at, prev);
+	if (ret)
+		return (ret);
+	aliasnode->next = node->next;
+	free_node(node);
+	node = aliasnode->next;
 	return (astexec_simplecmd(at));
 }
