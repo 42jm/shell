@@ -6,12 +6,53 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 16:48:15 by quegonza          #+#    #+#             */
-/*   Updated: 2021/04/03 03:57:47 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/04/05 20:43:42 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "quegonza.h"
 #include "header_42sh.h"
+
+t_list	*ft_ifalias(char *name)
+{
+	int		len;
+	t_alias	*i;
+	t_list	*res;
+
+	len = ft_strlen(name);
+	res = NULL;
+	if (!name)
+		return (NULL);
+	i = g_alias;
+	while (i)
+	{
+		if (ft_strnequ(name, i->name, len))
+		{
+			ft_lstadd(&res, ft_lstnew(i->name, ft_strlen(i->name) + 1));
+		}
+		i = i->next;
+	}
+	return (res);
+}
+
+void	ifaliastest(char *name)
+{
+	t_list	*i;
+	t_list	*tmp;
+
+	i = ft_ifalias(name);
+	while (i)
+	{
+		tmp = i;
+		ft_putstr(i->content);
+		ft_putstr(" ");
+		ft_putnbr(i->content_size);
+		ft_putstr("\n");
+		i = i->next;
+		free(tmp->content);
+		free(tmp);
+	}
+}
 
 void	ft_putalias(t_alias *alias)
 {
@@ -102,6 +143,8 @@ int 	builtin_alias(int argc, char **argv)
 		return (1);
 	if (!ft_count_args(argc, argv))
 		ft_print_alias(NULL);
+	else if (!ft_strcmp(argv[1], "match") && argc > 2)
+		ifaliastest(argv[2]);
 	else
 	{
 		i = 0;

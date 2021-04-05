@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 03:16:03 by quegonza          #+#    #+#             */
-/*   Updated: 2021/04/03 19:12:36 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/04/05 20:50:09 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,15 +107,17 @@ int					ft_getcol_fromstr(int cursor);
 void				ft_history(char opt);
 char				**ft_history_init(void);
 char				**ft_history_new(void);
+t_list				*ft_ifalias(char *name);
+void				ft_ignore_allsig(void);
 void				ft_input_init(void);
 char				*ft_insert_char(char *line, char chr);
-void				ft_ignore_allsig(void);
 int					ft_isoneof_chr(char chr, char *chrs);
 int					ft_line_validation(void);
 void				ft_move_cursor(char side, int nb);
 void				ft_mv_left(void);
 void				ft_mv_right(void);
 char				*ft_path(char *path, char *name);
+void				ft_put2str_fd(char *cause, char *msg, int fd);
 int					ft_putc(int c);
 int					ft_reach_next_word(void);
 int					ft_reach_previous_word(void);
