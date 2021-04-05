@@ -41,8 +41,6 @@ static int	lexer_ignore(t_astnode **at, char *input, size_t *alen)
 		tmp = quotationlen(input + len, "\\'\"");
 		if (!tmp)
 			return (put_error("unfinished quote", "lexer_ignore"));
-		//if (input[len] != '\\' && tmp > 1)
-		//	tmp--;
 		len += tmp;
 	}
 	else if (ft_strchr("$`", input[len]))
