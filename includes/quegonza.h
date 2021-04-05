@@ -6,7 +6,7 @@
 /*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 03:16:03 by quegonza          #+#    #+#             */
-/*   Updated: 2021/04/05 21:36:52 by lgaveria         ###   ########.fr       */
+/*   Updated: 2021/04/05 23:26:11 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,6 @@ int					ft_putc(int c);
 int					ft_reach_next_word(void);
 int					ft_reach_previous_word(void);
 void				ft_scroll(int nb, char opt);
-void				ft_sighandler_winsize_change(int signum);
-void				ft_sighandler_ctrl_c(int signum);
-void				ft_sighandler_ctrl_z_return(int signum);
 char				*ft_size1_char(char *line, char *chr);
 char				*ft_size2_char(char *line, char *chr);
 void				ft_size3_char(char *chr);

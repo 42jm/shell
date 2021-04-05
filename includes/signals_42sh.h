@@ -6,7 +6,7 @@
 /*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 15:30:38 by lgaveria          #+#    #+#             */
-/*   Updated: 2021/04/05 23:10:48 by lgaveria         ###   ########.fr       */
+/*   Updated: 2021/04/05 23:26:16 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 
 int submain(int argc, char **argv, char **envp);
 
-void	sighandle_chld(int signum);
 void	ft_sighandler_ctrl_c(int signum);
 void	ft_sighandler_ctrl_z_return(int signum);
 void	ft_sighandler_winsize_change(int signum);

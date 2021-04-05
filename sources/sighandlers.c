@@ -6,7 +6,7 @@
 /*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 06:43:28 by quegonza          #+#    #+#             */
-/*   Updated: 2021/04/05 23:15:56 by lgaveria         ###   ########.fr       */
+/*   Updated: 2021/04/05 23:28:14 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,6 @@ void	ft_sighandler_winsize_change(int signum)
 	(void)signum;
 	ft_get_cursor_info();
 }
-
-/*
-** NOTE: called when using ^C in the prompt
-*/
 
 void	ft_sighandler_ctrl_c(int signum)
 {

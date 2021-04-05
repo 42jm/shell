@@ -6,11 +6,12 @@
 /*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 10:06:09 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2021/04/05 21:01:52 by lgaveria         ###   ########.fr       */
+/*   Updated: 2021/04/05 23:24:47 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "jobs_42sh.h"
+#include "signals_42sh.h"
 
 static int	jobinit_interactive(void)
 {
