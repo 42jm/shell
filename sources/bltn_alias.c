@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 16:48:15 by quegonza          #+#    #+#             */
-/*   Updated: 2021/04/06 14:31:43 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/04/06 16:13:02 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,6 @@ int 	builtin_alias(int argc, char **argv)
 		return (1);
 	if (!ft_count_args(argc, argv))
 		ft_print_alias(NULL);
-	else if (!ft_strcmp(argv[1], "match") && argc > 2)
-		ifaliastest(argv[2]);
 	else
 	{
 		i = 0;
