@@ -77,6 +77,7 @@ SRC_NAME = main.c \
 	history.c \
 	line_edition.c \
 	line_validation.c \
+	list_matching.c \
 	options.c \
 	prompt.c \
 	read.c \

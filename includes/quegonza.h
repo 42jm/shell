@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 03:16:03 by quegonza          #+#    #+#             */
-/*   Updated: 2021/04/05 20:50:09 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/04/06 14:04:11 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,8 @@ void				ft_history(char opt);
 char				**ft_history_init(void);
 char				**ft_history_new(void);
 t_list				*ft_ifalias(char *name);
+t_list				*ft_ifbin(char *name);
+t_list				*ft_ifbuiltin(char *name);
 void				ft_ignore_allsig(void);
 void				ft_input_init(void);
 char				*ft_insert_char(char *line, char chr);
