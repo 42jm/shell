@@ -15,16 +15,16 @@
 
 int	execute_builtin(char **bltn_names, char **args)
 {
-	int	argc;
-	int	ret;
-	int	id;
-
-	static int (*bltn_funcs[])(int, char **) = {
+	int			argc;
+	int			ret;
+	int			id;
+	static	int	(*bltn_funcs[])(int, char **) = {
 builtin_alias, builtin_unalias, builtin_pwd, \
 builtin_echo, builtin_exit, builtin_cd, \
 builtin_set, builtin_unset, builtin_export, \
 builtin_setenv, builtin_unsetenv, builtin_env, \
 builtin_jobs, builtin_fg, builtin_bg, builtin_type};
+
 	argc = ft_strlen_arr((const char **)args);
 	id = ft_arrstr_id(bltn_names, *args);
 	if (id < 0)

@@ -26,7 +26,7 @@ char	*ft_itoa_base(int value, int base)
 		value *= -1;
 	while (ft_pow(base, i) - 1 < value)
 		i++;
-	nbr = (char*)malloc(sizeof(nbr) * i);
+	nbr = (char *)malloc(sizeof(nbr) * i);
 	nbr[i + neg] = '\0';
 	while (i-- > 0)
 	{
