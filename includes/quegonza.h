@@ -6,7 +6,7 @@
 /*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 03:16:03 by quegonza          #+#    #+#             */
-/*   Updated: 2021/04/06 18:04:22 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/04/06 18:46:22 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define ESC	27
 # define DEL	127
 
-typedef struct	s_alias
+typedef struct s_alias
 {
 	char			*name;
 	char			*link;
@@ -40,7 +40,7 @@ typedef struct	s_alias
 
 extern t_alias	*g_alias;
 
-typedef struct	s_cap
+typedef struct s_cap
 {
 	char			*cd;
 	char			*ce;
@@ -48,7 +48,7 @@ typedef struct	s_cap
 	char			*dc;
 }				t_cap;
 
-typedef struct	s_curs
+typedef struct s_curs
 {
 	int				fd[2];
 	int				row;
@@ -143,14 +143,5 @@ char				*ft_suppr_char(char *line);
 int					ft_termcap_init(void);
 int					ft_valid_quotes(void);
 int					ft_valid_dir(char *path, char *arg);
-
-void			ft_print_t_curs(void);
-void			ft_usecap(char *cap);
-int				ft_termcap_test(void);
-char			*ft_addchar(char *line, char *chr);
-void			ft_putchar_spe(char *c);
-void			chk21(void);
-
-char			*ft_get_alias(char *name);
 
 #endif

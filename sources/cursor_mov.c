@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 03:53:16 by quegonza          #+#    #+#             */
-/*   Updated: 2021/03/02 00:00:55 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/04/06 18:40:22 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_mv_left(void)
 	if (g_info.crsr_col == 0)
 	{
 		if (g_info.line[g_info.strlen - g_info.cursor - 1] == '\n')
-			tputs(tgoto(g_info.cap.cm, ft_getcol_fromstr(g_info.strlen
+			tputs(tgoto(g_info.cap.cm, ft_getcol_fromstr(g_info.strlen \
 				- g_info.cursor - 1), g_info.crsr_row - 1), 1, ft_putc);
 		else if (g_info.crsr_row > 0)
 			tputs(tgoto(g_info.cap.cm, g_info.col - 1, g_info.crsr_row - 1),
