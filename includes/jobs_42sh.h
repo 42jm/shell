@@ -29,7 +29,7 @@
 **	nbr			indentifier used by builtins
 **	notified	variable checked to see if the job is in need of a notification
 */
-typedef struct	s_job
+typedef struct s_job
 {
 	pid_t			pgid;
 	struct termios	tmodes;
@@ -50,7 +50,7 @@ typedef struct	s_job
 **	is_interactive	isatty(STDIN_FILENO) at startup, set to 0 if subshell
 **	job_blueprint	created jobs live here during first execution
 */
-typedef struct	s_shell
+typedef struct s_shell
 {
 	pid_t			pgid;
 	t_list			*joblst;

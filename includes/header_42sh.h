@@ -24,14 +24,14 @@
 extern char				**g_lines;
 extern t_list			*g_envlst;
 
-typedef struct	s_astnode
+typedef struct s_astnode
 {
 	char				*op;
 	void				*content;
 	struct s_astnode	*next;
 }				t_astnode;
 
-typedef struct	s_envvar
+typedef struct s_envvar
 {
 	bool				local;
 	bool				envir;

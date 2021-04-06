@@ -35,7 +35,7 @@ static int	jobinit_interactive(void)
 	return (0);
 }
 
-int			job_init_shell(void)
+int	job_init_shell(void)
 {
 	g_shell = (t_shell *)malloc(sizeof(t_shell));
 	if (!g_shell)
