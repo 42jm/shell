@@ -6,7 +6,7 @@
 /*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 15:26:02 by lgaveria          #+#    #+#             */
-/*   Updated: 2021/04/02 18:44:22 by lgaveria         ###   ########.fr       */
+/*   Updated: 2021/04/06 19:10:23 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	get_core_signals(int *core_signals)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	core_signals[i++] = SIGILL;
