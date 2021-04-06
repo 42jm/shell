@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 12:16:49 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2021/02/14 15:52:14 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/04/05 23:51:02 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*read_all(int fd)
 	return (ret);
 }
 
-int	format_input(char *in, char ***ainput)
+int		format_input(char *in, char ***ainput)
 {
 	char	*buf;
 
@@ -62,7 +62,7 @@ int	format_input(char *in, char ***ainput)
 	return (0);
 }
 
-int	read_userinput(char ***ainput)
+int		read_userinput(char ***ainput)
 {
 	size_t	ret;
 	char	*buf;
@@ -78,7 +78,11 @@ int	read_userinput(char ***ainput)
 			return (-1);
 		}
 	}
-	signal(SIGINT, sighandle_int);
+	if (!buf && g_info.sigcont)
+	{
+		return (put_error_ret(" can't set terminal after suspension.",
+				NULL, -1));
+	}
 	if (!buf)
 		return (put_error_ret("failed read", "read_userinput", -1));
 	ret = format_input(buf, ainput);

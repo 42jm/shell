@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   size1_char_typing.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 00:50:07 by quegonza          #+#    #+#             */
-/*   Updated: 2021/03/02 00:01:05 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/04/05 22:51:09 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*ft_size1_char(char *line, char *chr)
 	char	c;
 
 	c = chr[0];
+	if (g_info.sigcont)
+		return (line);
 	if (c == '\n')
 		ft_ctrl_e();
 	if ((32 <= c && c < DEL) || c == '\n')
@@ -61,7 +63,7 @@ char	*ft_ctrl_d(char *line)
 	if (!(g_info.strlen))
 	{
 		g_info.exit = 1;
-		free(line);
+		ft_strdel(&line);
 		line = ft_strdup("exit");
 	}
 	else if (!(g_info.cursor) && g_info.line[g_info.strlen - 1] == '\n')

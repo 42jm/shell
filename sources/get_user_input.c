@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   get_user_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 02:00:55 by quegonza          #+#    #+#             */
-/*   Updated: 2021/03/30 19:24:18 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/04/05 23:45:45 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "quegonza.h"
+#include "signals_42sh.h"
 
 char	*ft_current_char(char *buf, int *len)
 {
@@ -22,7 +23,7 @@ char	*ft_current_char(char *buf, int *len)
 	return (buf);
 }
 
-int 	ft_key_interaction(void)
+int		ft_key_interaction(void)
 {
 	char	chr[16];
 	int		len;
@@ -42,7 +43,7 @@ int 	ft_key_interaction(void)
 	return (1);
 }
 
-int 	ft_new_input(void)
+int		ft_new_input(void)
 {
 	if (tcsetattr(0, 0, &(g_info.s_termios)) == -1)
 		return (0);
@@ -54,9 +55,6 @@ int 	ft_new_input(void)
 	g_info.line = ft_memalloc(1);
 	if (!(g_info.line))
 		return (0);
-	signal(SIGWINCH, ft_sighandler_winsize_change);
-	signal(SIGINT, ft_sighandler_ctrl_c);
-	signal(SIGCONT, ft_sighandler_ctrl_z_return);
 	g_info.exit = 0;
 	if (!ft_stdin_init())
 		return (0);
@@ -76,6 +74,7 @@ char	*ft_get_user_input(void)
 			return (NULL);
 		}
 	}
+	g_info.sigcont = 0;
 	g_info.hist = ft_history_new();
 	if (!(g_info.hist))
 	{

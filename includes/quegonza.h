@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quegonza.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 03:16:03 by quegonza          #+#    #+#             */
-/*   Updated: 2021/04/06 14:04:11 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/04/06 18:04:22 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,24 +31,24 @@
 # define ESC	27
 # define DEL	127
 
-typedef struct s_alias
+typedef struct	s_alias
 {
 	char			*name;
 	char			*link;
 	struct s_alias	*next;
-}					t_alias;
+}				t_alias;
 
-extern t_alias		*g_alias;
+extern t_alias	*g_alias;
 
-typedef struct s_cap
+typedef struct	s_cap
 {
 	char			*cd;
 	char			*ce;
 	char			*cm;
 	char			*dc;
-}					t_cap;
+}				t_cap;
 
-typedef struct s_curs
+typedef struct	s_curs
 {
 	int				fd[2];
 	int				row;
@@ -60,6 +60,7 @@ typedef struct s_curs
 	int				prompt;
 	int				eof;
 	int				hist_pos;
+	int				sigcont;
 	char			**hist;
 	char			*line;
 	char			*temp;
@@ -68,9 +69,9 @@ typedef struct s_curs
 	struct termios	s_termios;
 	struct termios	s_termios_backup;
 	t_cap			cap;
-}					t_curs;
+}				t_curs;
 
-extern t_curs		g_info;
+extern t_curs	g_info;
 
 char				*ft_bad_option(char *cmd_name, char option, char *message);
 int					ft_cd_options(char **argv);
@@ -143,13 +144,13 @@ int					ft_termcap_init(void);
 int					ft_valid_quotes(void);
 int					ft_valid_dir(char *path, char *arg);
 
-void				ft_print_t_curs(void);
-void				ft_usecap(char *cap);
-int					ft_termcap_test(void);
-char				*ft_addchar(char *line, char *chr);
-void				ft_putchar_spe(char *c);
-void				chk21(void);
+void			ft_print_t_curs(void);
+void			ft_usecap(char *cap);
+int				ft_termcap_test(void);
+char			*ft_addchar(char *line, char *chr);
+void			ft_putchar_spe(char *c);
+void			chk21(void);
 
-char				*ft_get_alias(char *name);
+char			*ft_get_alias(char *name);
 
 #endif

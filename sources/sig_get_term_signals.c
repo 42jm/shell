@@ -1,34 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   get_term_signals.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/20 12:16:49 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2021/04/05 23:28:22 by lgaveria         ###   ########.fr       */
+/*   Created: 2021/04/02 15:26:05 by lgaveria          #+#    #+#             */
+/*   Updated: 2021/04/02 17:31:39 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header_42sh.h"
-#include "jobs_42sh.h"
+#include "signals_42sh.h"
 
-void	sighandle_chld(int signum)
+void	get_term_signals(int *term_signals)
 {
-	(void)signum;
-	job_update_status(NULL);
-}
+	int i;
 
-void	sighandle_tstp(int signum)
-{
-	(void)signum;
-	ft_putchar('\n');
-	env_set("?", "148", 0);
-}
-
-void	sighandle_int(int signum)
-{
-	(void)signum;
-	ft_putchar('\n');
-	env_set("?", "130", 0);
+	i = 0;
+	term_signals[i++] = SIGHUP;
+	term_signals[i++] = SIGPIPE;
+	term_signals[i++] = SIGALRM;
+	term_signals[i++] = SIGPOLL;
+	term_signals[i++] = SIGVTALRM;
+	term_signals[i++] = SIGPROF;
+	term_signals[i++] = SIGUSR1;
+	term_signals[i++] = SIGUSR2;
+	term_signals[i++] = 0;
 }

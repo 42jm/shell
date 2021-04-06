@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   job_init_shell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 10:06:09 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2019/02/23 11:12:02 by jmbomeyo         ###   ########.fr       */
+/*   Updated: 2021/04/05 23:46:40 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "jobs_42sh.h"
+#include "signals_42sh.h"
 
 static int	jobinit_interactive(void)
 {
@@ -24,12 +25,6 @@ static int	jobinit_interactive(void)
 		kill(-g_shell->pgid, SIGTTIN);
 		term_pgid = tcgetpgrp(g_shell->terminal);
 	}
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGTSTP, SIG_IGN);
-	signal(SIGTTIN, SIG_IGN);
-	signal(SIGTTOU, SIG_IGN);
-	signal(SIGCHLD, sighandle_chld);
 	g_shell->pgid = getpid();
 	if (setpgid(g_shell->pgid, g_shell->pgid) < 0)
 		return (put_error("giving 42sh its own pgid", "jobinit_interactive"));
@@ -40,7 +35,7 @@ static int	jobinit_interactive(void)
 	return (0);
 }
 
-int	job_init_shell(void)
+int			job_init_shell(void)
 {
 	g_shell = (t_shell *)malloc(sizeof(t_shell));
 	if (!g_shell)
@@ -52,6 +47,7 @@ int	job_init_shell(void)
 	g_shell->is_interactive = isatty(g_shell->terminal);
 	g_shell->job_blueprint = NULL;
 	g_shell->exit_warning = 0;
+	set_up_shell_signals();
 	if (g_shell->is_interactive)
 		return (jobinit_interactive());
 	return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   header_42sh.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmbomeyo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/30 15:39:13 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2021/04/03 03:40:11 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/04/05 23:42:14 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,21 @@
 extern char				**g_lines;
 extern t_list			*g_envlst;
 
-typedef struct s_astnode
+typedef struct	s_astnode
 {
 	char				*op;
 	void				*content;
 	struct s_astnode	*next;
-}						t_astnode;
+}				t_astnode;
 
-typedef struct s_envvar
+typedef struct	s_envvar
 {
 	bool				local;
 	bool				envir;
 	bool				exportable;
 	char				*name;
 	char				*value;
-}						t_envvar;
+}				t_envvar;
 
 void			sighandle_int(int signum);
 void			sighandle_tstp(int signum);
