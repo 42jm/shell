@@ -80,8 +80,6 @@ int	env_init(int argc, char **argv, char **envp)
 	if (!ret)
 		ret = env_set("?", "0", 0);
 	if (!ret)
-		ret = env_set("$", "lmao", 0);
-	if (!ret)
 	{
 		if (argc == 1)
 			ret = builtin_set(0, argv);
