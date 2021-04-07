@@ -29,6 +29,7 @@ SRC_NAME = main.c \
 	astlex_token.c \
 	astparse_andor.c \
 	astparse_curly.c \
+	astparse_heredoc.c \
 	astparse_parentheses.c \
 	ast_parser.c \
 	ast_put.c \
@@ -111,7 +112,16 @@ SRC_NAME = main.c \
 	sig_get_term_signals.c \
 	sig_dfl_signals_for_sub_process.c \
 	sig_set_up_action_for_given_signals.c \
-	sig_set_up_shell_signals.c
+	sig_set_up_shell_signals.c	\
+	is_whitespace.c	\
+	strchri.c \
+	completion_choice.c \
+	completion_context.c \
+	completion_directory.c \
+	completion_display.c \
+	completion_fill_choice.c \
+	auto_completion.c	\
+	completion_get_shell_variable.c
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_NAME))
 OBJ = $(addprefix $(OBJ_DIR), $(SRC_NAME:.c=.o))
@@ -121,14 +131,14 @@ OBJ = $(addprefix $(OBJ_DIR), $(SRC_NAME:.c=.o))
 
 all: $(NAME)
 
-$(NAME): Makefile libft/libft.a $(OBJ) includes/quegonza.h includes/header_42sh.h includes/signals_42sh.h
+$(NAME): Makefile libft/libft.a $(OBJ) includes/quegonza.h includes/header_42sh.h includes/signals_42sh.h includes/auto_completion.h
 	@printf "\n$(WAIT_COLOR)$(NAME): linking\$(NO_COLOR)\n"
-	@clang $(FLAGS) -o $(NAME) $(OBJ) $(INC) $(LIB)
+	@clang -g3 $(FLAGS) -o $(NAME) $(OBJ) $(INC) $(LIB)
 	@echo "$(OK_COLOR)	+++ " $@ "   created +++	$(NO_COLOR)"
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@mkdir -p $(OBJ_DIR)
-	@clang $(FLAGS) -c $< -o $@ $(INC)
+	@clang -g3 $(FLAGS) -c $< -o $@ $(INC)
 	@printf "$(WAIT_COLOR)+$(NO_COLOR)"
 
 libft/libft.a:

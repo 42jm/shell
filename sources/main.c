@@ -6,7 +6,7 @@
 /*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 12:16:49 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2021/04/05 23:48:15 by lgaveria         ###   ########.fr       */
+/*   Updated: 2021/04/07 09:27:39 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	execute_firstline(char ***alines)
 	if (!ret)
 		ret = ast_lexer(*g_lines, &astroot);
 	g_lines++;
+	if (!ret)
+		ret = ast_fillup_heredocs(astroot);
 	if (!ret)
 		ret = ast_parser(&astroot);
 	if (!ret)

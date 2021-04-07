@@ -25,14 +25,17 @@ char	*astget_redirop(char *op)
 	return (NULL);
 }
 
-static int	handle_redir(t_astnode **at, int fd, char *op, char *word)
+static int	handle_redir(t_astnode **at, int fd, char *op, t_astnode *node)
 {
+	char	*word;
+
+	word = node->next->content;
 	if (!ft_strcmp(op, "<") || !ft_strcmp(op, ">") || !ft_strcmp(op, ">>"))
 		return (astredir_simple(at, fd, op, word));
 	else if (!ft_strcmp(op, "<&") || !ft_strcmp(op, ">&"))
 		return (astredir_aggregate(at, fd, op, word));
 	else if (!ft_strcmp(op, "<<"))
-		return (astredir_heredoc(at, fd, op, word));
+		return (astredir_heredoc(at, fd, op, node));
 	return (put_error("invalid redirection operator", op));
 }
 
@@ -40,7 +43,6 @@ int	astredir_handler(t_astnode **at, t_astnode *node)
 {
 	int		fd;
 	char	*redir_op;
-	char	*word;
 
 	if (!node || !node->op)
 		return (put_error("no arguments", "astredir_handler"));
@@ -49,13 +51,12 @@ int	astredir_handler(t_astnode **at, t_astnode *node)
 		return (put_error("node is not a redir_op", node->op));
 	if (!node->next || node->next->op)
 		return (put_error("no word following redir_op", redir_op));
-	word = node->next->content;
 	fd = 0;
 	if (ft_isdigit(*node->op))
 		fd = ft_atoi(node->op);
 	else if (*redir_op == '>')
 		fd = 1;
-	return (handle_redir(at, fd, redir_op, word));
+	return (handle_redir(at, fd, redir_op, node));
 }
 
 int	astpop_redir(t_astnode **ahead, t_astnode **aredir)

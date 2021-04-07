@@ -74,22 +74,13 @@ int	astcmdstr_op_heredoc(t_astnode *node, char **acmd)
 {
 	char	*word_delim;
 
-	if (node->content)
-		astcmdstr(node->content, acmd);
 	astcmdstr_cpy(acmd, "<< ");
 	if (!node->next || node->next->op || !node->next->content)
 		return (put_error("no delimiter word set", "astcmdstr_op_heredoc"));
 	word_delim = node->next->content;
 	astcmdstr(node->next, acmd);
 	astcmdstr_cpy(acmd, "\n");
-	while (*g_lines && ft_strcmp(*g_lines, word_delim))
-	{
-		astcmdstr_cpy(acmd, *g_lines);
-		astcmdstr_cpy(acmd, "\n");
-		g_lines++;
-	}
-	if (*g_lines && !ft_strcmp(*g_lines, word_delim))
-		g_lines++;
+	astcmdstr_cpy(acmd, node->content);
 	astcmdstr_cpy(acmd, word_delim);
 	astcmdstr_cpy(acmd, "\n");
 	return (0);

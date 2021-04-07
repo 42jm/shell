@@ -6,7 +6,7 @@
 /*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 02:00:55 by quegonza          #+#    #+#             */
-/*   Updated: 2021/04/06 18:41:38 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/04/07 09:16:38 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int 	ft_key_interaction(void)
 	if (!ft_current_char(chr, &len))
 		return (0);
 	else if (len == 1)
-		g_info.line = ft_size1_char(g_info.line, chr);
+		g_info.line = ft_size1_char(g_info.line, chr[0]);
 	else if (len == 2)
 		g_info.line = ft_size2_char(g_info.line, chr);
 	else if (len == 3)

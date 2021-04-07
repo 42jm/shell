@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "header_42sh.h"
+#include "jobs_42sh.h"
 
 static int	replace_node_by_fdstr(t_astnode *node, int fd)
 {
@@ -33,16 +34,25 @@ static int	process_substitute(t_astnode *node, int *fildes, int fd_child)
 {
 	int	ret;
 	int	tmp;
+	int	termsaved;
 
 	close(fildes[1 - fd_child]);
 	tmp = dup(fd_child);
 	if (tmp == -1)
 		return (put_error("failed to backup fd", node->op));
+	termsaved = 0;
+	if (!fd_child && !g_shell->terminal)
+	{
+		g_shell->terminal = tmp;
+		termsaved = 1;
+	}
 	if ((dup2(fildes[fd_child], fd_child)) == -1)
 		return (put_error("failed to set new fd", node->op));
 	ret = ast_execute(&node);
 	if ((dup2(tmp, fd_child)) == -1)
 		ret = put_error("failed to reset fd to backup", node->op);
+	if (termsaved)
+		g_shell->terminal = fd_child;
 	if (close(tmp) == -1)
 		ret = put_error("failed to close fd backup", node->op);
 	close(fildes[fd_child]);

@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 19:41:55 by quegonza          #+#    #+#             */
-/*   Updated: 2021/04/03 02:44:07 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/04/07 10:59:15 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,30 @@ char	*ft_get_path(char *name)
 	}
 	ft_free_tabzero(path_dirs);
 	return (NULL);
+}
+
+char	*ft_cl_line(char *s)
+{
+	int		i;
+	char	*res;
+
+	i = 0;
+	res = s;
+	while (s[i])
+	{
+		if (s[i] == '\\' && s[i + 1] == '\n')
+		{
+			res = ft_memalloc(ft_strlen(s) - 1);
+			ft_strncpy(res, s, i);
+			ft_strcpy(&res[i], &s[i + 2]);
+			free(s);
+			s = res;
+			i = 0;
+		}
+		else if (s[i] == '\\' && s[i + 1])
+			i += 2;
+		else
+			ft_quote_hdoc(s[i], &i);
+	}
+	return (s);
 }

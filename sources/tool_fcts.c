@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 00:44:05 by quegonza          #+#    #+#             */
-/*   Updated: 2021/04/06 01:14:12 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/04/03 19:25:36 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 int 	ft_error(char *cause, int code)
 {
 	if (cause)
-		pr_putstr_fd(cause, 2);
+		ft_putstr(cause);
 	else
-		pr_putstr_fd("\nerror\n", 2);
+		ft_putstr("\nerror\n");
 	return (code);
 }
 
@@ -27,12 +27,15 @@ int 	ft_putc(int c)
 	return (c);
 }
 
-void	ft_put2str_fd(char *cause, char *msg, int fd)
+int 	ft_isoneof_chr(char chr, char *chrs)
 {
-	if (cause)
-		pr_putstr_fd(cause, fd);
-	if (msg)
-		pr_putstr_fd(msg, fd);
+	while (*chrs)
+	{
+		if (chr == *chrs)
+			return (1);
+		chrs++;
+	}
+	return (0);
 }
 
 char	*ft_first_word(char *str)

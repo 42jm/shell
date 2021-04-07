@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   quegonza.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cylemair <cylemair@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 03:16:03 by quegonza          #+#    #+#             */
-/*   Updated: 2021/04/06 18:46:22 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/04/07 11:04:23 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef QUEGONZA_H
 # define QUEGONZA_H
 # include "header_42sh.h"
+# include "auto_completion.h"
 # include "libft.h"
 # include <termcap.h>
 # include <termios.h>
@@ -76,6 +77,7 @@ extern t_curs	g_info;
 char				*ft_bad_option(char *cmd_name, char option, char *message);
 int					ft_cd_options(char **argv);
 int					ft_chk_dot(char *str, char *dots);
+char				*ft_cl_line(char *s);
 void				ft_clean_after_cursor(void);
 char				*ft_clear_dot(char *str);
 int					ft_count_args(int argc, char **argv);
@@ -122,6 +124,7 @@ void				ft_mv_right(void);
 char				*ft_path(char *path, char *name);
 void				ft_put2str_fd(char *cause, char *msg, int fd);
 int					ft_putc(int c);
+int					ft_quote_hdoc(char chr, int *i);
 int					ft_reach_next_word(void);
 int					ft_reach_previous_word(void);
 char				*ft_replace_alias(char *str);
@@ -132,7 +135,7 @@ void				ft_scroll(int nb, char opt);
 void				ft_sighandler_winsize_change(int signum);
 void				ft_sighandler_ctrl_c(int signum);
 void				ft_sighandler_ctrl_z_return(int signum);
-char				*ft_size1_char(char *line, char *chr);
+char				*ft_size1_char(char *line, char c);
 char				*ft_size2_char(char *line, char *chr);
 void				ft_size3_char(char *chr);
 char				*ft_size4_char(char *line, char *chr);
@@ -143,5 +146,14 @@ char				*ft_suppr_char(char *line);
 int					ft_termcap_init(void);
 int					ft_valid_quotes(void);
 int					ft_valid_dir(char *path, char *arg);
+
+void				ft_print_t_curs(void);
+void				ft_usecap(char *cap);
+int					ft_termcap_test(void);
+char				*ft_addchar(char *line, char *chr);
+void				ft_putchar_spe(char *c);
+void				chk21(void);
+
+char				*ft_get_alias(char *name);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/30 15:39:13 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2021/04/05 23:42:14 by lgaveria         ###   ########.fr       */
+/*   Updated: 2021/04/07 09:30:53 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ size_t			parenlen(char *s);
 t_astnode		*token_new(char *type);
 int				token_delimit(t_astnode *token, char *input, size_t len);
 int				handle_andor(t_astnode **at, t_astnode *prev, t_astnode *head);
+int				ast_fillup_heredocs(t_astnode *lexed);
 int				ast_parser(t_astnode **aroot);
 int				parse_curly_braces(t_astnode **aroot);
 int				parse_all_parentheses(t_astnode *head);
@@ -85,7 +86,7 @@ int				ast_localredir(t_astnode **at, int dest, int src);
 int				ast_localclose(t_astnode **at, int fd);
 int				astredir_simple(t_astnode **at, int fd, char *op, char *path);
 int				astredir_aggregate(t_astnode **at, int fd, char *op, char *w);
-int				astredir_heredoc(t_astnode **at, int fd, char *op, char *word);
+int				astredir_heredoc(t_astnode **at, int fd, char *o, t_astnode *n);
 
 int				astexec_args(t_astnode *node);
 int				astexec_assign(t_astnode *node);

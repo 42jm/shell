@@ -6,7 +6,7 @@
 /*   By: quegonza <quegonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 19:21:23 by quegonza          #+#    #+#             */
-/*   Updated: 2021/04/06 01:07:25 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/04/07 09:14:26 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,9 @@ int 	ft_rm_alias(char *alias)
 		prev = i;
 		i = i->next;
 	}
-	pr_putstr_fd("42sh: unalias: ", 2);
-	pr_putstr_fd(alias, 2);
-	pr_putstr_fd(": not found\n", 2);
+	ft_putstr("42sh: unalias: ");
+	ft_putstr(alias);
+	ft_putstr(": not found\n");
 	return (0);
 }
 
@@ -106,14 +106,14 @@ int 	builtin_unalias(int argc, char **argv)
 		return (0);
 	}
 	if (!ft_count_args(argc, argv))
+		ft_putstr("unalias: usage: unalias [-a] name [name ...]\n");
+	else
 	{
-		pr_putstr_fd("unalias: usage: unalias [-a] name [name ...]\n", 2);
-		return (1);
+		i = 1;
+		while (argv[i] && argv[i][0] == '-' && argv[i][1])
+			i++;
+		while (argv[i])
+			ft_rm_alias(argv[i++]);
 	}
-	i = 1;
-	while (argv[i] && argv[i][0] == '-' && argv[i][1])
-		i++;
-	while (argv[i])
-		ft_rm_alias(argv[i++]);
 	return (0);
 }

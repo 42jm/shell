@@ -97,7 +97,7 @@ int	ast_parser(t_astnode **aroot)
 	static char	*tokens[3][3] = {
 		{";", "&", NULL },
 		{"&&", "||", NULL },
-		{"|", NULL, NULL }
+		{"|", NULL, NULL },
 	};
 
 	lvl = 0;

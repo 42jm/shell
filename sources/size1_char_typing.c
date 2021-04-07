@@ -3,20 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   size1_char_typing.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cylemair <cylemair@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 00:50:07 by quegonza          #+#    #+#             */
-/*   Updated: 2021/04/05 22:51:09 by lgaveria         ###   ########.fr       */
+/*   Updated: 2021/04/07 09:16:13 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "quegonza.h"
 
-char	*ft_size1_char(char *line, char *chr)
+char	*ft_size1_char(char *line, char c)
 {
-	char	c;
-
-	c = chr[0];
 	if (g_info.sigcont)
 		return (line);
 	if (c == '\n')
@@ -37,6 +34,8 @@ char	*ft_size1_char(char *line, char *chr)
 		line = ft_ctrl_w(line);
 	else if (c == CTRL_Y && g_info.copy[0])
 		line = ft_ctrl_y(line);
+	else if (c == '\t')
+		line = auto_completion(line);
 	return (line);
 }
 

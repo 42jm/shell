@@ -41,6 +41,8 @@ void	free_node(t_astnode *node)
 			free(node->content);
 		else if (is_op_known(node->op))
 			free_ast(node->content);
+		else if (!ft_strcmp(node->op, "<<"))
+			free(node->content);
 		else
 			put_error(node->op, "cannot free contents of unkown op node");
 	}

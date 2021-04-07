@@ -12,17 +12,6 @@
 
 #include "jobs_42sh.h"
 
-static void	joblst_del(void *content, size_t content_size)
-{
-	t_job	*job;
-
-	(void)content_size;
-	job = content;
-	if (!job)
-		return ;
-	job_free(&job);
-}
-
 static int	job_should_be_cleaned(t_job *job, int nbr)
 {
 	if (!job)
@@ -42,26 +31,45 @@ static int	job_should_be_cleaned(t_job *job, int nbr)
 	return (0);
 }
 
+static void	joblst_pop_free(t_list **ajoblst, t_list *prev, t_job **ajob)
+{
+	t_list	*next;
+	t_list	*joblst;
+
+	joblst = *ajoblst;
+	if (prev)
+		prev->next = joblst->next;
+	else
+		g_shell->joblst = joblst->next;
+	next = joblst->next;
+	job_free(ajob);
+	*ajob = NULL;
+	free(joblst);
+	joblst = next;
+	*ajoblst = joblst;
+}
+
 int	job_cleanup(int nbr)
 {
 	t_list	*joblst;
-	t_list	*todel;
+	t_list	*prev;
 	t_job	*job;
 	int		i;
 
 	joblst = g_shell->joblst;
+	prev = NULL;
 	i = 0;
 	while (joblst)
 	{
 		job = joblst->content;
 		if (!job)
 			return (put_error("empty joblst element", "job_cleanup"));
-		joblst = joblst->next;
 		if (job_should_be_cleaned(job, nbr))
+			joblst_pop_free(&joblst, prev, &job);
+		else
 		{
-			todel = ft_lstpop(&g_shell->joblst, i);
-			if (todel)
-				ft_lstdelone(&todel, &joblst_del);
+			prev = joblst;
+			joblst = joblst->next;
 		}
 		i++;
 	}

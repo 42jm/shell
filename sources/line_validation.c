@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   line_validation.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cylemair <cylemair@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 05:44:26 by quegonza          #+#    #+#             */
-/*   Updated: 2021/04/05 23:32:01 by lgaveria         ###   ########.fr       */
+/*   Updated: 2021/04/07 12:26:20 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,17 @@ int 	ft_valid_hdoc(int i)
 	len = ft_stralen_unquoted(&(g_info.line[i]), "><&();| \t\n") - 1;
 	if (!len)
 		return (1);
-	tmp = ft_memalloc(len + 1);
+	tmp = ft_memalloc(len + 2);
 	if (!tmp)
 		return (0);
-	ft_strncpy(tmp, &(g_info.line[i]), len);
-	eof = remove_quotes(tmp);
-	free(tmp);
+	if (g_info.line[i])
+	{
+		ft_strncpy(tmp, &(g_info.line[i]), len);
+		eof = remove_quotes(tmp);
+		free(tmp);
+	}
+	else
+		eof = tmp;
 	len = ft_strlen(eof);
 	i += len - 1;
 	if (ft_find_eof(eof, i, len))
@@ -91,7 +96,7 @@ int 	ft_quote_hdoc(char chr, int *i)
 			return (0);
 		*i += len;
 	}
-	else if (g_info.line[*i] == '<' && g_info.line[*i + 1] == '<')
+	else if (chr == '<' && g_info.line[*i + 1] == '<')
 	{
 		*i += 2;
 		if (!ft_valid_hdoc(*i))
@@ -110,6 +115,8 @@ int 	ft_line_validation(void)
 		return (1);
 	if (g_info.strlen && g_info.line[g_info.strlen - 1] == '\n')
 	{
+		if (g_info.strlen - 2 >= 0 && g_info.line[g_info.strlen - 2] == '\\')
+			return (0);
 		i = 0;
 		while (g_info.line[i])
 		{
@@ -119,6 +126,7 @@ int 	ft_line_validation(void)
 				return (0);
 		}
 		g_info.line[g_info.strlen - 1] = '\0';
+		g_info.line = ft_cl_line(g_info.line);
 		return (1);
 	}
 	return (0);

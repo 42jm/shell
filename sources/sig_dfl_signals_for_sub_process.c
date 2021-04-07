@@ -6,7 +6,7 @@
 /*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 15:21:52 by lgaveria          #+#    #+#             */
-/*   Updated: 2021/04/05 23:34:38 by lgaveria         ###   ########.fr       */
+/*   Updated: 2021/04/07 14:29:32 by lgaveria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	dfl_signals_for_sub_process(void)
 	set_up_action_for_given_signals(core_signals, action);
 	set_up_action_for_given_signals(term_signals, action);
 	set_up_action_for_given_signals(ignored_signals, action);
+	sigaction(SIGINT, &action, NULL);
 	sigaction(SIGCONT, &action, NULL);
 	sigaction(SIGCHLD, &action, NULL);
 }

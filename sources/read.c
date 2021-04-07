@@ -6,7 +6,7 @@
 /*   By: lgaveria <lgaveria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 12:16:49 by jmbomeyo          #+#    #+#             */
-/*   Updated: 2021/04/05 23:51:02 by lgaveria         ###   ########.fr       */
+/*   Updated: 2021/04/07 09:28:07 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*read_all(int fd)
 	return (ret);
 }
 
-int	format_input(char *in, char ***ainput)
+int 	format_input(char *in, char ***ainput)
 {
 	char	*buf;
 
@@ -62,7 +62,7 @@ int	format_input(char *in, char ***ainput)
 	return (0);
 }
 
-int	read_userinput(char ***ainput)
+int 	read_userinput(char ***ainput)
 {
 	size_t	ret;
 	char	*buf;
