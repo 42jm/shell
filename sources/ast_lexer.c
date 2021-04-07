@@ -30,21 +30,22 @@ static int	lexer_ignore(t_astnode **at, char *input, size_t *alen)
 	size_t	tmp;
 
 	len = *alen;
+	tmp = 1;
 	if (!*at)
-	{
 		*at = token_new(NULL);
-		if (!*at)
-			return (1);
-	}
 	if (ft_strchr("\\'\"", input[len]))
 	{
 		tmp = quotationlen(input + len, "\\'\"");
 		if (!tmp)
 			return (put_error("unfinished quote", "lexer_ignore"));
-		len += tmp;
 	}
 	else if (ft_strchr("$`", input[len]))
-		len += expansionlen(input + len);
+	{
+		tmp = expansionlen(input + len);
+		if (!tmp)
+			tmp = 1;
+	}
+	len += tmp;
 	*alen = len;
 	return (0);
 }

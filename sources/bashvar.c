@@ -18,7 +18,7 @@ size_t	bashvar_len(char *str)
 
 	if (!str)
 		return (0);
-	if (ft_strchr("#?", *str))
+	if (ft_strchr("$#?", *str))
 		return (1);
 	if (*str == '{')
 		return (ft_strclen(str, '}'));
