@@ -66,6 +66,12 @@ int	expand_alias(t_astnode **at)
 	alias = ft_get_alias(node->content);
 	if (!alias)
 		return (astexec_simplecmd(at));
+	if (!*alias)
+	{
+		free(node->content);
+		node->content = ft_strdup("");
+		return (astexec_simplecmd(at));
+	}
 	aliasnode = NULL;
 	ret = alias_insert_node(&aliasnode, alias, at, prev);
 	if (ret)
