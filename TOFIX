@@ -1,0 +1,53 @@
+# job not created
+\_$> cat <(sleep 10)
+^Z
+
+# EOF not recognized
+\_$> cat -e << EO\
+F
+AA
+EOF
+
+# type not recognized
+\_$> type type
+
+# builtins not implemented
+\_$> false && true
+
+# does not appear in output (might be VM only)
+\_$> sleep 10 &
+\_$> ps a
+
+# does not work in VM
+\_$> cat $(cat author)
+
+# waitpid failed && term cursor && read_userinput failed read
+\_$> cat <(ls)
+\_$> cat <(ls)
+
+# fd open no error msg; forgot to close some file
+\_$> cat <&4
+
+# no optional error msg + should not return 0
+\_$> echo foo >&-
+
+# multilines () <() $() ${} {}
+\_$> (
+AA=BB
+)
+\_$> echo $AA
+
+# does not always work
+\_$> cd -
+
+# set sets $0 as set
+\_$> set 1 2 3
+\_$> echo $0
+
+# $? $0 $1 $# etc... should not appear (envir = 0 and exportable = 0)
+\_$> set
+
+# PATH is an exception, it should be exportable by default
+\_$> unset PATH
+\_$> PATH=/bin:/usr/bin
+\_$> mkdir test
